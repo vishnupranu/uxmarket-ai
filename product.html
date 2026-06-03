@@ -1,382 +1,549 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<html lang="en" data-theme="dark"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Aurora AI Dashboard Pro — UXMarket AI</title>
-  <meta name="description" content="Complete AI analytics dashboard with 200+ components, real-time data viz, and conversational UI patterns. React + Figma + Tailwind." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/style.css" />
-  <link rel="stylesheet" href="css/animations.css" />
+  <meta name="description" content="340+ components for AI analytics products. Dark mode first, Figma variables, React components. Built for teams shipping AI features daily.">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <script src="js/theme.js"></script>
+  <style>
+    .product-layout {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: var(--space-8);
+      align-items: start;
+      padding-top: calc(var(--nav-height) + var(--space-8));
+    }
+    @media(max-width:1024px){ .product-layout{grid-template-columns:1fr;} }
+
+    .product-sidebar {
+      position: sticky;
+      top: calc(var(--nav-height) + var(--space-6));
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+
+    .purchase-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+    }
+
+    .license-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      margin-bottom: var(--space-3);
+    }
+    .license-card:hover { border-color: var(--border-strong); background: var(--bg-elevated); }
+    .license-card.active {
+      border-color: var(--accent);
+      background: rgba(99,102,241,0.06);
+    }
+    .license-card__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--space-2);
+    }
+    .license-card__name { font-weight: 700; font-size: var(--text-sm); }
+    .license-card__price { font-size: var(--text-xl); font-weight: 900; letter-spacing:-0.03em; }
+    .license-card__desc { font-size: var(--text-xs); color: var(--text-muted); line-height:1.5; }
+
+    .radio-circle {
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      border: 1.5px solid var(--border-strong);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .license-card.active .radio-circle {
+      border-color: var(--accent);
+      background: var(--accent);
+    }
+    .license-card.active .radio-circle::after {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: white;
+    }
+
+    /* Screenshot gallery */
+    .screenshot-gallery {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-3);
+      margin-top: var(--space-6);
+    }
+    .screenshot-thumb {
+      aspect-ratio: 16/10;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      cursor: pointer;
+      transition: border-color var(--transition-fast);
+    }
+    .screenshot-thumb:hover { border-color: var(--border-strong); }
+
+    /* Review */
+    .review-card {
+      padding: var(--space-5);
+      border-bottom: 1px solid var(--border);
+    }
+    .review-card:last-child { border-bottom: none; }
+    .review-header { display: flex; gap: var(--space-3); align-items: flex-start; margin-bottom: var(--space-3); }
+    .review-meta { font-size: var(--text-xs); color: var(--text-muted); margin-top: 2px; }
+    .review-text { font-size: var(--text-sm); color: var(--text-secondary); line-height: 1.7; }
+
+    /* Breadcrumb */
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-size: var(--text-xs);
+      color: var(--text-muted);
+      margin-bottom: var(--space-6);
+      flex-wrap: wrap;
+    }
+    .breadcrumb a { color: var(--text-muted); transition: color var(--transition-fast); }
+    .breadcrumb a:hover { color: var(--text-secondary); }
+    .breadcrumb-sep { opacity: 0.4; }
+
+    /* Feature tags row */
+    .feature-tags { display: flex; flex-wrap: wrap; gap: var(--space-2); margin: var(--space-4) 0; }
+    .feature-tag {
+      display: flex; align-items: center; gap: 5px;
+      font-size: var(--text-xs); font-weight: 600;
+      color: var(--text-secondary);
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 4px 10px;
+    }
+    .feature-tag svg { width: 12px; height: 12px; }
+
+    /* Spec table */
+    .spec-table { width: 100%; border-collapse: collapse; }
+    .spec-table tr { border-bottom: 1px solid var(--border); }
+    .spec-table tr:last-child { border-bottom: none; }
+    .spec-table td { padding: var(--space-3) var(--space-4); font-size: var(--text-sm); }
+    .spec-table td:first-child { color: var(--text-muted); width: 40%; }
+    .spec-table td:last-child { color: var(--text-primary); font-weight: 500; }
+  </style>
 </head>
 <body>
-  <nav class="nav" id="nav">
-    <div class="nav__container">
-      <a href="index.html" class="nav__logo">
-        <div class="nav__logo-icon">
-          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-            <rect width="32" height="32" rx="8" fill="url(#lg1)"/>
-            <path d="M8 16L14 10L20 16L26 10" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M8 22L14 16L20 22L26 16" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.6"/>
-            <defs><linearGradient id="lg1" x1="0" y1="0" x2="32" y2="32"><stop offset="0%" stop-color="#6366f1"/><stop offset="100%" stop-color="#8b5cf6"/></linearGradient></defs>
-          </svg>
-        </div>
-        <span class="nav__logo-text">UXMarket<span class="nav__logo-ai">AI</span></span>
-      </a>
-      <div class="nav__links">
-        <a href="index.html#marketplace" class="nav__link">Marketplace</a>
-        <a href="categories.html" class="nav__link">Categories</a>
-        <a href="sellers.html" class="nav__link">Become a Seller</a>
-        <a href="enterprise.html" class="nav__link">Enterprise</a>
-      </div>
-      <div class="nav__actions">
-        <a href="index.html" class="btn btn--ghost btn--sm">← Back</a>
-        <a href="auth.html#register" class="btn btn--primary btn--sm">Start Selling</a>
-      </div>
+<nav class="nav" id="main-nav">
+  <div class="nav__inner">
+    <a href="index.html" class="nav__logo" id="nav-logo">
+      <div class="nav__logo-mark"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="5" height="5" rx="1" fill="white" opacity="0.9"></rect><rect x="8" y="1" width="5" height="5" rx="1" fill="white" opacity="0.6"></rect><rect x="1" y="8" width="5" height="5" rx="1" fill="white" opacity="0.6"></rect><rect x="8" y="8" width="5" height="5" rx="1" fill="white" opacity="0.3"></rect></svg></div>
+      UXMarket <span class="nav__logo-ai">AI</span>
+    </a>
+    <div class="nav__links">
+      <a href="index.html" class="nav__link">Marketplace</a>
+      <a href="categories.html" class="nav__link">Categories</a>
+      <a href="sellers.html" class="nav__link">Sell</a>
+      <a href="enterprise.html" class="nav__link">Enterprise</a>
+      <a href="ai-tools.html" class="nav__link nav__link--badge">AI Tools</a>
     </div>
-  </nav>
+    <div class="nav__actions">
+      <button class="theme-toggle" id="theme-toggle-btn" aria-label="Toggle theme">
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: block;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line></svg>
+      </button>
+      <a href="auth.html" class="btn btn--ghost btn--sm" id="nav-signin">Sign in</a>
+      <a href="sellers.html" class="btn btn--primary btn--sm" id="nav-start-selling">Start selling</a>
+      <button class="nav__hamburger" id="nav-hamburger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+<div class="nav__mobile" id="mobile-menu">
+  <a href="index.html" class="nav__link">Marketplace</a>
+  <a href="categories.html" class="nav__link">Categories</a>
+  <a href="sellers.html" class="nav__link">Sell</a>
+  <a href="enterprise.html" class="nav__link">Enterprise</a>
+  <a href="ai-tools.html" class="nav__link">AI Tools</a>
+</div>
 
-  <main id="main-content">
-    <!-- Product Hero -->
-    <div class="product-hero">
-      <div class="product-hero__inner">
-        <div class="product-hero__main">
-          <div class="product-hero__breadcrumb">
-            <a href="index.html">Home</a>
-            <span>/</span>
-            <a href="categories.html">Marketplace</a>
-            <span>/</span>
-            <a href="category.html?cat=ai-dashboards">AI Dashboards</a>
-            <span>/</span>
-            <span>Aurora AI Dashboard Pro</span>
+<!-- Token stream hero -->
+<div class="hero hero--product" style="min-height:40vh;padding-block:0;align-items:stretch" aria-hidden="true">
+  <div class="hero__bg">
+    <div class="token-stream" id="token-stream-bg"></div>
+    <div class="mesh-orb mesh-orb--1" style="opacity:0.15"></div>
+    <div class="grid-overlay"></div>
+  </div>
+</div>
+
+<main class="container" style="padding-bottom:var(--space-24)" id="main-content">
+  <div class="product-layout">
+    <!-- Left: product details -->
+    <div class="product-main">
+      <div class="breadcrumb" aria-label="Breadcrumb">
+        <a href="index.html">Marketplace</a>
+        <span class="breadcrumb-sep" aria-hidden="true">/</span>
+        <a href="categories.html#saas">SaaS Dashboard</a>
+        <span class="breadcrumb-sep" aria-hidden="true">/</span>
+        <span style="color:var(--text-secondary)">Aurora AI Dashboard Pro</span>
+      </div>
+
+      <!-- Main preview -->
+      <div style="aspect-ratio:16/9;border-radius:var(--radius-xl);border:1px solid var(--border);overflow:hidden;margin-bottom:var(--space-6);background:linear-gradient(135deg,#050510,#0d0d2b,#050518)" aria-label="Product preview">
+        <div style="width:100%;height:100%;position:relative">
+          <div class="preview-sidebar" style="border-radius:var(--radius-xl) 0 0 var(--radius-xl)"></div>
+          <div class="preview-content">
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px">
+              <div style="padding:10px;background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.15);border-radius:8px">
+                <div style="font-size:8px;color:rgba(129,140,248,0.7);font-family:monospace;margin-bottom:4px">Revenue</div>
+                <div style="font-size:14px;font-weight:800;color:rgba(255,255,255,0.85);letter-spacing:-0.03em">₹48.2Cr</div>
+              </div>
+              <div style="padding:10px;background:rgba(16,185,129,0.06);border:1px solid rgba(16,185,129,0.12);border-radius:8px">
+                <div style="font-size:8px;color:rgba(52,211,153,0.7);font-family:monospace;margin-bottom:4px">Active Users</div>
+                <div style="font-size:14px;font-weight:800;color:rgba(255,255,255,0.85);letter-spacing:-0.03em">98.4K</div>
+              </div>
+              <div style="padding:10px;background:rgba(245,158,11,0.06);border:1px solid rgba(245,158,11,0.12);border-radius:8px">
+                <div style="font-size:8px;color:rgba(251,191,36,0.7);font-family:monospace;margin-bottom:4px">Conversion</div>
+                <div style="font-size:14px;font-weight:800;color:rgba(255,255,255,0.85);letter-spacing:-0.03em">+24.8%</div>
+              </div>
+            </div>
+            <div class="preview-widget" style="flex:1"></div>
+          </div>
+          <div style="position:absolute;bottom:12px;right:12px">
+            <span class="badge badge--new">Live preview</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Screenshot grid -->
+      <div class="screenshot-gallery" aria-label="Product screenshots">
+        <div class="screenshot-thumb" style="background:linear-gradient(135deg,#050510,#0d1030)" tabindex="0" role="img" aria-label="Analytics view"></div>
+        <div class="screenshot-thumb" style="background:linear-gradient(135deg,#030d08,#001f10)" tabindex="0" role="img" aria-label="Dashboard view"></div>
+        <div class="screenshot-thumb" style="background:linear-gradient(135deg,#100510,#1a0a1a)" tabindex="0" role="img" aria-label="Settings view"></div>
+        <div class="screenshot-thumb" style="background:linear-gradient(160deg,#050510,#0a0520)" tabindex="0" role="img" aria-label="Mobile view"></div>
+      </div>
+
+      <!-- Product info -->
+      <div style="margin-top:var(--space-8)" data-reveal="">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:var(--space-4);margin-bottom:var(--space-4)">
+          <div>
+            <div style="display:flex;align-items:center;gap:var(--space-2);margin-bottom:var(--space-3)">
+              <span class="badge badge--new">Editor's Pick</span>
+              <span class="badge badge--ai">AI-native</span>
+            </div>
+            <h1 style="font-size:var(--text-3xl);font-weight:900;letter-spacing:-0.04em;line-height:1.1">Aurora AI Dashboard Pro</h1>
+          </div>
+          <div style="text-align:right">
+            <div class="product-card__rating" style="justify-content:flex-end;margin-bottom:4px">
+              <span class="stars" aria-label="4.9 stars">★★★★★</span>
+              <span class="rating-num">4.9</span>
+              <span class="rating-count">(847 reviews)</span>
+            </div>
+            <div style="font-size:var(--text-xs);color:var(--text-muted)">8,400+ downloads</div>
+          </div>
+        </div>
+
+        <div class="product-card__seller" style="margin-bottom:var(--space-4)">
+          <div class="seller-avatar seller-avatar--purple" style="width:32px;height:32px;font-size:12px" aria-hidden="true">AX</div>
+          <div>
+            <div style="font-size:var(--text-sm);font-weight:600">AxiomDesign Studio</div>
+            <div style="font-size:var(--text-xs);color:var(--text-muted)">340 products · 4.9 avg · Verified seller</div>
+          </div>
+        </div>
+
+        <div class="feature-tags" role="list" aria-label="Product features">
+          <div class="feature-tag" role="listitem">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            340+ Components
+          </div>
+          <div class="feature-tag" role="listitem">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            Dark + Light mode
+          </div>
+          <div class="feature-tag" role="listitem">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            Figma Variables
+          </div>
+          <div class="feature-tag" role="listitem">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            React + TypeScript
+          </div>
+          <div class="feature-tag" role="listitem">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            Storybook docs
+          </div>
+          <div class="feature-tag" role="listitem">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            WCAG 2.1 AA
+          </div>
+          <div class="feature-tag" role="listitem">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            Lifetime updates
+          </div>
+        </div>
+
+        <!-- Tabs -->
+        <div style="margin-top:var(--space-8)" data-tabs-parent="">
+          <div class="tabs" id="product-tabs" role="tablist">
+            <button class="tab active" data-tab="overview" id="tab-overview" role="tab" aria-selected="true">Overview</button>
+            <button class="tab" data-tab="includes" id="tab-includes" role="tab" aria-selected="false">What's included</button>
+            <button class="tab" data-tab="reviews" id="tab-reviews" role="tab" aria-selected="false">Reviews (847)</button>
+            <button class="tab" data-tab="changelog" id="tab-changelog" role="tab" aria-selected="false">Changelog</button>
           </div>
 
-          <div class="product-hero__badges" style="display:flex;gap:8px;margin-bottom:16px;">
-            <span class="badge badge--new">New</span>
-            <span class="badge badge--ai">AI-Powered</span>
-            <span class="badge badge--trending">🔥 Trending</span>
-          </div>
-
-          <h1 class="product-hero__title">Aurora AI Dashboard Pro</h1>
-
-          <div class="product-hero__meta">
-            <div class="product-hero__author">
-              <div class="seller-avatar seller-avatar--purple" style="width:32px;height:32px;">SK</div>
-              <span style="font-weight:600">SketchKraft Studio</span>
-              <span class="seller-badge">⭐ Elite Author</span>
-            </div>
-            <div style="display:flex;align-items:center;gap:6px;font-size:0.875rem;">
-              <span style="color:#f59e0b">★★★★★</span>
-              <strong>4.9</strong>
-              <span style="color:var(--color-text-3)">(284 reviews)</span>
-            </div>
-            <span style="color:var(--color-text-3);font-size:0.875rem;">2,841 sales</span>
-            <span style="color:var(--color-text-3);font-size:0.875rem;">Updated: June 2026</span>
-          </div>
-
-          <p class="product-hero__desc">
-            Aurora AI Dashboard Pro is the most comprehensive AI-first analytics dashboard design system ever built. With 200+ production-ready components, real-time data visualization, conversational UI patterns, and AI agent interfaces, it's everything you need to ship a world-class SaaS product in days — not months.
-          </p>
-
-          <!-- Preview Window -->
-          <div class="product-preview-window" style="background:linear-gradient(135deg,#0d0d2b,#1a0a2e,#0d1f3c);border-radius:16px;border:1px solid rgba(99,102,241,0.2);overflow:hidden;margin-bottom:32px;">
-            <div style="display:flex;align-items:center;gap:8px;padding:14px 18px;border-bottom:1px solid rgba(255,255,255,0.06);">
-              <div style="display:flex;gap:6px"><span style="width:10px;height:10px;border-radius:50%;background:#ef4444;display:block"></span><span style="width:10px;height:10px;border-radius:50%;background:#f59e0b;display:block"></span><span style="width:10px;height:10px;border-radius:50%;background:#10b981;display:block"></span></div>
-              <span style="font-size:0.75rem;color:var(--color-text-3);margin-left:8px;">aurora-ai-dashboard.vercel.app</span>
-            </div>
-            <div style="height:360px;display:flex;gap:0;">
-              <!-- Sidebar -->
-              <div style="width:220px;border-right:1px solid rgba(255,255,255,0.06);padding:20px 12px;flex-shrink:0;">
-                <div style="display:flex;align-items:center;gap:8px;margin-bottom:24px;">
-                  <div style="width:28px;height:28px;border-radius:6px;background:linear-gradient(135deg,#6366f1,#8b5cf6);"></div>
-                  <span style="font-size:0.8125rem;font-weight:700;color:var(--color-text)">AuroraAI</span>
+          <div data-tab-panel="overview" style="margin-top:var(--space-6)">
+            <p style="font-size:var(--text-base);color:var(--text-secondary);line-height:1.8;margin-bottom:var(--space-5)">
+              Aurora AI Dashboard Pro is the most comprehensive design system for teams building AI-powered analytics products. Every component is designed for data density — showing complex information without overwhelming users.
+            </p>
+            <p style="font-size:var(--text-base);color:var(--text-secondary);line-height:1.8;margin-bottom:var(--space-6)">
+              Unlike generic admin templates, Aurora was purpose-built for AI product requirements: streaming data displays, confidence indicators, model performance charts, and human-AI handoff patterns that your users will immediately understand.
+            </p>
+            <div style="background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-lg);padding:var(--space-5);margin-bottom:var(--space-6)">
+              <h3 style="font-size:var(--text-base);font-weight:700;letter-spacing:-0.02em;margin-bottom:var(--space-4)">What makes Aurora different</h3>
+              <div style="display:flex;flex-direction:column;gap:var(--space-3)">
+                <div class="check-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  AI-specific components: streaming text, tool call displays, agent state visualizations, confidence meters
                 </div>
-                <div style="display:flex;flex-direction:column;gap:4px;">
-                  <div style="padding:8px 10px;border-radius:8px;background:rgba(99,102,241,0.15);border:1px solid rgba(99,102,241,0.25);font-size:0.75rem;color:#a5b4fc;font-weight:600;">📊 Dashboard</div>
-                  <div style="padding:8px 10px;border-radius:8px;font-size:0.75rem;color:var(--color-text-3);">📈 Analytics</div>
-                  <div style="padding:8px 10px;border-radius:8px;font-size:0.75rem;color:var(--color-text-3);">🤖 AI Insights</div>
-                  <div style="padding:8px 10px;border-radius:8px;font-size:0.75rem;color:var(--color-text-3);">👥 Users</div>
-                  <div style="padding:8px 10px;border-radius:8px;font-size:0.75rem;color:var(--color-text-3);">💰 Revenue</div>
-                  <div style="padding:8px 10px;border-radius:8px;font-size:0.75rem;color:var(--color-text-3);">⚙️ Settings</div>
+                <div class="check-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  Figma Variables (not just styles) — swap themes in 2 clicks, not 2 hours
                 </div>
-              </div>
-              <!-- Content -->
-              <div style="flex:1;padding:20px;overflow:hidden;">
-                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px;">
-                  <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:14px;">
-                    <div style="font-size:0.6875rem;color:var(--color-text-3);margin-bottom:4px;">Total Revenue</div>
-                    <div style="font-size:1.25rem;font-weight:800;color:var(--color-text);">₹48.2L</div>
-                    <div style="font-size:0.6875rem;color:#10b981;">▲ 18.4%</div>
-                  </div>
-                  <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:14px;">
-                    <div style="font-size:0.6875rem;color:var(--color-text-3);margin-bottom:4px;">Active Users</div>
-                    <div style="font-size:1.25rem;font-weight:800;color:var(--color-text);">12,840</div>
-                    <div style="font-size:0.6875rem;color:#10b981;">▲ 9.2%</div>
-                  </div>
-                  <div style="background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.2);border-radius:10px;padding:14px;">
-                    <div style="font-size:0.6875rem;color:var(--color-text-3);margin-bottom:4px;">AI Requests</div>
-                    <div style="font-size:1.25rem;font-weight:800;color:var(--color-text);">2.4M</div>
-                    <div style="font-size:0.6875rem;color:#6366f1;">▲ 42%</div>
-                  </div>
+                <div class="check-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  Production React components with TypeScript, tested with Vitest, documented in Storybook
                 </div>
-                <!-- Chart area -->
-                <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:16px;height:180px;display:flex;flex-direction:column;">
-                  <div style="font-size:0.75rem;font-weight:600;color:var(--color-text-2);margin-bottom:12px;">Revenue Trend</div>
-                  <div style="flex:1;display:flex;align-items:flex-end;gap:6px;">
-                    <div style="flex:1;background:rgba(99,102,241,0.2);border-radius:4px 4px 0 0;height:60%;"></div>
-                    <div style="flex:1;background:rgba(99,102,241,0.3);border-radius:4px 4px 0 0;height:75%;"></div>
-                    <div style="flex:1;background:rgba(99,102,241,0.2);border-radius:4px 4px 0 0;height:45%;"></div>
-                    <div style="flex:1;background:rgba(99,102,241,0.35);border-radius:4px 4px 0 0;height:90%;"></div>
-                    <div style="flex:1;background:linear-gradient(to top,#6366f1,#8b5cf6);border-radius:4px 4px 0 0;height:70%;"></div>
-                    <div style="flex:1;background:rgba(99,102,241,0.3);border-radius:4px 4px 0 0;height:80%;"></div>
-                  </div>
+                <div class="check-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  Every component tested for WCAG 2.1 AA — works for all users, including screen readers
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- Product Tabs -->
-          <div class="product-tabs" style="padding:0;max-width:100%;">
-            <div class="tabs__nav">
-              <button class="tab-btn active" data-tab="overview">Overview</button>
-              <button class="tab-btn" data-tab="components">Components</button>
-              <button class="tab-btn" data-tab="tech">Tech Stack</button>
-              <button class="tab-btn" data-tab="reviews">Reviews (284)</button>
-              <button class="tab-btn" data-tab="changelog">Changelog</button>
-            </div>
-
-            <div class="tab-panel active" id="tab-overview">
-              <h3 style="font-size:1.25rem;font-weight:700;margin-bottom:16px;">What's Included</h3>
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:32px;">
-                <div class="enterprise-feature">
-                  <div class="enterprise-feature__icon">📦</div>
-                  <div><div class="enterprise-feature__title">200+ Components</div><div class="enterprise-feature__desc">Charts, tables, forms, modals, and AI-specific UI patterns</div></div>
-                </div>
-                <div class="enterprise-feature">
-                  <div class="enterprise-feature__icon">🎨</div>
-                  <div><div class="enterprise-feature__title">Figma Design File</div><div class="enterprise-feature__desc">Full Figma file with auto-layout, variables, and components</div></div>
-                </div>
-                <div class="enterprise-feature">
-                  <div class="enterprise-feature__icon">⚛️</div>
-                  <div><div class="enterprise-feature__title">React + Next.js</div><div class="enterprise-feature__desc">TypeScript-first, shadcn/ui, Tailwind CSS v4 implementation</div></div>
-                </div>
-                <div class="enterprise-feature">
-                  <div class="enterprise-feature__icon">🤖</div>
-                  <div><div class="enterprise-feature__title">AI UX Patterns</div><div class="enterprise-feature__desc">Streaming UI, thinking states, tool calls, copilot patterns</div></div>
-                </div>
-                <div class="enterprise-feature">
-                  <div class="enterprise-feature__icon">📖</div>
-                  <div><div class="enterprise-feature__title">Documentation Site</div><div class="enterprise-feature__desc">Complete Storybook + Docusaurus documentation</div></div>
-                </div>
-                <div class="enterprise-feature">
-                  <div class="enterprise-feature__icon">🚀</div>
-                  <div><div class="enterprise-feature__title">Live Demo App</div><div class="enterprise-feature__desc">Full deployed SaaS demo on Vercel with real data</div></div>
-                </div>
+          <div data-tab-panel="includes" hidden="" style="margin-top:var(--space-6)">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4)">
+              <div class="card">
+                <div class="icon-box icon-box--accent" style="margin-bottom:var(--space-4)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><rect x="7" y="7" width="3" height="9"></rect><rect x="14" y="7" width="3" height="5"></rect></svg></div>
+                <div style="font-weight:700;margin-bottom:var(--space-2)">Figma File</div>
+                <div style="font-size:var(--text-sm);color:var(--text-muted)">340+ components, Auto-layout, Variables, Frames for 8 page templates</div>
               </div>
-
-              <h3 style="font-size:1.25rem;font-weight:700;margin-bottom:16px;">Design Tokens</h3>
-              <div style="background:rgba(0,0,0,0.3);border-radius:12px;padding:20px;font-family:'JetBrains Mono',monospace;font-size:0.8125rem;color:#a5b4fc;margin-bottom:24px;border:1px solid rgba(99,102,241,0.15);">
-                <div style="color:#64748b;margin-bottom:8px;">/* Aurora Design Tokens */</div>
-                <div>--color-primary: <span style="color:#10b981">#6366f1</span>;</div>
-                <div>--color-surface: <span style="color:#10b981">rgba(255,255,255,0.04)</span>;</div>
-                <div>--font-display: <span style="color:#f59e0b">'Space Grotesk'</span>;</div>
-                <div>--radius-card: <span style="color:#10b981">16px</span>;</div>
-                <div>--shadow-glow: <span style="color:#10b981">0 0 40px rgba(99,102,241,0.3)</span>;</div>
+              <div class="card">
+                <div class="icon-box icon-box--success" style="margin-bottom:var(--space-4)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></div>
+                <div style="font-weight:700;margin-bottom:var(--space-2)">React Components</div>
+                <div style="font-size:var(--text-sm);color:var(--text-muted)">TypeScript, Storybook docs, Vitest tests, npm package</div>
+              </div>
+              <div class="card">
+                <div class="icon-box icon-box--warning" style="margin-bottom:var(--space-4)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg></div>
+                <div style="font-weight:700;margin-bottom:var(--space-2)">Documentation</div>
+                <div style="font-size:var(--text-sm);color:var(--text-muted)">Usage guidelines, design principles, token reference, accessibility notes</div>
+              </div>
+              <div class="card">
+                <div class="icon-box icon-box--accent" style="margin-bottom:var(--space-4)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg></div>
+                <div style="font-weight:700;margin-bottom:var(--space-2)">Lifetime Updates</div>
+                <div style="font-size:var(--text-sm);color:var(--text-muted)">All future versions included. We ship monthly. Your purchase never expires.</div>
               </div>
             </div>
+          </div>
 
-            <div class="tab-panel" id="tab-components">
-              <div class="component-showcase">
-                <div class="component-item"><div class="component-item__preview">📊</div><div class="component-item__name">Analytics Cards</div><div class="component-item__count">24 variants</div></div>
-                <div class="component-item"><div class="component-item__preview">📈</div><div class="component-item__name">Charts</div><div class="component-item__count">18 types</div></div>
-                <div class="component-item"><div class="component-item__preview">🗃️</div><div class="component-item__name">Data Tables</div><div class="component-item__count">8 variants</div></div>
-                <div class="component-item"><div class="component-item__preview">🤖</div><div class="component-item__name">AI Chat</div><div class="component-item__count">6 layouts</div></div>
-                <div class="component-item"><div class="component-item__preview">📝</div><div class="component-item__name">Forms</div><div class="component-item__count">32 components</div></div>
-                <div class="component-item"><div class="component-item__preview">🔔</div><div class="component-item__name">Notifications</div><div class="component-item__count">12 styles</div></div>
-                <div class="component-item"><div class="component-item__preview">🗂️</div><div class="component-item__name">Sidebars</div><div class="component-item__count">5 layouts</div></div>
-                <div class="component-item"><div class="component-item__preview">🎛️</div><div class="component-item__name">Filters</div><div class="component-item__count">20 patterns</div></div>
-              </div>
-            </div>
-
-            <div class="tab-panel" id="tab-tech">
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-                <div style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:12px;padding:20px;">
-                  <h4 style="font-weight:700;margin-bottom:12px;">Frontend</h4>
-                  <div style="display:flex;flex-direction:column;gap:8px;font-size:0.875rem;color:var(--color-text-2);">
-                    <span>✓ React 19 + Next.js 15</span>
-                    <span>✓ TypeScript 5.4</span>
-                    <span>✓ Tailwind CSS v4</span>
-                    <span>✓ shadcn/ui components</span>
-                    <span>✓ Recharts + Tremor</span>
-                    <span>✓ Zustand state management</span>
-                  </div>
-                </div>
-                <div style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:12px;padding:20px;">
-                  <h4 style="font-weight:700;margin-bottom:12px;">Design</h4>
-                  <div style="display:flex;flex-direction:column;gap:8px;font-size:0.875rem;color:var(--color-text-2);">
-                    <span>✓ Figma (Auto Layout 5.0)</span>
-                    <span>✓ Design Variables/Tokens</span>
-                    <span>✓ Dark + Light modes</span>
-                    <span>✓ Component properties</span>
-                    <span>✓ Responsive frames</span>
-                    <span>✓ Storybook 8.x</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="tab-panel" id="tab-reviews">
-              <div style="display:flex;flex-direction:column;gap:20px;">
-                <div style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:12px;padding:20px;">
-                  <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:12px;">
-                    <div>
-                      <strong style="font-size:0.9375rem;">Priya Sharma</strong>
-                      <span style="font-size:0.75rem;color:var(--color-text-3);margin-left:8px;">Bangalore, India</span>
+          <div data-tab-panel="reviews" hidden="" style="margin-top:var(--space-6)">
+            <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-xl);overflow:hidden">
+              <div class="review-card">
+                <div class="review-header">
+                  <div class="seller-avatar seller-avatar--green" style="width:32px;height:32px;font-size:11px" aria-hidden="true">MK</div>
+                  <div>
+                    <div style="font-size:var(--text-sm);font-weight:600">Madhav Kumar</div>
+                    <div class="review-meta">
+                      <span style="color:var(--warning)">★★★★★</span> · Product Lead @ Groww · 3 days ago
                     </div>
-                    <span style="color:#f59e0b;font-size:0.875rem;">★★★★★</span>
                   </div>
-                  <p style="font-size:0.875rem;color:var(--color-text-2);line-height:1.7;">"Absolutely stunning. We launched our SaaS MVP using Aurora in 3 weeks. The AI patterns saved us months of UX research. Worth every rupee."</p>
                 </div>
-                <div style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:12px;padding:20px;">
-                  <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:12px;">
-                    <div>
-                      <strong style="font-size:0.9375rem;">James Mitchell</strong>
-                      <span style="font-size:0.75rem;color:var(--color-text-3);margin-left:8px;">London, UK</span>
-                    </div>
-                    <span style="color:#f59e0b;font-size:0.875rem;">★★★★★</span>
+                <p class="review-text">We moved our entire design team to Aurora and shipped our AI analytics dashboard in 6 weeks instead of 4 months. The AI-specific components saved us weeks. The Figma variables mean our designers and devs are finally speaking the same language.</p>
+              </div>
+              <div class="review-card">
+                <div class="review-header">
+                  <div class="seller-avatar seller-avatar--amber" style="width:32px;height:32px;font-size:11px" aria-hidden="true">PS</div>
+                  <div>
+                    <div style="font-size:var(--text-sm);font-weight:600">Priya Sharma</div>
+                    <div class="review-meta"><span style="color:var(--warning)">★★★★★</span> · Design Director @ CRED · 1 week ago</div>
                   </div>
-                  <p style="font-size:0.875rem;color:var(--color-text-2);line-height:1.7;">"Best design system purchase I've ever made. The TypeScript types are perfect, Figma variables sync seamlessly, and the AI components are unique."</p>
                 </div>
+                <p class="review-text">The accessibility baked into every component is what sold me. We have enterprise clients with strict WCAG requirements, and Aurora just works. Zero accessibility issues on our audit report for the first time ever.</p>
+              </div>
+              <div class="review-card">
+                <div class="review-header">
+                  <div class="seller-avatar seller-avatar--purple" style="width:32px;height:32px;font-size:11px" aria-hidden="true">AK</div>
+                  <div>
+                    <div style="font-size:var(--text-sm);font-weight:600">Arjun Kapoor</div>
+                    <div class="review-meta"><span style="color:var(--warning)">★★★★☆</span> · Founding Designer · 2 weeks ago</div>
+                  </div>
+                </div>
+                <p class="review-text">Outstanding for an early-stage startup. We launched our MVP dashboard in 3 weeks. Would love to see more chart types in v4. The dark mode is flawless.</p>
               </div>
             </div>
+          </div>
 
-            <div class="tab-panel" id="tab-changelog">
-              <div style="display:flex;flex-direction:column;gap:16px;">
-                <div style="border-left:2px solid var(--color-primary);padding-left:20px;">
-                  <div style="font-size:0.8125rem;color:var(--color-primary-light);font-weight:600;margin-bottom:4px;">v3.2.0 — June 2026</div>
-                  <p style="font-size:0.875rem;color:var(--color-text-2);">Added AI streaming UI components, typing indicators, and multi-modal input patterns. Updated to Next.js 15 and React 19.</p>
+          <div data-tab-panel="changelog" hidden="" style="margin-top:var(--space-6)">
+            <div style="display:flex;flex-direction:column;gap:var(--space-5)">
+              <div style="display:flex;gap:var(--space-4)">
+                <div style="display:flex;flex-direction:column;align-items:center;gap:0">
+                  <div style="width:10px;height:10px;border-radius:50%;background:var(--accent);flex-shrink:0;margin-top:4px"></div>
+                  <div style="width:1px;flex:1;background:var(--border);margin-top:4px"></div>
                 </div>
-                <div style="border-left:2px solid var(--color-border);padding-left:20px;">
-                  <div style="font-size:0.8125rem;color:var(--color-text-3);font-weight:600;margin-bottom:4px;">v3.0.0 — March 2026</div>
-                  <p style="font-size:0.875rem;color:var(--color-text-2);">Major redesign with Tailwind v4, new token system, 40+ new components.</p>
+                <div>
+                  <div style="font-size:var(--text-sm);font-weight:700;margin-bottom:4px">v3.2.0 — June 2025</div>
+                  <p style="font-size:var(--text-sm);color:var(--text-muted);line-height:1.6">Added streaming text component, improved dark mode contrast ratios, new AI confidence indicator widget, 24 new chart variants.</p>
+                </div>
+              </div>
+              <div style="display:flex;gap:var(--space-4)">
+                <div style="width:10px;height:10px;border-radius:50%;background:var(--border-strong);flex-shrink:0;margin-top:4px"></div>
+                <div>
+                  <div style="font-size:var(--text-sm);font-weight:700;margin-bottom:4px">v3.0.0 — April 2025</div>
+                  <p style="font-size:var(--text-sm);color:var(--text-muted);line-height:1.6">Major overhaul: migrated all Figma styles to Variables, added React component library, Storybook integration.</p>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Buy Card -->
-        <div class="product-buy-card">
-          <div class="product-buy-card__price-row">
-            <span class="product-buy-card__price">₹8,499</span>
-            <span class="product-buy-card__price-old">₹14,999</span>
-            <span class="product-buy-card__discount">43% OFF</span>
+        <!-- Specs -->
+        <div style="margin-top:var(--space-8);background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-xl);overflow:hidden" data-reveal="">
+          <div style="padding:var(--space-5) var(--space-6);border-bottom:1px solid var(--border)">
+            <h3 style="font-size:var(--text-base);font-weight:700;letter-spacing:-0.02em">Product specifications</h3>
           </div>
-
-          <div class="license-selector">
-            <p class="license-selector__label">Choose License</p>
-            <div class="license-option selected" id="lic-personal">
-              <input type="radio" name="license" value="personal" checked />
-              <div>
-                <p class="license-option__name">Personal</p>
-                <p class="license-option__desc">1 project, non-commercial</p>
-              </div>
-              <span class="license-option__price">₹8,499</span>
-            </div>
-            <div class="license-option" id="lic-commercial">
-              <input type="radio" name="license" value="commercial" />
-              <div>
-                <p class="license-option__name">Commercial</p>
-                <p class="license-option__desc">Unlimited projects, client work</p>
-              </div>
-              <span class="license-option__price">₹18,999</span>
-            </div>
-            <div class="license-option" id="lic-extended">
-              <input type="radio" name="license" value="extended" />
-              <div>
-                <p class="license-option__name">Extended</p>
-                <p class="license-option__desc">SaaS products, resale allowed</p>
-              </div>
-              <span class="license-option__price">₹49,999</span>
-            </div>
-          </div>
-
-          <button class="btn btn--primary btn--full" id="buy-now-btn" style="margin-bottom:12px;">
-            Buy Now — ₹8,499
-          </button>
-          <button class="btn btn--outline btn--full" id="add-cart-btn">
-            Add to Cart
-          </button>
-
-          <hr class="product-buy-card__divider" />
-
-          <div class="product-includes">
-            <p class="product-includes__title">What's Included</p>
-            <div class="include-item">Figma Design File (200+ components)</div>
-            <div class="include-item">React + Next.js source code</div>
-            <div class="include-item">Storybook documentation</div>
-            <div class="include-item">AI UX patterns & guidelines</div>
-            <div class="include-item">6 months free updates</div>
-            <div class="include-item">Priority email support</div>
-          </div>
-
-          <hr class="product-buy-card__divider" />
-
-          <div style="display:flex;flex-direction:column;gap:8px;">
-            <a href="#" class="btn btn--ghost btn--full btn--sm" id="live-preview-btn">🔗 Live Preview</a>
-            <a href="#" class="btn btn--ghost btn--full btn--sm" id="figma-preview-btn">◈ Open in Figma</a>
-          </div>
-
-          <div style="margin-top:16px;padding:12px;background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.15);border-radius:10px;">
-            <p style="font-size:0.75rem;color:#34d399;font-weight:600;">🛡️ Quality Guarantee</p>
-            <p style="font-size:0.6875rem;color:var(--color-text-3);margin-top:4px;">30-day refund policy. 24/7 support. WCAG 2.1 AA guaranteed.</p>
-          </div>
+          <table class="spec-table" aria-label="Product specifications">
+            <tbody><tr><td>Components</td><td>340+</td></tr>
+            <tr><td>Page templates</td><td>8 full pages</td></tr>
+            <tr><td>Design tool</td><td>Figma (2024)</td></tr>
+            <tr><td>Code formats</td><td>React, TypeScript, CSS</td></tr>
+            <tr><td>Figma features</td><td>Variables, Auto-layout, Interactive components</td></tr>
+            <tr><td>Accessibility</td><td>WCAG 2.1 AA verified</td></tr>
+            <tr><td>Browser support</td><td>Chrome 90+, Firefox 88+, Safari 14+</td></tr>
+            <tr><td>Last updated</td><td>June 2025 (v3.2.0)</td></tr>
+            <tr><td>License</td><td>Personal / Commercial / Enterprise</td></tr>
+          </tbody></table>
         </div>
       </div>
     </div>
-  </main>
 
-  <footer class="footer">
-    <div class="container">
-      <div class="footer__bottom">
-        <p>© 2026 UXMarket AI. All rights reserved.</p>
-        <div class="footer__legal">
-          <a href="privacy.html">Privacy</a>
-          <a href="terms.html">Terms</a>
-          <a href="licenses.html">Licensing</a>
+    <!-- Right: purchase sidebar -->
+    <div class="product-sidebar">
+      <div class="purchase-card">
+        <div style="margin-bottom:var(--space-5)">
+          <div style="font-size:var(--text-xs);color:var(--text-muted);margin-bottom:var(--space-3)">Choose a license</div>
+
+          <div class="license-card active" data-license="personal" id="license-personal" role="radio" aria-checked="true" tabindex="0">
+            <div class="license-card__header">
+              <div style="display:flex;align-items:center;gap:var(--space-3)">
+                <div class="radio-circle"></div>
+                <span class="license-card__name">Personal</span>
+              </div>
+              <span class="license-card__price" id="personal-price">$49</span>
+            </div>
+            <div class="license-card__desc">Use in one personal or client project. No resale.</div>
+          </div>
+
+          <div class="license-card" data-license="commercial" id="license-commercial" role="radio" aria-checked="false" tabindex="0">
+            <div class="license-card__header">
+              <div style="display:flex;align-items:center;gap:var(--space-3)">
+                <div class="radio-circle"></div>
+                <span class="license-card__name">Commercial</span>
+                <span class="badge badge--new" style="font-size:10px">Popular</span>
+              </div>
+              <span class="license-card__price">$129</span>
+            </div>
+            <div class="license-card__desc">Use in unlimited client &amp; commercial projects. SaaS allowed.</div>
+          </div>
+
+          <div class="license-card" data-license="enterprise" id="license-enterprise" role="radio" aria-checked="false" tabindex="0">
+            <div class="license-card__header">
+              <div style="display:flex;align-items:center;gap:var(--space-3)">
+                <div class="radio-circle"></div>
+                <span class="license-card__name">Enterprise</span>
+              </div>
+              <span class="license-card__price">$499</span>
+            </div>
+            <div class="license-card__desc">Unlimited seats, source code, SSO, priority support, SLA.</div>
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:var(--space-5);padding:var(--space-4);background:var(--bg-elevated);border-radius:var(--radius-md)">
+          <span style="font-size:var(--text-sm);color:var(--text-muted)">Total</span>
+          <div>
+            <span style="font-size:var(--text-2xl);font-weight:900;letter-spacing:-0.04em" id="selected-price">$49</span>
+            <span class="price-original">$99</span>
+          </div>
+        </div>
+
+        <button class="btn btn--primary btn--full btn--lg" id="purchase-btn" type="button">
+          Purchase Personal License — $49
+        </button>
+
+        <div style="display:flex;align-items:center;justify-content:center;gap:var(--space-4);margin-top:var(--space-4)">
+          <button class="btn btn--ghost btn--sm" type="button" id="add-wishlist-btn" style="gap:6px">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+            Wishlist
+          </button>
+          <button class="btn btn--ghost btn--sm" type="button" id="share-btn" style="gap:6px">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+            Share
+          </button>
+        </div>
+
+        <div style="margin-top:var(--space-5);padding-top:var(--space-5);border-top:1px solid var(--border)">
+          <div style="display:flex;flex-direction:column;gap:var(--space-3)">
+            <div class="check-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              14-day money-back guarantee
+            </div>
+            <div class="check-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              Instant download after purchase
+            </div>
+            <div class="check-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              Lifetime updates included
+            </div>
+            <div class="check-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              AI quality-reviewed &amp; verified
+            </div>
+          </div>
         </div>
       </div>
+
+      <!-- Seller card -->
+      <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-xl);padding:var(--space-5)">
+        <div style="display:flex;align-items:center;gap:var(--space-3);margin-bottom:var(--space-4)">
+          <div class="seller-avatar seller-avatar--purple" style="width:40px;height:40px;font-size:14px;flex-shrink:0" aria-hidden="true">AX</div>
+          <div>
+            <div style="font-weight:700;font-size:var(--text-sm)">AxiomDesign Studio</div>
+            <div style="font-size:var(--text-xs);color:var(--text-muted)">Member since 2023 · Top seller</div>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;text-align:center;padding:var(--space-3);background:var(--bg-elevated);border-radius:var(--radius-md);margin-bottom:var(--space-4)">
+          <div><div style="font-weight:800;font-size:var(--text-lg);letter-spacing:-0.03em">4.9</div><div style="font-size:10px;color:var(--text-muted)">Rating</div></div>
+          <div><div style="font-weight:800;font-size:var(--text-lg);letter-spacing:-0.03em">340</div><div style="font-size:10px;color:var(--text-muted)">Products</div></div>
+          <div><div style="font-weight:800;font-size:var(--text-lg);letter-spacing:-0.03em">52K</div><div style="font-size:10px;color:var(--text-muted)">Downloads</div></div>
+        </div>
+        <a href="index.html" class="btn btn--secondary btn--full btn--sm" id="view-seller-btn">View all products</a>
+      </div>
     </div>
-  </footer>
+  </div>
+</main>
 
-  <script src="js/main.js" type="module"></script>
-  <script>
-    // Product-specific JS
-    document.getElementById('buy-now-btn')?.addEventListener('click', () => {
-      const btn = document.getElementById('buy-now-btn');
-      btn.textContent = '✓ Processing...';
-      btn.disabled = true;
-      setTimeout(() => {
-        btn.textContent = 'Buy Now — ₹8,499';
-        btn.disabled = false;
-        const notif = document.createElement('div');
-        notif.style.cssText = 'position:fixed;bottom:24px;right:24px;z-index:9999;background:rgba(16,185,129,0.15);border:1px solid rgba(16,185,129,0.4);color:#f1f5f9;padding:14px 20px;border-radius:12px;font-size:14px;font-weight:500;backdrop-filter:blur(10px);';
-        notif.textContent = '🎉 Redirecting to checkout...';
-        document.body.appendChild(notif);
-        setTimeout(() => notif.remove(), 3000);
-      }, 1500);
-    });
+<footer class="footer">
+  <div class="container">
+    <div class="footer__bottom" style="border-top:none;padding-top:0">
+      <a href="index.html" class="nav__logo"><div class="nav__logo-mark" style="width:22px;height:22px"><svg width="11" height="11" viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="5" height="5" rx="1" fill="white" opacity="0.9"></rect><rect x="8" y="1" width="5" height="5" rx="1" fill="white" opacity="0.6"></rect><rect x="1" y="8" width="5" height="5" rx="1" fill="white" opacity="0.6"></rect><rect x="8" y="8" width="5" height="5" rx="1" fill="white" opacity="0.3"></rect></svg></div>UXMarket AI</a>
+      <span style="font-size:var(--text-xs);color:var(--text-muted)">© 2025 UXMarket AI. All rights reserved.</span>
+    </div>
+  </div>
+</footer>
+<script src="js/main.js"></script>
 
-    document.querySelectorAll('.license-option').forEach(opt => {
-      opt.addEventListener('click', () => {
-        document.querySelectorAll('.license-option').forEach(o => o.classList.remove('selected'));
-        opt.classList.add('selected');
-        const price = opt.querySelector('.license-option__price')?.textContent;
-        const btn = document.getElementById('buy-now-btn');
-        if (btn && price) btn.textContent = `Buy Now — ${price}`;
-      });
-    });
-  </script>
-</body>
-</html>
+
+</body></html>
