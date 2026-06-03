@@ -1,0 +1,13 @@
+{
+  "name": "uxmarket-ai",
+  "version": "2.0.0",
+  "description": "UXMarket AI — The World's First AI-Native Design System Marketplace",
+  "scripts": {
+    "dev": "npx serve . -p 3000",
+    "test": "npx playwright test",
+    "test:report": "npx playwright show-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.44.0"
+  }
+}
