@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign In / Register — UXMarket AI</title>
+  <meta name="description" content="Sign in or create your UXMarket AI account. Buy design systems, sell your work, or access AI tools." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <style>
+    .auth-page {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .auth-visual {
+      background: linear-gradient(135deg, #0d0d2b, #1a0a2e, #0d1f3c);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 60px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .auth-visual::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 80% at 30% 40%, rgba(99,102,241,0.2) 0%, transparent 60%);
+    }
+
+    .auth-visual__content { position: relative; z-index: 1; }
+
+    .auth-form-side {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 48px;
+      background: var(--color-bg);
+    }
+
+    .auth-card {
+      width: 100%;
+      max-width: 420px;
+    }
+
+    .auth-tabs {
+      display: flex;
+      gap: 0;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: 4px;
+      margin-bottom: 32px;
+    }
+
+    .auth-tab {
+      flex: 1;
+      padding: 10px;
+      border-radius: calc(var(--radius-lg) - 4px);
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--color-text-3);
+      transition: all var(--transition-fast);
+      text-align: center;
+    }
+
+    .auth-tab.active {
+      background: var(--gradient-primary);
+      color: white;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+
+    .form-label {
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--color-text-2);
+    }
+
+    .form-input {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border-2);
+      border-radius: var(--radius-md);
+      padding: 12px 16px;
+      color: var(--color-text);
+      font-size: 0.9375rem;
+      font-family: var(--font-sans);
+      outline: none;
+      transition: all var(--transition-fast);
+      width: 100%;
+    }
+
+    .form-input:focus {
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 3px rgba(99,102,241,0.15);
+    }
+
+    .form-input::placeholder { color: var(--color-text-3); }
+
+    .auth-divider {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin: 24px 0;
+      color: var(--color-text-3);
+      font-size: 0.8125rem;
+    }
+
+    .auth-divider::before, .auth-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--color-border);
+    }
+
+    .social-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      padding: 12px;
+      border: 1px solid var(--color-border-2);
+      border-radius: var(--radius-md);
+      background: var(--color-surface);
+      color: var(--color-text);
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      margin-bottom: 8px;
+    }
+
+    .social-btn:hover {
+      border-color: var(--color-primary);
+      background: rgba(99,102,241,0.05);
+    }
+
+    @media (max-width: 768px) {
+      .auth-page { grid-template-columns: 1fr; }
+      .auth-visual { display: none; }
+      .auth-form-side { padding: 32px 24px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="auth-page">
+    <!-- Visual Side -->
+    <div class="auth-visual">
+      <a href="index.html" class="nav__logo" style="margin-bottom:48px;">
+        <div class="nav__logo-icon"><svg width="36" height="36" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="url(#lg6)"/><path d="M8 16L14 10L20 16L26 10" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 22L14 16L20 22L26 16" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.6"/><defs><linearGradient id="lg6" x1="0" y1="0" x2="32" y2="32"><stop offset="0%" stop-color="#6366f1"/><stop offset="100%" stop-color="#8b5cf6"/></linearGradient></defs></svg></div>
+        <span class="nav__logo-text" style="font-size:1.5rem;">UXMarket<span class="nav__logo-ai">AI</span></span>
+      </a>
+
+      <div class="auth-visual__content">
+        <h2 style="font-size:2.5rem;font-weight:900;font-family:'Space Grotesk',sans-serif;line-height:1.1;margin-bottom:16px;">
+          The World's First<br>
+          <span style="background:linear-gradient(135deg,#a5b4fc,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">AI UX Marketplace</span>
+        </h2>
+        <p style="font-size:1rem;color:rgba(255,255,255,0.6);line-height:1.8;margin-bottom:48px;">
+          Join 98,000+ designers, developers, and enterprises building with AI-powered design systems.
+        </p>
+
+        <div style="display:flex;flex-direction:column;gap:16px;">
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div style="width:36px;height:36px;border-radius:8px;background:rgba(99,102,241,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;">✨</div>
+            <div>
+              <p style="font-size:0.875rem;font-weight:600;color:white;">100 Free AI Credits</p>
+              <p style="font-size:0.75rem;color:rgba(255,255,255,0.5);">Generate your first design system free</p>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div style="width:36px;height:36px;border-radius:8px;background:rgba(16,185,129,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;">💰</div>
+            <div>
+              <p style="font-size:0.875rem;font-weight:600;color:white;">70% Revenue Share</p>
+              <p style="font-size:0.75rem;color:rgba(255,255,255,0.5);">Highest in the industry for sellers</p>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div style="width:36px;height:36px;border-radius:8px;background:rgba(6,182,212,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;">🌍</div>
+            <div>
+              <p style="font-size:0.875rem;font-weight:600;color:white;">Global Marketplace</p>
+              <p style="font-size:0.75rem;color:rgba(255,255,255,0.5);">India, US, EU, ME, APAC coverage</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mini preview cards -->
+        <div style="margin-top:40px;display:flex;gap:12px;flex-wrap:wrap;">
+          <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 16px;">
+            <div style="font-size:0.75rem;color:rgba(255,255,255,0.5);">Active Sellers</div>
+            <div style="font-size:1.25rem;font-weight:800;color:white;">3,800+</div>
+          </div>
+          <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 16px;">
+            <div style="font-size:0.75rem;color:rgba(255,255,255,0.5);">Products</div>
+            <div style="font-size:1.25rem;font-weight:800;color:white;">12,400+</div>
+          </div>
+          <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 16px;">
+            <div style="font-size:0.75rem;color:rgba(255,255,255,0.5);">Creator Revenue</div>
+            <div style="font-size:1.25rem;font-weight:800;color:white;">₹48Cr+</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Form Side -->
+    <div class="auth-form-side">
+      <div class="auth-card">
+        <div class="auth-tabs">
+          <button class="auth-tab active" id="tab-signin" onclick="switchTab('signin')">Sign In</button>
+          <button class="auth-tab" id="tab-register" onclick="switchTab('register')">Register</button>
+        </div>
+
+        <!-- Sign In Form -->
+        <div id="signin-form">
+          <h2 style="font-size:1.5rem;font-weight:800;margin-bottom:4px;">Welcome back</h2>
+          <p style="font-size:0.875rem;color:var(--color-text-3);margin-bottom:28px;">Sign in to your UXMarket AI account</p>
+
+          <button class="social-btn" id="google-signin">
+            <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+            Continue with Google
+          </button>
+          <button class="social-btn" id="github-signin">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+            Continue with GitHub
+          </button>
+          <button class="social-btn" id="figma-signin">
+            <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#F24E1E" d="M8 24c2.208 0 4-1.792 4-4v-4H8c-2.208 0-4 1.792-4 4s1.792 4 4 4z"/><path fill="#FF7262" d="M4 12c0-2.208 1.792-4 4-4h4v8H8c-2.208 0-4-1.792-4-4z"/><path fill="#A259FF" d="M4 4c0-2.208 1.792-4 4-4h4v8H8C5.792 8 4 6.208 4 4z"/><path fill="#1ABCFE" d="M12 0h4c2.208 0 4 1.792 4 4s-1.792 4-4 4h-4V0z"/><path fill="#0ACF83" d="M20 12c0 2.208-1.792 4-4 4s-4-1.792-4-4 1.792-4 4-4 4 1.792 4 4z"/></svg>
+            Continue with Figma
+          </button>
+
+          <div class="auth-divider">or sign in with email</div>
+
+          <form id="email-signin" novalidate>
+            <div class="form-group">
+              <label class="form-label" for="signin-email">Email Address</label>
+              <input type="email" id="signin-email" class="form-input" placeholder="you@company.com" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="signin-password" style="display:flex;justify-content:space-between;">
+                Password
+                <a href="#" style="color:var(--color-primary-light);font-weight:500;font-size:0.8125rem;">Forgot password?</a>
+              </label>
+              <input type="password" id="signin-password" class="form-input" placeholder="••••••••" required />
+            </div>
+            <button type="submit" class="btn btn--primary" style="width:100%;justify-content:center;margin-top:8px;" id="signin-submit">
+              Sign In to UXMarket AI
+            </button>
+          </form>
+        </div>
+
+        <!-- Register Form -->
+        <div id="register-form" style="display:none;">
+          <h2 style="font-size:1.5rem;font-weight:800;margin-bottom:4px;">Create your account</h2>
+          <p style="font-size:0.875rem;color:var(--color-text-3);margin-bottom:24px;">Join 98,000+ designers & developers</p>
+
+          <div style="display:flex;gap:8px;margin-bottom:20px;">
+            <button class="social-btn" style="flex:1;margin-bottom:0;" id="google-register">
+              <svg width="16" height="16" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+              Google
+            </button>
+            <button class="social-btn" style="flex:1;margin-bottom:0;" id="github-register">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+              GitHub
+            </button>
+          </div>
+
+          <div class="auth-divider">or register with email</div>
+
+          <form id="email-register" novalidate>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+              <div class="form-group">
+                <label class="form-label" for="reg-fname">First Name</label>
+                <input type="text" id="reg-fname" class="form-input" placeholder="Rohan" required />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="reg-lname">Last Name</label>
+                <input type="text" id="reg-lname" class="form-input" placeholder="Kumar" required />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="reg-email">Work Email</label>
+              <input type="email" id="reg-email" class="form-input" placeholder="rohan@startup.com" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="reg-password">Password</label>
+              <input type="password" id="reg-password" class="form-input" placeholder="8+ characters" required />
+            </div>
+            <div style="display:flex;gap:8px;margin-bottom:16px;">
+              <div style="display:flex;align-items:center;gap:8px;padding:10px 14px;border:1px solid var(--color-border);border-radius:8px;cursor:pointer;flex:1;" id="role-buyer" onclick="selectRole('buyer')">
+                <input type="radio" name="role" value="buyer" checked style="accent-color:#6366f1;" />
+                <div><div style="font-size:0.8125rem;font-weight:600;">🛒 Buyer</div><div style="font-size:0.6875rem;color:var(--color-text-3);">Buy design systems</div></div>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;padding:10px 14px;border:1px solid var(--color-border);border-radius:8px;cursor:pointer;flex:1;" id="role-seller" onclick="selectRole('seller')">
+                <input type="radio" name="role" value="seller" style="accent-color:#6366f1;" />
+                <div><div style="font-size:0.8125rem;font-weight:600;">💰 Seller</div><div style="font-size:0.6875rem;color:var(--color-text-3);">Sell your designs</div></div>
+              </div>
+            </div>
+            <button type="submit" class="btn btn--primary" style="width:100%;justify-content:center;" id="register-submit">
+              Create Free Account ✨
+            </button>
+            <p style="font-size:0.75rem;color:var(--color-text-3);text-align:center;margin-top:12px;">By creating an account you agree to our <a href="terms.html" style="color:var(--color-primary-light)">Terms</a> and <a href="privacy.html" style="color:var(--color-primary-light)">Privacy Policy</a></p>
+          </form>
+        </div>
+
+        <p style="margin-top:24px;font-size:0.8125rem;color:var(--color-text-3);text-align:center;">
+          <span id="switch-text">Don't have an account?</span>
+          <a href="#" id="switch-link" style="color:var(--color-primary-light);font-weight:600;margin-left:4px;" onclick="switchTab('register');return false;">Register free</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/main.js" type="module"></script>
+  <script>
+    function switchTab(tab) {
+      const signinForm = document.getElementById('signin-form');
+      const registerForm = document.getElementById('register-form');
+      const signinTab = document.getElementById('tab-signin');
+      const registerTab = document.getElementById('tab-register');
+      const switchText = document.getElementById('switch-text');
+      const switchLink = document.getElementById('switch-link');
+
+      if (tab === 'register') {
+        signinForm.style.display = 'none';
+        registerForm.style.display = 'block';
+        signinTab.classList.remove('active');
+        registerTab.classList.add('active');
+        switchText.textContent = 'Already have an account?';
+        switchLink.textContent = 'Sign in';
+        switchLink.onclick = (e) => { e.preventDefault(); switchTab('signin'); };
+      } else {
+        signinForm.style.display = 'block';
+        registerForm.style.display = 'none';
+        signinTab.classList.add('active');
+        registerTab.classList.remove('active');
+        switchText.textContent = "Don't have an account?";
+        switchLink.textContent = 'Register free';
+        switchLink.onclick = (e) => { e.preventDefault(); switchTab('register'); };
+      }
+    }
+
+    function selectRole(role) {
+      const buyerEl = document.getElementById('role-buyer');
+      const sellerEl = document.getElementById('role-seller');
+      buyerEl.style.borderColor = role === 'buyer' ? '#6366f1' : 'rgba(255,255,255,0.08)';
+      sellerEl.style.borderColor = role === 'seller' ? '#6366f1' : 'rgba(255,255,255,0.08)';
+      buyerEl.style.background = role === 'buyer' ? 'rgba(99,102,241,0.08)' : '';
+      sellerEl.style.background = role === 'seller' ? 'rgba(99,102,241,0.08)' : '';
+    }
+
+    // Check URL hash
+    if (location.hash.includes('register')) switchTab('register');
+
+    // Form submit handlers
+    document.getElementById('email-signin')?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('signin-submit');
+      btn.textContent = '⟳ Signing in...';
+      btn.disabled = true;
+      setTimeout(() => {
+        btn.textContent = '✓ Welcome back! Redirecting...';
+        btn.style.background = 'rgba(16,185,129,0.2)';
+      }, 1500);
+    });
+
+    document.getElementById('email-register')?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('register-submit');
+      btn.textContent = '⟳ Creating account...';
+      btn.disabled = true;
+      setTimeout(() => {
+        btn.textContent = '✓ Account created! Check your email.';
+        btn.style.background = 'rgba(16,185,129,0.2)';
+      }, 1500);
+    });
+
+    // Focus styles
+    document.querySelectorAll('.form-input').forEach(el => {
+      el.addEventListener('focus', () => { el.style.borderColor = '#6366f1'; el.style.boxShadow = '0 0 0 3px rgba(99,102,241,0.12)'; });
+      el.addEventListener('blur', () => { el.style.borderColor = 'rgba(255,255,255,0.12)'; el.style.boxShadow = 'none'; });
+    });
+  </script>
+</body>
+</html>
