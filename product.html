@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aurora AI Dashboard Pro — UXMarket AI</title>
+  <meta name="description" content="Complete AI analytics dashboard with 200+ components, real-time data viz, and conversational UI patterns. React + Figma + Tailwind." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+</head>
+<body>
+  <nav class="nav" id="nav">
+    <div class="nav__container">
+      <a href="index.html" class="nav__logo">
+        <div class="nav__logo-icon">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <rect width="32" height="32" rx="8" fill="url(#lg1)"/>
+            <path d="M8 16L14 10L20 16L26 10" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M8 22L14 16L20 22L26 16" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.6"/>
+            <defs><linearGradient id="lg1" x1="0" y1="0" x2="32" y2="32"><stop offset="0%" stop-color="#6366f1"/><stop offset="100%" stop-color="#8b5cf6"/></linearGradient></defs>
+          </svg>
+        </div>
+        <span class="nav__logo-text">UXMarket<span class="nav__logo-ai">AI</span></span>
+      </a>
+      <div class="nav__links">
+        <a href="index.html#marketplace" class="nav__link">Marketplace</a>
+        <a href="categories.html" class="nav__link">Categories</a>
+        <a href="sellers.html" class="nav__link">Become a Seller</a>
+        <a href="enterprise.html" class="nav__link">Enterprise</a>
+      </div>
+      <div class="nav__actions">
+        <a href="index.html" class="btn btn--ghost btn--sm">← Back</a>
+        <a href="auth.html#register" class="btn btn--primary btn--sm">Start Selling</a>
+      </div>
+    </div>
+  </nav>
+
+  <main id="main-content">
+    <!-- Product Hero -->
+    <div class="product-hero">
+      <div class="product-hero__inner">
+        <div class="product-hero__main">
+          <div class="product-hero__breadcrumb">
+            <a href="index.html">Home</a>
+            <span>/</span>
+            <a href="categories.html">Marketplace</a>
+            <span>/</span>
+            <a href="category.html?cat=ai-dashboards">AI Dashboards</a>
+            <span>/</span>
+            <span>Aurora AI Dashboard Pro</span>
+          </div>
+
+          <div class="product-hero__badges" style="display:flex;gap:8px;margin-bottom:16px;">
+            <span class="badge badge--new">New</span>
+            <span class="badge badge--ai">AI-Powered</span>
+            <span class="badge badge--trending">🔥 Trending</span>
+          </div>
+
+          <h1 class="product-hero__title">Aurora AI Dashboard Pro</h1>
+
+          <div class="product-hero__meta">
+            <div class="product-hero__author">
+              <div class="seller-avatar seller-avatar--purple" style="width:32px;height:32px;">SK</div>
+              <span style="font-weight:600">SketchKraft Studio</span>
+              <span class="seller-badge">⭐ Elite Author</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:6px;font-size:0.875rem;">
+              <span style="color:#f59e0b">★★★★★</span>
+              <strong>4.9</strong>
+              <span style="color:var(--color-text-3)">(284 reviews)</span>
+            </div>
+            <span style="color:var(--color-text-3);font-size:0.875rem;">2,841 sales</span>
+            <span style="color:var(--color-text-3);font-size:0.875rem;">Updated: June 2026</span>
+          </div>
+
+          <p class="product-hero__desc">
+            Aurora AI Dashboard Pro is the most comprehensive AI-first analytics dashboard design system ever built. With 200+ production-ready components, real-time data visualization, conversational UI patterns, and AI agent interfaces, it's everything you need to ship a world-class SaaS product in days — not months.
+          </p>
+
+          <!-- Preview Window -->
+          <div class="product-preview-window" style="background:linear-gradient(135deg,#0d0d2b,#1a0a2e,#0d1f3c);border-radius:16px;border:1px solid rgba(99,102,241,0.2);overflow:hidden;margin-bottom:32px;">
+            <div style="display:flex;align-items:center;gap:8px;padding:14px 18px;border-bottom:1px solid rgba(255,255,255,0.06);">
+              <div style="display:flex;gap:6px"><span style="width:10px;height:10px;border-radius:50%;background:#ef4444;display:block"></span><span style="width:10px;height:10px;border-radius:50%;background:#f59e0b;display:block"></span><span style="width:10px;height:10px;border-radius:50%;background:#10b981;display:block"></span></div>
+              <span style="font-size:0.75rem;color:var(--color-text-3);margin-left:8px;">aurora-ai-dashboard.vercel.app</span>
+            </div>
+            <div style="height:360px;display:flex;gap:0;">
+              <!-- Sidebar -->
+              <div style="width:220px;border-right:1px solid rgba(255,255,255,0.06);padding:20px 12px;flex-shrink:0;">
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:24px;">
+                  <div style="width:28px;height:28px;border-radius:6px;background:linear-gradient(135deg,#6366f1,#8b5cf6);"></div>
+                  <span style="font-size:0.8125rem;font-weight:700;color:var(--color-text)">AuroraAI</span>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:4px;">
+                  <div style="padding:8px 10px;border-radius:8px;background:rgba(99,102,241,0.15);border:1px solid rgba(99,102,241,0.25);font-size:0.75rem;color:#a5b4fc;font-weight:600;">📊 Dashboard</div>
+                  <div style="padding:8px 10px;border-radius:8px;font-size:0.75rem;color:var(--color-text-3);">📈 Analytics</div>
+                  <div style="padding:8px 10px;border-radius:8px;font-size:0.75rem;color:var(--color-text-3);">🤖 AI Insights</div>
+                  <div style="padding:8px 10px;border-radius:8px;font-size:0.75rem;color:var(--color-text-3);">👥 Users</div>
+                  <div style="padding:8px 10px;border-radius:8px;font-size:0.75rem;color:var(--color-text-3);">💰 Revenue</div>
+                  <div style="padding:8px 10px;border-radius:8px;font-size:0.75rem;color:var(--color-text-3);">⚙️ Settings</div>
+                </div>
+              </div>
+              <!-- Content -->
+              <div style="flex:1;padding:20px;overflow:hidden;">
+                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px;">
+                  <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:14px;">
+                    <div style="font-size:0.6875rem;color:var(--color-text-3);margin-bottom:4px;">Total Revenue</div>
+                    <div style="font-size:1.25rem;font-weight:800;color:var(--color-text);">₹48.2L</div>
+                    <div style="font-size:0.6875rem;color:#10b981;">▲ 18.4%</div>
+                  </div>
+                  <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:14px;">
+                    <div style="font-size:0.6875rem;color:var(--color-text-3);margin-bottom:4px;">Active Users</div>
+                    <div style="font-size:1.25rem;font-weight:800;color:var(--color-text);">12,840</div>
+                    <div style="font-size:0.6875rem;color:#10b981;">▲ 9.2%</div>
+                  </div>
+                  <div style="background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.2);border-radius:10px;padding:14px;">
+                    <div style="font-size:0.6875rem;color:var(--color-text-3);margin-bottom:4px;">AI Requests</div>
+                    <div style="font-size:1.25rem;font-weight:800;color:var(--color-text);">2.4M</div>
+                    <div style="font-size:0.6875rem;color:#6366f1;">▲ 42%</div>
+                  </div>
+                </div>
+                <!-- Chart area -->
+                <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:16px;height:180px;display:flex;flex-direction:column;">
+                  <div style="font-size:0.75rem;font-weight:600;color:var(--color-text-2);margin-bottom:12px;">Revenue Trend</div>
+                  <div style="flex:1;display:flex;align-items:flex-end;gap:6px;">
+                    <div style="flex:1;background:rgba(99,102,241,0.2);border-radius:4px 4px 0 0;height:60%;"></div>
+                    <div style="flex:1;background:rgba(99,102,241,0.3);border-radius:4px 4px 0 0;height:75%;"></div>
+                    <div style="flex:1;background:rgba(99,102,241,0.2);border-radius:4px 4px 0 0;height:45%;"></div>
+                    <div style="flex:1;background:rgba(99,102,241,0.35);border-radius:4px 4px 0 0;height:90%;"></div>
+                    <div style="flex:1;background:linear-gradient(to top,#6366f1,#8b5cf6);border-radius:4px 4px 0 0;height:70%;"></div>
+                    <div style="flex:1;background:rgba(99,102,241,0.3);border-radius:4px 4px 0 0;height:80%;"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Product Tabs -->
+          <div class="product-tabs" style="padding:0;max-width:100%;">
+            <div class="tabs__nav">
+              <button class="tab-btn active" data-tab="overview">Overview</button>
+              <button class="tab-btn" data-tab="components">Components</button>
+              <button class="tab-btn" data-tab="tech">Tech Stack</button>
+              <button class="tab-btn" data-tab="reviews">Reviews (284)</button>
+              <button class="tab-btn" data-tab="changelog">Changelog</button>
+            </div>
+
+            <div class="tab-panel active" id="tab-overview">
+              <h3 style="font-size:1.25rem;font-weight:700;margin-bottom:16px;">What's Included</h3>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:32px;">
+                <div class="enterprise-feature">
+                  <div class="enterprise-feature__icon">📦</div>
+                  <div><div class="enterprise-feature__title">200+ Components</div><div class="enterprise-feature__desc">Charts, tables, forms, modals, and AI-specific UI patterns</div></div>
+                </div>
+                <div class="enterprise-feature">
+                  <div class="enterprise-feature__icon">🎨</div>
+                  <div><div class="enterprise-feature__title">Figma Design File</div><div class="enterprise-feature__desc">Full Figma file with auto-layout, variables, and components</div></div>
+                </div>
+                <div class="enterprise-feature">
+                  <div class="enterprise-feature__icon">⚛️</div>
+                  <div><div class="enterprise-feature__title">React + Next.js</div><div class="enterprise-feature__desc">TypeScript-first, shadcn/ui, Tailwind CSS v4 implementation</div></div>
+                </div>
+                <div class="enterprise-feature">
+                  <div class="enterprise-feature__icon">🤖</div>
+                  <div><div class="enterprise-feature__title">AI UX Patterns</div><div class="enterprise-feature__desc">Streaming UI, thinking states, tool calls, copilot patterns</div></div>
+                </div>
+                <div class="enterprise-feature">
+                  <div class="enterprise-feature__icon">📖</div>
+                  <div><div class="enterprise-feature__title">Documentation Site</div><div class="enterprise-feature__desc">Complete Storybook + Docusaurus documentation</div></div>
+                </div>
+                <div class="enterprise-feature">
+                  <div class="enterprise-feature__icon">🚀</div>
+                  <div><div class="enterprise-feature__title">Live Demo App</div><div class="enterprise-feature__desc">Full deployed SaaS demo on Vercel with real data</div></div>
+                </div>
+              </div>
+
+              <h3 style="font-size:1.25rem;font-weight:700;margin-bottom:16px;">Design Tokens</h3>
+              <div style="background:rgba(0,0,0,0.3);border-radius:12px;padding:20px;font-family:'JetBrains Mono',monospace;font-size:0.8125rem;color:#a5b4fc;margin-bottom:24px;border:1px solid rgba(99,102,241,0.15);">
+                <div style="color:#64748b;margin-bottom:8px;">/* Aurora Design Tokens */</div>
+                <div>--color-primary: <span style="color:#10b981">#6366f1</span>;</div>
+                <div>--color-surface: <span style="color:#10b981">rgba(255,255,255,0.04)</span>;</div>
+                <div>--font-display: <span style="color:#f59e0b">'Space Grotesk'</span>;</div>
+                <div>--radius-card: <span style="color:#10b981">16px</span>;</div>
+                <div>--shadow-glow: <span style="color:#10b981">0 0 40px rgba(99,102,241,0.3)</span>;</div>
+              </div>
+            </div>
+
+            <div class="tab-panel" id="tab-components">
+              <div class="component-showcase">
+                <div class="component-item"><div class="component-item__preview">📊</div><div class="component-item__name">Analytics Cards</div><div class="component-item__count">24 variants</div></div>
+                <div class="component-item"><div class="component-item__preview">📈</div><div class="component-item__name">Charts</div><div class="component-item__count">18 types</div></div>
+                <div class="component-item"><div class="component-item__preview">🗃️</div><div class="component-item__name">Data Tables</div><div class="component-item__count">8 variants</div></div>
+                <div class="component-item"><div class="component-item__preview">🤖</div><div class="component-item__name">AI Chat</div><div class="component-item__count">6 layouts</div></div>
+                <div class="component-item"><div class="component-item__preview">📝</div><div class="component-item__name">Forms</div><div class="component-item__count">32 components</div></div>
+                <div class="component-item"><div class="component-item__preview">🔔</div><div class="component-item__name">Notifications</div><div class="component-item__count">12 styles</div></div>
+                <div class="component-item"><div class="component-item__preview">🗂️</div><div class="component-item__name">Sidebars</div><div class="component-item__count">5 layouts</div></div>
+                <div class="component-item"><div class="component-item__preview">🎛️</div><div class="component-item__name">Filters</div><div class="component-item__count">20 patterns</div></div>
+              </div>
+            </div>
+
+            <div class="tab-panel" id="tab-tech">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+                <div style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:12px;padding:20px;">
+                  <h4 style="font-weight:700;margin-bottom:12px;">Frontend</h4>
+                  <div style="display:flex;flex-direction:column;gap:8px;font-size:0.875rem;color:var(--color-text-2);">
+                    <span>✓ React 19 + Next.js 15</span>
+                    <span>✓ TypeScript 5.4</span>
+                    <span>✓ Tailwind CSS v4</span>
+                    <span>✓ shadcn/ui components</span>
+                    <span>✓ Recharts + Tremor</span>
+                    <span>✓ Zustand state management</span>
+                  </div>
+                </div>
+                <div style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:12px;padding:20px;">
+                  <h4 style="font-weight:700;margin-bottom:12px;">Design</h4>
+                  <div style="display:flex;flex-direction:column;gap:8px;font-size:0.875rem;color:var(--color-text-2);">
+                    <span>✓ Figma (Auto Layout 5.0)</span>
+                    <span>✓ Design Variables/Tokens</span>
+                    <span>✓ Dark + Light modes</span>
+                    <span>✓ Component properties</span>
+                    <span>✓ Responsive frames</span>
+                    <span>✓ Storybook 8.x</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-panel" id="tab-reviews">
+              <div style="display:flex;flex-direction:column;gap:20px;">
+                <div style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:12px;padding:20px;">
+                  <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:12px;">
+                    <div>
+                      <strong style="font-size:0.9375rem;">Priya Sharma</strong>
+                      <span style="font-size:0.75rem;color:var(--color-text-3);margin-left:8px;">Bangalore, India</span>
+                    </div>
+                    <span style="color:#f59e0b;font-size:0.875rem;">★★★★★</span>
+                  </div>
+                  <p style="font-size:0.875rem;color:var(--color-text-2);line-height:1.7;">"Absolutely stunning. We launched our SaaS MVP using Aurora in 3 weeks. The AI patterns saved us months of UX research. Worth every rupee."</p>
+                </div>
+                <div style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:12px;padding:20px;">
+                  <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:12px;">
+                    <div>
+                      <strong style="font-size:0.9375rem;">James Mitchell</strong>
+                      <span style="font-size:0.75rem;color:var(--color-text-3);margin-left:8px;">London, UK</span>
+                    </div>
+                    <span style="color:#f59e0b;font-size:0.875rem;">★★★★★</span>
+                  </div>
+                  <p style="font-size:0.875rem;color:var(--color-text-2);line-height:1.7;">"Best design system purchase I've ever made. The TypeScript types are perfect, Figma variables sync seamlessly, and the AI components are unique."</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-panel" id="tab-changelog">
+              <div style="display:flex;flex-direction:column;gap:16px;">
+                <div style="border-left:2px solid var(--color-primary);padding-left:20px;">
+                  <div style="font-size:0.8125rem;color:var(--color-primary-light);font-weight:600;margin-bottom:4px;">v3.2.0 — June 2026</div>
+                  <p style="font-size:0.875rem;color:var(--color-text-2);">Added AI streaming UI components, typing indicators, and multi-modal input patterns. Updated to Next.js 15 and React 19.</p>
+                </div>
+                <div style="border-left:2px solid var(--color-border);padding-left:20px;">
+                  <div style="font-size:0.8125rem;color:var(--color-text-3);font-weight:600;margin-bottom:4px;">v3.0.0 — March 2026</div>
+                  <p style="font-size:0.875rem;color:var(--color-text-2);">Major redesign with Tailwind v4, new token system, 40+ new components.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Buy Card -->
+        <div class="product-buy-card">
+          <div class="product-buy-card__price-row">
+            <span class="product-buy-card__price">₹8,499</span>
+            <span class="product-buy-card__price-old">₹14,999</span>
+            <span class="product-buy-card__discount">43% OFF</span>
+          </div>
+
+          <div class="license-selector">
+            <p class="license-selector__label">Choose License</p>
+            <div class="license-option selected" id="lic-personal">
+              <input type="radio" name="license" value="personal" checked />
+              <div>
+                <p class="license-option__name">Personal</p>
+                <p class="license-option__desc">1 project, non-commercial</p>
+              </div>
+              <span class="license-option__price">₹8,499</span>
+            </div>
+            <div class="license-option" id="lic-commercial">
+              <input type="radio" name="license" value="commercial" />
+              <div>
+                <p class="license-option__name">Commercial</p>
+                <p class="license-option__desc">Unlimited projects, client work</p>
+              </div>
+              <span class="license-option__price">₹18,999</span>
+            </div>
+            <div class="license-option" id="lic-extended">
+              <input type="radio" name="license" value="extended" />
+              <div>
+                <p class="license-option__name">Extended</p>
+                <p class="license-option__desc">SaaS products, resale allowed</p>
+              </div>
+              <span class="license-option__price">₹49,999</span>
+            </div>
+          </div>
+
+          <button class="btn btn--primary btn--full" id="buy-now-btn" style="margin-bottom:12px;">
+            Buy Now — ₹8,499
+          </button>
+          <button class="btn btn--outline btn--full" id="add-cart-btn">
+            Add to Cart
+          </button>
+
+          <hr class="product-buy-card__divider" />
+
+          <div class="product-includes">
+            <p class="product-includes__title">What's Included</p>
+            <div class="include-item">Figma Design File (200+ components)</div>
+            <div class="include-item">React + Next.js source code</div>
+            <div class="include-item">Storybook documentation</div>
+            <div class="include-item">AI UX patterns & guidelines</div>
+            <div class="include-item">6 months free updates</div>
+            <div class="include-item">Priority email support</div>
+          </div>
+
+          <hr class="product-buy-card__divider" />
+
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <a href="#" class="btn btn--ghost btn--full btn--sm" id="live-preview-btn">🔗 Live Preview</a>
+            <a href="#" class="btn btn--ghost btn--full btn--sm" id="figma-preview-btn">◈ Open in Figma</a>
+          </div>
+
+          <div style="margin-top:16px;padding:12px;background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.15);border-radius:10px;">
+            <p style="font-size:0.75rem;color:#34d399;font-weight:600;">🛡️ Quality Guarantee</p>
+            <p style="font-size:0.6875rem;color:var(--color-text-3);margin-top:4px;">30-day refund policy. 24/7 support. WCAG 2.1 AA guaranteed.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__bottom">
+        <p>© 2026 UXMarket AI. All rights reserved.</p>
+        <div class="footer__legal">
+          <a href="privacy.html">Privacy</a>
+          <a href="terms.html">Terms</a>
+          <a href="licenses.html">Licensing</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js" type="module"></script>
+  <script>
+    // Product-specific JS
+    document.getElementById('buy-now-btn')?.addEventListener('click', () => {
+      const btn = document.getElementById('buy-now-btn');
+      btn.textContent = '✓ Processing...';
+      btn.disabled = true;
+      setTimeout(() => {
+        btn.textContent = 'Buy Now — ₹8,499';
+        btn.disabled = false;
+        const notif = document.createElement('div');
+        notif.style.cssText = 'position:fixed;bottom:24px;right:24px;z-index:9999;background:rgba(16,185,129,0.15);border:1px solid rgba(16,185,129,0.4);color:#f1f5f9;padding:14px 20px;border-radius:12px;font-size:14px;font-weight:500;backdrop-filter:blur(10px);';
+        notif.textContent = '🎉 Redirecting to checkout...';
+        document.body.appendChild(notif);
+        setTimeout(() => notif.remove(), 3000);
+      }, 1500);
+    });
+
+    document.querySelectorAll('.license-option').forEach(opt => {
+      opt.addEventListener('click', () => {
+        document.querySelectorAll('.license-option').forEach(o => o.classList.remove('selected'));
+        opt.classList.add('selected');
+        const price = opt.querySelector('.license-option__price')?.textContent;
+        const btn = document.getElementById('buy-now-btn');
+        if (btn && price) btn.textContent = `Buy Now — ${price}`;
+      });
+    });
+  </script>
+</body>
+</html>
