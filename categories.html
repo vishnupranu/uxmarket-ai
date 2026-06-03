@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>All Categories — UXMarket AI Design Marketplace</title>
+  <meta name="description" content="Browse 12,400+ AI UX design systems, SaaS UI kits, FinTech dashboards, healthcare UX, and more. The world's largest AI UX marketplace." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+</head>
+<body>
+  <nav class="nav" id="nav">
+    <div class="nav__container">
+      <a href="index.html" class="nav__logo">
+        <div class="nav__logo-icon">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="url(#lg2)"/><path d="M8 16L14 10L20 16L26 10" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 22L14 16L20 22L26 16" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.6"/><defs><linearGradient id="lg2" x1="0" y1="0" x2="32" y2="32"><stop offset="0%" stop-color="#6366f1"/><stop offset="100%" stop-color="#8b5cf6"/></linearGradient></defs></svg>
+        </div>
+        <span class="nav__logo-text">UXMarket<span class="nav__logo-ai">AI</span></span>
+      </a>
+      <div class="nav__links">
+        <a href="index.html#marketplace" class="nav__link">Marketplace</a>
+        <a href="categories.html" class="nav__link" style="color:var(--color-primary-light)">Categories</a>
+        <a href="sellers.html" class="nav__link">Become a Seller</a>
+        <a href="enterprise.html" class="nav__link">Enterprise</a>
+      </div>
+      <div class="nav__actions">
+        <button class="btn btn--ghost btn--sm" id="nav-search-btn">🔍 Search</button>
+        <a href="auth.html" class="btn btn--ghost btn--sm">Sign In</a>
+        <a href="auth.html#register" class="btn btn--primary btn--sm">Start Selling</a>
+      </div>
+    </div>
+  </nav>
+
+  <main id="main-content">
+    <div class="category-hero">
+      <span class="section__eyebrow">12,400+ Products</span>
+      <h1 class="category-hero__title">Browse by Category</h1>
+      <p class="category-hero__desc">Every AI UX vertical covered. Find production-ready design systems for your exact industry and use case.</p>
+
+      <!-- Search Bar -->
+      <div style="max-width:560px;margin:32px auto 0;display:flex;align-items:center;gap:0;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:12px;overflow:hidden;">
+        <span style="padding:0 16px;color:var(--color-text-3);">🔍</span>
+        <input type="search" id="cat-search" placeholder="Search categories, UI kits, design systems…" style="flex:1;background:none;border:none;outline:none;padding:14px 0;font-size:0.9375rem;color:var(--color-text);" />
+        <button class="btn btn--primary" style="border-radius:0 10px 10px 0;margin:0;padding:14px 20px;">Search</button>
+      </div>
+    </div>
+
+    <div class="container" style="padding-bottom:80px;">
+      <!-- Stats Bar -->
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:24px 0;border-bottom:1px solid var(--color-border);margin-bottom:32px;flex-wrap:wrap;gap:16px;">
+        <div style="display:flex;gap:32px;">
+          <div style="text-align:center;"><span style="display:block;font-size:1.5rem;font-weight:800;font-family:'Space Grotesk',sans-serif;">12,400+</span><span style="font-size:0.75rem;color:var(--color-text-3);">Total Products</span></div>
+          <div style="text-align:center;"><span style="display:block;font-size:1.5rem;font-weight:800;font-family:'Space Grotesk',sans-serif;">8</span><span style="font-size:0.75rem;color:var(--color-text-3);">Categories</span></div>
+          <div style="text-align:center;"><span style="display:block;font-size:1.5rem;font-weight:800;font-family:'Space Grotesk',sans-serif;">3,800+</span><span style="font-size:0.75rem;color:var(--color-text-3);">Sellers</span></div>
+          <div style="text-align:center;"><span style="display:block;font-size:1.5rem;font-weight:800;font-family:'Space Grotesk',sans-serif;">98K+</span><span style="font-size:0.75rem;color:var(--color-text-3);">Buyers</span></div>
+        </div>
+        <div style="display:flex;gap:8px;">
+          <button class="filter-btn filter-btn--active" data-sort="trending">🔥 Trending</button>
+          <button class="filter-btn" data-sort="new">New</button>
+          <button class="filter-btn" data-sort="price-asc">Price ↑</button>
+        </div>
+      </div>
+
+      <!-- All Categories Grid -->
+      <div class="categories-grid" style="grid-template-columns:repeat(auto-fill,minmax(320px,1fr));" data-stagger>
+
+        <a href="category.html?cat=ai-dashboards" class="category-card category-card--featured" id="cat-ai-dashboards">
+          <div class="category-card__glow"></div>
+          <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:16px;">
+            <div class="category-card__icon" style="background:rgba(99,102,241,0.15);border:1px solid rgba(99,102,241,0.25);">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M3 18l4-4 4 4 4-6 5 4" stroke="#6366f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><rect x="3" y="3" width="7" height="5" rx="1" fill="#6366f1" fill-opacity="0.3"/><rect x="14" y="3" width="7" height="5" rx="1" fill="#8b5cf6" fill-opacity="0.3"/></svg>
+            </div>
+            <span class="badge badge--trending">🔥 #1 Category</span>
+          </div>
+          <h3 class="category-card__title">AI Dashboard Systems</h3>
+          <p class="category-card__desc">Analytics, monitoring, and intelligence dashboards powered by AI. The largest collection of production-ready dashboard design systems.</p>
+          <div class="category-card__meta"><span class="category-card__count">2,840 products</span><span class="category-card__price">From ₹2,499</span></div>
+          <div class="category-card__tags"><span class="tag">React</span><span class="tag">Figma</span><span class="tag">Real-time</span><span class="tag">AI-native</span></div>
+        </a>
+
+        <a href="category.html?cat=saas" class="category-card" id="cat-saas-2">
+          <div class="category-card__icon" style="background:rgba(245,158,11,0.15);border:1px solid rgba(245,158,11,0.25);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="#f59e0b" stroke-width="2"/><path d="M7 9h10M7 12h6M7 15h4" stroke="#f59e0b" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </div>
+          <h3 class="category-card__title">SaaS UI Kits</h3>
+          <p class="category-card__desc">Complete SaaS product design systems with onboarding flows, billing pages, and user management.</p>
+          <div class="category-card__meta"><span class="category-card__count">3,450 products</span><span class="category-card__price">From ₹1,999</span></div>
+          <div class="category-card__tags"><span class="tag">Next.js</span><span class="tag">Tailwind</span><span class="tag">SaaS</span></div>
+        </a>
+
+        <a href="category.html?cat=fintech" class="category-card" id="cat-fintech-2">
+          <div class="category-card__icon" style="background:rgba(16,185,129,0.15);border:1px solid rgba(16,185,129,0.25);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 3v18M7 7h8a3 3 0 010 6H7" stroke="#10b981" stroke-width="2" stroke-linecap="round"/></svg>
+          </div>
+          <h3 class="category-card__title">FinTech UX Systems</h3>
+          <p class="category-card__desc">Banking, payments, trading, and wealth management interfaces. WCAG 2.1 AA compliant.</p>
+          <div class="category-card__meta"><span class="category-card__count">1,920 products</span><span class="category-card__price">From ₹3,999</span></div>
+          <div class="category-card__tags"><span class="tag">WCAG</span><span class="tag">Dark Mode</span><span class="tag">Banking</span></div>
+        </a>
+
+        <a href="category.html?cat=enterprise" class="category-card" id="cat-enterprise-2">
+          <div class="category-card__icon" style="background:rgba(236,72,153,0.15);border:1px solid rgba(236,72,153,0.25);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="3" y="12" width="5" height="9" rx="1" fill="#ec4899" fill-opacity="0.4"/><rect x="10" y="8" width="5" height="13" rx="1" fill="#ec4899" fill-opacity="0.6"/><rect x="17" y="4" width="4" height="17" rx="1" fill="#ec4899"/></svg>
+          </div>
+          <h3 class="category-card__title">Enterprise Dashboard Systems</h3>
+          <p class="category-card__desc">B2B analytics platforms, admin panels, operational centers. Multi-tenant, SSO-ready.</p>
+          <div class="category-card__meta"><span class="category-card__count">1,120 products</span><span class="category-card__price">From ₹9,999</span></div>
+          <div class="category-card__tags"><span class="tag">Multi-tenant</span><span class="tag">SSO</span><span class="tag">RBAC</span></div>
+        </a>
+
+        <a href="category.html?cat=ai-agents" class="category-card" id="cat-agents-2">
+          <div class="category-card__icon" style="background:rgba(139,92,246,0.15);border:1px solid rgba(139,92,246,0.25);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="5" stroke="#8b5cf6" stroke-width="2"/><path d="M12 5V3M12 21v-2M5 12H3M21 12h-2" stroke="#8b5cf6" stroke-width="2" stroke-linecap="round"/></svg>
+          </div>
+          <h3 class="category-card__title">AI Agent UI Systems</h3>
+          <p class="category-card__desc">Chat interfaces, copilot UX, voice interfaces, and human-AI interaction patterns. AI-native.</p>
+          <div class="category-card__meta"><span class="category-card__count">760 products</span><span class="category-card__price">From ₹5,999</span></div>
+          <div class="category-card__tags"><span class="tag">LLM</span><span class="tag">Streaming</span><span class="tag">Copilot</span></div>
+        </a>
+
+        <a href="category.html?cat=ecommerce" class="category-card" id="cat-ecommerce-2">
+          <div class="category-card__icon" style="background:rgba(6,182,212,0.15);border:1px solid rgba(6,182,212,0.25);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M3 5h2l2 9h12l2-7H9" stroke="#06b6d4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10" cy="19" r="1.5" fill="#06b6d4"/><circle cx="18" cy="19" r="1.5" fill="#06b6d4"/></svg>
+          </div>
+          <h3 class="category-card__title">E-commerce UX Systems</h3>
+          <p class="category-card__desc">Next-gen shopping experiences, checkout flows, catalog UX, and headless commerce patterns.</p>
+          <div class="category-card__meta"><span class="category-card__count">1,680 products</span><span class="category-card__price">From ₹2,999</span></div>
+          <div class="category-card__tags"><span class="tag">Headless</span><span class="tag">CMS</span><span class="tag">Shopify</span></div>
+        </a>
+
+        <a href="category.html?cat=healthcare" class="category-card" id="cat-health-2">
+          <div class="category-card__icon" style="background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.25);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round"/></svg>
+          </div>
+          <h3 class="category-card__title">Healthcare UX Systems</h3>
+          <p class="category-card__desc">EHR, telemedicine, patient portals, and clinical interfaces. HIPAA-aware, accessible.</p>
+          <div class="category-card__meta"><span class="category-card__count">890 products</span><span class="category-card__price">From ₹4,999</span></div>
+          <div class="category-card__tags"><span class="tag">HIPAA</span><span class="tag">WCAG AAA</span><span class="tag">EHR</span></div>
+        </a>
+
+        <a href="category.html?cat=headless-cms" class="category-card" id="cat-cms-2">
+          <div class="category-card__icon" style="background:rgba(100,116,139,0.2);border:1px solid rgba(100,116,139,0.3);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M5 8h14M5 12h10M5 16h11" stroke="#94a3b8" stroke-width="2" stroke-linecap="round"/><circle cx="20" cy="16" r="2.5" fill="#6366f1"/></svg>
+          </div>
+          <h3 class="category-card__title">Headless CMS UI Kits</h3>
+          <p class="category-card__desc">Content-first design systems for Sanity, Strapi, Contentful, and custom headless backends.</p>
+          <div class="category-card__meta"><span class="category-card__count">640 products</span><span class="category-card__price">From ₹3,499</span></div>
+          <div class="category-card__tags"><span class="tag">API-first</span><span class="tag">Sanity</span><span class="tag">Strapi</span></div>
+        </a>
+      </div>
+
+      <!-- Trending This Week -->
+      <div style="margin-top:64px;">
+        <h2 style="font-size:1.75rem;font-weight:800;margin-bottom:24px;">🔥 Trending This Week</h2>
+        <div class="products-grid">
+          <article class="product-card" data-category="ai-powered trending">
+            <a href="product.html?id=aurora-ai-dashboard" class="product-card__media-link">
+              <div class="product-card__media"><div class="product-card__preview aurora-preview"><div class="aurora-bg"></div><div class="aurora-ui"><div class="aurora-sidebar"></div><div class="aurora-content"><div class="aurora-widget"></div><div class="aurora-widget aurora-widget--wide"></div></div></div></div><div class="product-card__badges"><span class="badge badge--new">New</span><span class="badge badge--ai">AI-Powered</span></div></div>
+            </a>
+            <div class="product-card__body">
+              <div class="product-card__seller"><div class="seller-avatar seller-avatar--purple">SK</div><span class="seller-name">SketchKraft Studio</span><span class="seller-badge">⭐ Elite</span></div>
+              <h3 class="product-card__title"><a href="product.html">Aurora AI Dashboard Pro</a></h3>
+              <p class="product-card__desc">200+ AI-driven components, real-time data viz, and conversational UI patterns.</p>
+              <div class="product-card__tech"><span class="tech-tag">React</span><span class="tech-tag">Figma</span><span class="tech-tag">Tailwind</span></div>
+              <div class="product-card__footer"><div class="product-card__rating"><span class="stars">★★★★★</span><span class="rating-num">4.9</span><span class="rating-count">(284)</span></div><div class="product-card__price"><span class="price--current">₹8,499</span><span class="price--old">₹14,999</span></div></div>
+              <a href="product.html" class="btn btn--primary btn--full btn--sm">View & Buy</a>
+            </div>
+          </article>
+
+          <article class="product-card" data-category="fintech">
+            <a href="product.html?id=finflow" class="product-card__media-link">
+              <div class="product-card__media"><div class="product-card__preview fintech-preview"><div class="fintech-bg"></div><div class="fintech-ui"><div class="fintech-card"></div><div class="fintech-chart"></div></div></div><div class="product-card__badges"><span class="badge badge--trending">🔥 Hot</span></div></div>
+            </a>
+            <div class="product-card__body">
+              <div class="product-card__seller"><div class="seller-avatar seller-avatar--green">DF</div><span class="seller-name">DesignForge</span></div>
+              <h3 class="product-card__title"><a href="product.html">FinFlow Pro — FinTech UX</a></h3>
+              <p class="product-card__desc">400+ banking components, dark mode, WCAG 2.1 AA. Built for scale.</p>
+              <div class="product-card__tech"><span class="tech-tag">Next.js</span><span class="tech-tag">shadcn</span></div>
+              <div class="product-card__footer"><div class="product-card__rating"><span class="stars">★★★★★</span><span class="rating-num">4.8</span><span class="rating-count">(192)</span></div><div class="product-card__price"><span class="price--current">₹12,999</span></div></div>
+              <a href="product.html" class="btn btn--primary btn--full btn--sm">View & Buy</a>
+            </div>
+          </article>
+
+          <article class="product-card" data-category="ai-powered">
+            <a href="product.html?id=agentux" class="product-card__media-link">
+              <div class="product-card__media"><div class="product-card__preview agent-preview"><div class="agent-bg"></div><div class="agent-ui"><div class="agent-chat"><div class="agent-bubble agent-bubble--ai"></div><div class="agent-bubble agent-bubble--user"></div><div class="agent-bubble agent-bubble--ai"></div></div></div></div><div class="product-card__badges"><span class="badge badge--ai">AI-Native</span></div></div>
+            </a>
+            <div class="product-card__body">
+              <div class="product-card__seller"><div class="seller-avatar seller-avatar--purple">AI</div><span class="seller-name">AIInterface.design</span><span class="seller-badge">⭐ Elite</span></div>
+              <h3 class="product-card__title"><a href="product.html">AgentUX — Human-AI Interface</a></h3>
+              <p class="product-card__desc">Streaming UI, thinking states, tool calls UI. For LLM-powered products.</p>
+              <div class="product-card__tech"><span class="tech-tag">Vercel AI SDK</span><span class="tech-tag">Figma</span></div>
+              <div class="product-card__footer"><div class="product-card__rating"><span class="stars">★★★★★</span><span class="rating-num">5.0</span><span class="rating-count">(47)</span></div><div class="product-card__price"><span class="price--current">₹24,999</span></div></div>
+              <a href="product.html" class="btn btn--primary btn--full btn--sm">View & Buy</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__bottom">
+        <p>© 2026 UXMarket AI. All rights reserved.</p>
+        <div class="footer__legal"><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js" type="module"></script>
+</body>
+</html>
