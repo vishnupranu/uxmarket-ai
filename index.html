@@ -1,999 +1,1108 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>UXMarket AI — The World's First AI UX Design Marketplace</title>
-  <meta name="description" content="Buy and sell premium AI UX design systems, human-AI interface templates, SaaS UI kits, and enterprise dashboards. The ThemeForest for the AI era." />
-  <meta name="keywords" content="AI UX design systems, marketplace, Figma templates, React UI kits, enterprise dashboards, FinTech UX, Healthcare UX" />
-  <meta property="og:title" content="UXMarket AI — AI UX Design Marketplace" />
-  <meta property="og:description" content="The world's first marketplace for AI UX design systems & human-AI interfaces." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/style.css" />
-  <link rel="stylesheet" href="css/animations.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UXMarket AI — The Design Marketplace for AI-Native Products</title>
+  <meta name="description" content="The world's premier marketplace for AI UX design systems, human-AI interfaces, and enterprise UI kits. Built by designers who ship.">
+  <meta property="og:title" content="UXMarket AI — Design Systems for the AI Era">
+  <meta property="og:description" content="Buy and sell production-ready AI UX systems, SaaS dashboards, and enterprise design kits.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <script src="js/theme.js"></script>
+  <style>
+    /* Page-specific */
+    .hero-search {
+      position: relative;
+      display: flex;
+      align-items: center;
+      max-width: 560px;
+      width: 100%;
+      margin: 0 auto var(--space-8);
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-full);
+      padding: 6px 6px 6px 20px;
+      transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+      animation: slide-up-in 0.7s var(--ease-smooth) 200ms both;
+    }
+    .hero-search:focus-within {
+      border-color: var(--border-focus);
+      box-shadow: 0 0 0 3px var(--accent-glow-sm);
+    }
+    .hero-search svg { width: 18px; height: 18px; color: var(--text-muted); flex-shrink: 0; }
+    .hero-search input {
+      flex: 1;
+      background: none;
+      border: none;
+      outline: none;
+      font-size: var(--text-sm);
+      color: var(--text-primary);
+      padding: 0 var(--space-3);
+      font-family: var(--font-sans);
+    }
+    .hero-search input::placeholder { color: var(--text-muted); }
+    .hero-search__btn {
+      background: var(--btn-primary-bg);
+      color: var(--btn-primary-text);
+      border: none;
+      padding: 8px 18px;
+      border-radius: var(--radius-full);
+      font-size: var(--text-sm);
+      font-weight: 600;
+      font-family: var(--font-sans);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background var(--transition-fast);
+    }
+    .hero-search__btn:hover { background: var(--btn-primary-hover); }
+    .hero-search__suggestions {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0; right: 0;
+      background: var(--bg-card);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      z-index: 100;
+      box-shadow: var(--shadow-lg);
+    }
+    .search-suggestion {
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding: 10px 16px;
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+      cursor: pointer;
+      border: none;
+      background: none;
+      font-family: var(--font-sans);
+      transition: background var(--transition-fast), color var(--transition-fast);
+    }
+    .search-suggestion:hover { background: var(--bg-elevated); color: var(--text-primary); }
+
+    .trending-tags {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      flex-wrap: wrap;
+      margin-bottom: var(--space-12);
+      animation: fade-in 0.8s var(--ease-smooth) 360ms both;
+    }
+    .trending-tag {
+      font-size: var(--text-xs);
+      color: var(--text-muted);
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-full);
+      padding: 3px 10px;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      font-family: var(--font-mono);
+    }
+    .trending-tag:hover { color: var(--text-primary); border-color: var(--border-strong); }
+    .trending-label { font-size: var(--text-xs); color: var(--text-muted); }
+
+    .section-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      margin: 0;
+    }
+
+    /* Featured product showcase */
+    .featured-showcase {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--grid-line);
+      border: 1px solid var(--grid-line);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      margin-bottom: var(--space-6);
+    }
+    @media (max-width: 768px) { .featured-showcase { grid-template-columns: 1fr; } }
+
+    .featured-main {
+      background: var(--bg-base);
+      padding: var(--space-8);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .featured-main__preview {
+      aspect-ratio: 16/9;
+      border-radius: var(--radius-lg);
+      background: linear-gradient(135deg, #050510 0%, #0d0d2b 50%, #050518 100%);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      position: relative;
+      margin-bottom: var(--space-6);
+      flex-shrink: 0;
+    }
+
+    .featured-side {
+      background: var(--bg-surface);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .featured-side-item {
+      padding: var(--space-6);
+      border-bottom: 1px solid var(--grid-line);
+      display: flex;
+      gap: var(--space-4);
+      align-items: flex-start;
+      cursor: pointer;
+      transition: background var(--transition-fast);
+    }
+    .featured-side-item:last-child { border-bottom: none; }
+    .featured-side-item:hover { background: var(--bg-card); }
+    .featured-side-item.active { background: var(--bg-card); }
+
+    .side-preview {
+      width: 80px; height: 56px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+
+    /* Trusted by bar */
+    .trust-bar {
+      text-align: center;
+      padding: var(--space-12) 0;
+    }
+    .trust-bar__label {
+      font-size: var(--text-xs);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: var(--space-6);
+    }
+    .trust-logos {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(var(--space-6), 4vw, var(--space-16));
+      flex-wrap: wrap;
+    }
+    .trust-logo {
+      font-size: var(--text-sm);
+      font-weight: 600;
+      color: var(--text-muted);
+      letter-spacing: -0.02em;
+      opacity: 0.5;
+      transition: opacity var(--transition-fast);
+    }
+    .trust-logo:hover { opacity: 0.8; }
+
+    /* Feature bento grid */
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: auto auto;
+      gap: 1px;
+      background: var(--grid-line);
+      border: 1px solid var(--grid-line);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+    }
+    @media (max-width: 900px) { .bento-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 600px) { .bento-grid { grid-template-columns: 1fr; } }
+
+    .bento-cell {
+      background: var(--bg-base);
+      padding: var(--space-8);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+      transition: background var(--transition-base);
+    }
+    .bento-cell:hover { background: var(--bg-surface); }
+    .bento-cell--wide { grid-column: span 2; }
+    @media (max-width: 900px) { .bento-cell--wide { grid-column: span 1; } }
+
+    .bento-cell__title {
+      font-size: var(--text-lg);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: var(--text-primary);
+      line-height: 1.2;
+    }
+    .bento-cell__desc {
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+    .bento-cell__visual {
+      flex: 1;
+      min-height: 120px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      background: var(--bg-elevated);
+      position: relative;
+    }
+
+    /* CTA section */
+    .cta-section {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      padding: clamp(var(--space-12), 6vw, 80px);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      width: 600px; height: 300px;
+      background: radial-gradient(ellipse, var(--accent-glow) 0%, transparent 70%);
+      top: -100px; left: 50%;
+      transform: translateX(-50%);
+      pointer-events: none;
+    }
+    .cta-section h2 {
+      font-size: var(--text-4xl);
+      font-weight: 900;
+      letter-spacing: -0.05em;
+      margin-bottom: var(--space-4);
+      position: relative;
+    }
+    .cta-section p {
+      font-size: var(--text-lg);
+      color: var(--text-secondary);
+      max-width: 480px;
+      margin: 0 auto var(--space-8);
+      line-height: 1.7;
+      position: relative;
+    }
+
+    /* Field error */
+    .field-error {
+      font-size: var(--text-xs);
+      color: var(--danger);
+      margin-top: 4px;
+      display: block;
+    }
+    .form-input.error { border-color: var(--danger); }
+
+    .license-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+    .license-card:hover { border-color: var(--border-strong); }
+    .license-card.active {
+      border-color: var(--accent);
+      background: var(--accent-glow-sm);
+    }
+  </style>
 </head>
 <body>
-  <!-- ═══════════════════════════════ NAVIGATION ═══════════════════════════════ -->
-  <nav class="nav" id="nav" role="navigation" aria-label="Main navigation">
-    <div class="nav__container">
-      <a href="index.html" class="nav__logo" aria-label="UXMarket AI home">
-        <div class="nav__logo-icon">
-          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
-            <rect width="32" height="32" rx="8" fill="url(#logo-gradient)"/>
-            <path d="M8 16L14 10L20 16L26 10" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M8 22L14 16L20 22L26 16" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.6"/>
-            <defs>
-              <linearGradient id="logo-gradient" x1="0" y1="0" x2="32" y2="32">
-                <stop offset="0%" stop-color="#6366f1"/>
-                <stop offset="100%" stop-color="#8b5cf6"/>
-              </linearGradient>
-            </defs>
-          </svg>
-        </div>
-        <span class="nav__logo-text">UXMarket<span class="nav__logo-ai">AI</span></span>
-      </a>
 
-      <div class="nav__links" role="list">
-        <a href="#marketplace" class="nav__link" role="listitem">Marketplace</a>
-        <a href="categories.html" class="nav__link" role="listitem">Categories</a>
-        <a href="sellers.html" class="nav__link" role="listitem">Become a Seller</a>
-        <a href="enterprise.html" class="nav__link" role="listitem">Enterprise</a>
-        <a href="#ai-tools" class="nav__link nav__link--highlight" role="listitem">
-          <span class="nav__badge">AI</span> AI Tools
-        </a>
+<!-- ── Navigation ─────────────────────────────────────────── -->
+<nav class="nav" id="main-nav" role="navigation" aria-label="Main navigation">
+  <div class="nav__inner">
+    <a href="index.html" class="nav__logo" id="nav-logo" aria-label="UXMarket AI Home">
+      <div class="nav__logo-mark" aria-hidden="true">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <rect x="1" y="1" width="5" height="5" rx="1" fill="white" opacity="0.9"/>
+          <rect x="8" y="1" width="5" height="5" rx="1" fill="white" opacity="0.6"/>
+          <rect x="1" y="8" width="5" height="5" rx="1" fill="white" opacity="0.6"/>
+          <rect x="8" y="8" width="5" height="5" rx="1" fill="white" opacity="0.3"/>
+        </svg>
       </div>
+      UXMarket <span class="nav__logo-ai">AI</span>
+    </a>
 
-      <div class="nav__actions">
-        <button class="btn btn--ghost btn--sm" id="nav-search-btn" aria-label="Search marketplace">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-          </svg>
-        </button>
-        <a href="auth.html" class="btn btn--ghost btn--sm">Sign In</a>
-        <a href="auth.html#register" class="btn btn--primary btn--sm">Start Selling</a>
-      </div>
+    <div class="nav__links" role="list">
+      <a href="index.html" class="nav__link active" role="listitem">Marketplace</a>
+      <a href="categories.html" class="nav__link" role="listitem">Categories</a>
+      <a href="sellers.html" class="nav__link" role="listitem">Sell</a>
+      <a href="enterprise.html" class="nav__link" role="listitem">Enterprise</a>
+      <a href="ai-tools.html" class="nav__link nav__link--badge" role="listitem">AI Tools</a>
+    </div>
 
+    <div class="nav__actions">
+      <button class="theme-toggle" id="theme-toggle-btn" aria-label="Toggle theme" title="Toggle dark/light mode">
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      </button>
+      <a href="auth.html" class="btn btn--ghost btn--sm" id="nav-signin">Sign in</a>
+      <a href="sellers.html" class="btn btn--primary btn--sm" id="nav-start-selling">Start selling</a>
       <button class="nav__hamburger" id="nav-hamburger" aria-label="Open menu" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
     </div>
-  </nav>
+  </div>
+</nav>
 
-  <!-- ═══════════════════════════════ SEARCH OVERLAY ═══════════════════════════════ -->
-  <div class="search-overlay" id="search-overlay" role="dialog" aria-label="Search" aria-hidden="true">
-    <div class="search-overlay__inner">
-      <div class="search-overlay__bar">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-        </svg>
-        <input type="search" id="search-input" placeholder="Search AI design systems, UI kits, templates…" autocomplete="off" aria-label="Search marketplace" />
-        <button class="search-overlay__close" id="search-close" aria-label="Close search">
-          <kbd>ESC</kbd>
-        </button>
+<!-- Mobile menu -->
+<div class="nav__mobile" id="mobile-menu" role="dialog" aria-label="Mobile navigation">
+  <a href="index.html" class="nav__link active">Marketplace</a>
+  <a href="categories.html" class="nav__link">Categories</a>
+  <a href="sellers.html" class="nav__link">Sell</a>
+  <a href="enterprise.html" class="nav__link">Enterprise</a>
+  <a href="ai-tools.html" class="nav__link">AI Tools</a>
+  <a href="auth.html" class="nav__link">Sign in</a>
+</div>
+
+<!-- ── Hero ───────────────────────────────────────────────── -->
+<section class="hero hero--index" aria-label="Hero section">
+  <div class="hero__bg">
+    <div class="mesh-orb mesh-orb--1" aria-hidden="true"></div>
+    <div class="mesh-orb mesh-orb--2" aria-hidden="true"></div>
+    <div class="mesh-orb mesh-orb--3" aria-hidden="true"></div>
+    <div class="grid-overlay" aria-hidden="true"></div>
+  </div>
+
+  <div class="hero__content">
+    <div class="hero__eyebrow" aria-label="New platform announcement">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+      The world's first AI-native design marketplace
+    </div>
+
+    <h1 class="hero__title">
+      Ship faster with<br>
+      <em>design systems</em><br>
+      built for AI products
+    </h1>
+
+    <p class="hero__subtitle">
+      Production-ready UX kits, human-AI interfaces, and enterprise design systems — built by teams who ship. Used by 98K+ designers worldwide.
+    </p>
+
+    <div class="hero-search" role="search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="search" id="hero-search-input" placeholder="Search AI dashboards, SaaS kits, design systems…" aria-label="Search marketplace">
+      <button class="hero-search__btn" id="hero-search-btn" type="button">Search</button>
+      <div class="hero-search__suggestions" id="search-suggestions" hidden role="listbox" aria-label="Search suggestions"></div>
+    </div>
+
+    <div class="trending-tags" aria-label="Trending searches">
+      <span class="trending-label">Trending:</span>
+      <button class="trending-tag" type="button">AI Dashboard</button>
+      <button class="trending-tag" type="button">Chat UI</button>
+      <button class="trending-tag" type="button">FinTech</button>
+      <button class="trending-tag" type="button">SaaS Kit</button>
+      <button class="trending-tag" type="button">Design Tokens</button>
+    </div>
+
+    <div class="hero__social-proof">
+      <div class="hero__social-proof-avatars" aria-hidden="true">
+        <div class="avatar avatar--1">A</div>
+        <div class="avatar avatar--2">M</div>
+        <div class="avatar avatar--3">S</div>
+        <div class="avatar avatar--4">K</div>
+        <div class="avatar avatar--5">R</div>
       </div>
-      <div class="search-overlay__suggestions">
-        <p class="search-overlay__label">Trending Searches</p>
-        <div class="search-tags">
-          <button class="search-tag" data-query="AI Dashboard">AI Dashboard</button>
-          <button class="search-tag" data-query="FinTech UI Kit">FinTech UI Kit</button>
-          <button class="search-tag" data-query="Healthcare UX">Healthcare UX</button>
-          <button class="search-tag" data-query="SaaS Design System">SaaS Design System</button>
-          <button class="search-tag" data-query="Agent Interface">Agent Interface</button>
-          <button class="search-tag" data-query="Headless CMS UI">Headless CMS UI</button>
+      <p class="hero__social-proof-text"><strong>2,400+ designers</strong> joined this week</p>
+      <div style="width:1px;height:14px;background:var(--border)" aria-hidden="true"></div>
+      <div style="display:flex;align-items:center;gap:4px">
+        <span style="color:var(--warning);font-size:12px">★★★★★</span>
+        <span class="hero__social-proof-text"><strong>4.9/5</strong> avg rating</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Stats ───────────────────────────────────────────────── -->
+<section class="section section--sm" aria-label="Platform statistics">
+  <div class="container">
+    <div class="stat-grid stagger-children" data-reveal>
+      <div class="stat-item">
+        <span class="stat-num" data-counter="12400" data-suffix="+">0</span>
+        <span class="stat-label">Design Systems</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num" data-counter="3800" data-suffix="+">0</span>
+        <span class="stat-label">Verified Creators</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num" data-counter="98000" data-suffix="+">0</span>
+        <span class="stat-label">Active Buyers</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num" data-counter="48" data-suffix="Cr+">0</span>
+        <span class="stat-label">Creator Revenue (₹)</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider" aria-hidden="true"></div>
+
+<!-- ── Categories ─────────────────────────────────────────── -->
+<section class="section" aria-labelledby="categories-heading">
+  <div class="container">
+    <div class="section-header" data-reveal>
+      <div class="eyebrow" aria-hidden="true">Browse by category</div>
+      <h2 id="categories-heading">Every vertical. Every platform.</h2>
+      <p>From conversational AI to enterprise dashboards — design systems for every type of product you're building.</p>
+    </div>
+
+    <div class="category-grid stagger-children" id="category-grid" data-reveal>
+      <a href="categories.html#ai" class="category-card" id="cat-ai" aria-label="AI Agent Interfaces category">
+        <div class="category-card__header">
+          <div class="category-card__icon" style="background:rgba(99,102,241,0.1);border-color:rgba(99,102,241,0.2);color:var(--accent-light)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 0 2h-1v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1H2a1 1 0 0 1 0-2h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2z"/><circle cx="9" cy="12" r="1"/><circle cx="15" cy="12" r="1"/></svg>
+          </div>
+          <svg class="category-card__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </div>
+        <div>
+          <div class="category-card__title">AI Agent Interfaces</div>
+          <div class="category-card__desc">Chat UIs, agent dashboards, prompt libraries, and conversational design systems.</div>
+        </div>
+        <div class="category-card__count">1,240 products</div>
+      </a>
+
+      <a href="categories.html#saas" class="category-card" id="cat-saas" aria-label="SaaS Dashboard UI category">
+        <div class="category-card__header">
+          <div class="category-card__icon" style="background:rgba(16,185,129,0.1);border-color:rgba(16,185,129,0.2);color:var(--success)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
+          </div>
+          <svg class="category-card__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </div>
+        <div>
+          <div class="category-card__title">SaaS Dashboard UI</div>
+          <div class="category-card__desc">Complete admin panels, analytics dashboards, and data-heavy interfaces with dark mode.</div>
+        </div>
+        <div class="category-card__count">3,180 products</div>
+      </a>
+
+      <a href="categories.html#fintech" class="category-card" id="cat-fintech" aria-label="FinTech UX Systems category">
+        <div class="category-card__header">
+          <div class="category-card__icon" style="background:rgba(245,158,11,0.1);border-color:rgba(245,158,11,0.2);color:var(--warning)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          </div>
+          <svg class="category-card__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </div>
+        <div>
+          <div class="category-card__title">FinTech UX Systems</div>
+          <div class="category-card__desc">Banking apps, trading platforms, payment flows, and wallet interfaces.</div>
+        </div>
+        <div class="category-card__count">892 products</div>
+      </a>
+
+      <a href="categories.html#enterprise" class="category-card" id="cat-enterprise" aria-label="Enterprise Design Systems category">
+        <div class="category-card__header">
+          <div class="category-card__icon" style="background:rgba(6,182,212,0.1);border-color:rgba(6,182,212,0.2);color:var(--info)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </div>
+          <svg class="category-card__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </div>
+        <div>
+          <div class="category-card__title">Enterprise Design Systems</div>
+          <div class="category-card__desc">Token-based systems built for scale. Component libraries for large engineering teams.</div>
+        </div>
+        <div class="category-card__count">560 products</div>
+      </a>
+
+      <a href="categories.html#healthcare" class="category-card" id="cat-healthcare" aria-label="Healthcare UX category">
+        <div class="category-card__header">
+          <div class="category-card__icon" style="background:rgba(239,68,68,0.1);border-color:rgba(239,68,68,0.2);color:#f87171">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          </div>
+          <svg class="category-card__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </div>
+        <div>
+          <div class="category-card__title">Healthcare UX</div>
+          <div class="category-card__desc">HIPAA-aware interfaces for patient portals, EHR systems, and clinical dashboards.</div>
+        </div>
+        <div class="category-card__count">340 products</div>
+      </a>
+
+      <a href="categories.html#ecommerce" class="category-card" id="cat-ecommerce" aria-label="E-commerce UI Kits category">
+        <div class="category-card__header">
+          <div class="category-card__icon" style="background:rgba(139,92,246,0.1);border-color:rgba(139,92,246,0.2);color:var(--accent-2-light)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+          </div>
+          <svg class="category-card__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </div>
+        <div>
+          <div class="category-card__title">E-commerce UI Kits</div>
+          <div class="category-card__desc">Conversion-optimized storefronts, product pages, and checkout flows.</div>
+        </div>
+        <div class="category-card__count">1,560 products</div>
+      </a>
+
+      <a href="categories.html#headless" class="category-card" id="cat-headless" aria-label="Headless CMS UI category">
+        <div class="category-card__header">
+          <div class="category-card__icon" style="background:rgba(16,185,129,0.08);border-color:rgba(16,185,129,0.15);color:var(--success)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+          </div>
+          <svg class="category-card__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </div>
+        <div>
+          <div class="category-card__title">Headless CMS UI</div>
+          <div class="category-card__desc">Composable front-ends for Contentful, Sanity, Strapi, and custom CMS backends.</div>
+        </div>
+        <div class="category-card__count">680 products</div>
+      </a>
+
+      <a href="categories.html" class="category-card" id="cat-all" style="background:var(--bg-surface)" aria-label="Browse all categories">
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--space-3);text-align:center;color:var(--text-muted)">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+          <span style="font-size:var(--text-sm);font-weight:600">View all 24 categories</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider" aria-hidden="true"></div>
+
+<!-- ── Trust bar ───────────────────────────────────────────── -->
+<div class="trust-bar container" data-reveal aria-label="Trusted by leading teams">
+  <p class="trust-bar__label">Trusted by design teams at</p>
+  <div class="trust-logos">
+    <span class="trust-logo">Razorpay</span>
+    <span class="trust-logo">CRED</span>
+    <span class="trust-logo">Groww</span>
+    <span class="trust-logo">Zepto</span>
+    <span class="trust-logo">Meesho</span>
+    <span class="trust-logo">PhonePe</span>
+    <span class="trust-logo">Swiggy</span>
+  </div>
+</div>
+
+<div class="section-divider" aria-hidden="true"></div>
+
+<!-- ── Featured Products ───────────────────────────────────── -->
+<section class="section" aria-labelledby="featured-heading">
+  <div class="container">
+    <div class="section-header" data-reveal>
+      <div class="eyebrow" aria-hidden="true">Featured this week</div>
+      <h2 id="featured-heading">Handpicked by our team</h2>
+      <p>The highest quality, most comprehensive design systems on the platform right now.</p>
+    </div>
+
+    <div class="featured-showcase" data-reveal>
+      <!-- Main featured -->
+      <div class="featured-main">
+        <div class="featured-main__preview" aria-label="Aurora AI Dashboard Pro preview">
+          <div class="preview--aurora" style="width:100%;height:100%">
+            <div class="preview-ui">
+              <div class="preview-sidebar"></div>
+              <div class="preview-content">
+                <div class="preview-widget"></div>
+                <div style="display:flex;gap:8px">
+                  <div class="preview-widget" style="height:45%;flex:1"></div>
+                  <div class="preview-widget" style="height:45%;flex:1"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="badge badge--new" style="margin-bottom:var(--space-3)">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          Editor's Pick
+        </div>
+        <h3 style="font-size:var(--text-2xl);font-weight:800;letter-spacing:-0.04em;margin-bottom:var(--space-3)">
+          <a href="product.html" style="color:var(--text-primary)">Aurora AI Dashboard Pro</a>
+        </h3>
+        <p style="font-size:var(--text-sm);color:var(--text-secondary);line-height:1.6;margin-bottom:var(--space-5)">
+          A complete design system for AI-powered analytics products. 340+ components, dark mode first, Figma + React. Built for teams shipping AI features daily.
+        </p>
+        <div style="display:flex;align-items:center;justify-content:space-between;padding-top:var(--space-4);border-top:1px solid var(--border)">
+          <div>
+            <div class="product-card__rating">
+              <span class="stars" aria-label="5 stars">★★★★★</span>
+              <span class="rating-num">4.9</span>
+              <span class="rating-count">(847)</span>
+            </div>
+            <div style="margin-top:4px">
+              <span class="price-current">$49</span>
+              <span class="price-original">$99</span>
+            </div>
+          </div>
+          <a href="product.html" class="btn btn--primary btn--sm" id="featured-buy-btn">View product</a>
+        </div>
+      </div>
+
+      <!-- Side featured -->
+      <div class="featured-side" role="list">
+        <div class="featured-side-item active" role="listitem">
+          <div class="side-preview preview--fintech" aria-label="FinLedger preview"></div>
+          <div style="flex:1;min-width:0">
+            <div class="badge badge--ai" style="margin-bottom:var(--space-2)">AI-enhanced</div>
+            <div style="font-size:var(--text-sm);font-weight:700;letter-spacing:-0.02em;margin-bottom:4px">FinLedger Pro Dashboard</div>
+            <div style="font-size:var(--text-xs);color:var(--text-muted)">280 components · Figma</div>
+            <div style="font-size:var(--text-base);font-weight:800;letter-spacing:-0.03em;margin-top:4px">$89</div>
+          </div>
+        </div>
+
+        <div class="featured-side-item" role="listitem">
+          <div class="side-preview preview--agent" aria-label="AgentFlow preview">
+            <div style="width:100%;height:100%;background:linear-gradient(135deg,#0a0a15,#0f1022);display:flex;align-items:center;justify-content:center">
+              <div style="width:20px;height:20px;border-radius:50%;border:1.5px solid rgba(99,102,241,0.5);display:flex;align-items:center;justify-content:center">
+                <div style="width:6px;height:6px;border-radius:50%;background:var(--accent)"></div>
+              </div>
+            </div>
+          </div>
+          <div style="flex:1;min-width:0">
+            <div class="badge badge--new" style="margin-bottom:var(--space-2)">New</div>
+            <div style="font-size:var(--text-sm);font-weight:700;letter-spacing:-0.02em;margin-bottom:4px">AgentFlow UI System</div>
+            <div style="font-size:var(--text-xs);color:var(--text-muted)">180 components · React</div>
+            <div style="font-size:var(--text-base);font-weight:800;letter-spacing:-0.03em;margin-top:4px">$129</div>
+          </div>
+        </div>
+
+        <div class="featured-side-item" role="listitem">
+          <div class="side-preview" style="background:linear-gradient(135deg,#001a0d,#002810)" aria-label="MedFlow preview"></div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:var(--text-sm);font-weight:700;letter-spacing:-0.02em;margin-bottom:4px">MedFlow EHR System</div>
+            <div style="font-size:var(--text-xs);color:var(--text-muted)">420 components · Figma + Vue</div>
+            <div style="font-size:var(--text-base);font-weight:800;letter-spacing:-0.03em;margin-top:4px">$199</div>
+          </div>
         </div>
       </div>
     </div>
   </div>
+</section>
 
-  <main id="main-content">
-    <!-- ═══════════════════════════════ HERO ═══════════════════════════════ -->
-    <section class="hero" id="hero" aria-label="Hero section">
-      <div class="hero__bg" aria-hidden="true">
-        <div class="hero__orb hero__orb--1"></div>
-        <div class="hero__orb hero__orb--2"></div>
-        <div class="hero__orb hero__orb--3"></div>
-        <canvas id="hero-canvas" aria-hidden="true"></canvas>
-        <div class="hero__grid-overlay"></div>
+<div class="section-divider" aria-hidden="true"></div>
+
+<!-- ── All Products Grid ────────────────────────────────────── -->
+<section class="section" aria-labelledby="products-heading">
+  <div class="container">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:var(--space-4);margin-bottom:var(--space-8)" data-reveal>
+      <div>
+        <h2 id="products-heading" style="font-size:var(--text-3xl);font-weight:800;letter-spacing:-0.04em">New this week</h2>
+        <p style="color:var(--text-secondary);font-size:var(--text-sm);margin-top:4px">240 new products added in the last 7 days</p>
       </div>
 
-      <div class="hero__content">
-        <div class="hero__eyebrow">
-          <span class="hero__badge">
-            <span class="hero__badge-dot" aria-hidden="true"></span>
-            World's First AI UX Marketplace
-          </span>
-        </div>
-
-        <h1 class="hero__title">
-          <span class="hero__title-line">The ThemeForest</span>
-          <span class="hero__title-line hero__title-line--gradient">for the AI Era</span>
-        </h1>
-
-        <p class="hero__subtitle">
-          Buy &amp; sell production-ready AI design systems, human-AI interface templates,<br>
-          enterprise UI kits, and the next generation of SaaS experiences.
-        </p>
-
-        <div class="hero__stats" role="list" aria-label="Platform statistics">
-          <div class="hero__stat" role="listitem">
-            <span class="hero__stat-num" data-count="12400">0</span>
-            <span class="hero__stat-label">Design Systems</span>
-          </div>
-          <div class="hero__stat-divider" aria-hidden="true"></div>
-          <div class="hero__stat" role="listitem">
-            <span class="hero__stat-num" data-count="3800">0</span>
-            <span class="hero__stat-label">Active Sellers</span>
-          </div>
-          <div class="hero__stat-divider" aria-hidden="true"></div>
-          <div class="hero__stat" role="listitem">
-            <span class="hero__stat-num" data-count="98000">0</span>
-            <span class="hero__stat-label">Global Buyers</span>
-          </div>
-          <div class="hero__stat-divider" aria-hidden="true"></div>
-          <div class="hero__stat" role="listitem">
-            <span class="hero__stat-num" data-prefix="₹" data-count="48">0</span><span class="hero__stat-num">Cr+</span>
-            <span class="hero__stat-label">Creator Revenue</span>
-          </div>
-        </div>
-
-        <div class="hero__cta">
-          <a href="#marketplace" class="btn btn--primary btn--lg" id="hero-explore-btn">
-            Explore Marketplace
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-              <path d="M5 12h14M12 5l7 7-7 7"/>
-            </svg>
-          </a>
-          <a href="sellers.html" class="btn btn--outline btn--lg" id="hero-sell-btn">
-            Start Selling
-          </a>
-        </div>
-
-        <div class="hero__trusted" aria-label="Trusted by leading companies">
-          <p class="hero__trusted-label">Trusted by teams at</p>
-          <div class="hero__trusted-logos">
-            <div class="trusted-logo">Google</div>
-            <div class="trusted-logo">Microsoft</div>
-            <div class="trusted-logo">Razorpay</div>
-            <div class="trusted-logo">Zepto</div>
-            <div class="trusted-logo">Meesho</div>
-            <div class="trusted-logo">Groww</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="hero__preview" aria-hidden="true">
-        <div class="hero__preview-card hero__preview-card--main">
-          <div class="preview-card__header">
-            <div class="preview-card__dots">
-              <span></span><span></span><span></span>
-            </div>
-            <span class="preview-card__title">AI Dashboard Pro</span>
-          </div>
-          <div class="preview-card__body">
-            <div class="preview-mini-chart">
-              <div class="chart-bar" style="height:60%"></div>
-              <div class="chart-bar" style="height:80%"></div>
-              <div class="chart-bar" style="height:45%"></div>
-              <div class="chart-bar" style="height:90%"></div>
-              <div class="chart-bar chart-bar--active" style="height:70%"></div>
-              <div class="chart-bar" style="height:55%"></div>
-              <div class="chart-bar" style="height:85%"></div>
-            </div>
-            <div class="preview-mini-stats">
-              <div class="mini-stat">
-                <span class="mini-stat__val">₹24K</span>
-                <span class="mini-stat__label">Revenue</span>
-              </div>
-              <div class="mini-stat mini-stat--up">
-                <span class="mini-stat__val">+18%</span>
-                <span class="mini-stat__label">Growth</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="hero__preview-card hero__preview-card--float-1">
-          <div class="float-card-icon">🎨</div>
-          <div>
-            <p class="float-card-title">500+ Components</p>
-            <p class="float-card-sub">React + Figma</p>
-          </div>
-        </div>
-        <div class="hero__preview-card hero__preview-card--float-2">
-          <div class="float-card-icon">⚡</div>
-          <div>
-            <p class="float-card-title">AI Generated</p>
-            <p class="float-card-sub">UX Patterns</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="hero__scroll-indicator" aria-hidden="true">
-        <div class="scroll-indicator">
-          <div class="scroll-indicator__dot"></div>
-        </div>
-        <span>Scroll to explore</span>
-      </div>
-    </section>
-
-    <!-- ═══════════════════════════════ FEATURED CATEGORIES ═══════════════════════════════ -->
-    <section class="section categories-section" id="marketplace" aria-labelledby="categories-heading">
-      <div class="container">
-        <div class="section__header">
-          <span class="section__eyebrow">Browse by Category</span>
-          <h2 class="section__title" id="categories-heading">Every AI UX Vertical, Covered</h2>
-          <p class="section__subtitle">From FinTech dashboards to healthcare interfaces — find exactly what you need to ship faster.</p>
-        </div>
-
-        <div class="categories-grid" role="list">
-          <a href="category.html?cat=ai-dashboards" class="category-card category-card--featured" id="cat-ai-dashboards" role="listitem">
-            <div class="category-card__glow" aria-hidden="true"></div>
-            <div class="category-card__icon" aria-hidden="true">
-              <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#6366f1" fill-opacity="0.2"/><path d="M6 20l5-5 4 4 5-7 6 5" stroke="#6366f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><rect x="6" y="6" width="8" height="5" rx="1" fill="#6366f1" fill-opacity="0.4"/><rect x="18" y="6" width="8" height="5" rx="1" fill="#8b5cf6" fill-opacity="0.4"/></svg>
-            </div>
-            <h3 class="category-card__title">AI Dashboard Systems</h3>
-            <p class="category-card__desc">Analytics, monitoring, and intelligence dashboards powered by AI</p>
-            <div class="category-card__meta">
-              <span class="category-card__count">2,840 products</span>
-              <span class="category-card__price">From ₹2,499</span>
-            </div>
-            <div class="category-card__tags">
-              <span class="tag">React</span><span class="tag">Figma</span><span class="tag">Real-time</span>
-            </div>
-          </a>
-
-          <a href="category.html?cat=fintech" class="category-card" id="cat-fintech" role="listitem">
-            <div class="category-card__icon" aria-hidden="true">
-              <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#10b981" fill-opacity="0.2"/><path d="M16 6v20M10 10h9a3 3 0 010 6h-9" stroke="#10b981" stroke-width="2" stroke-linecap="round"/></svg>
-            </div>
-            <h3 class="category-card__title">FinTech UX Systems</h3>
-            <p class="category-card__desc">Banking, payments, trading, and wealth management interfaces</p>
-            <div class="category-card__meta">
-              <span class="category-card__count">1,920 products</span>
-              <span class="category-card__price">From ₹3,999</span>
-            </div>
-            <div class="category-card__tags">
-              <span class="tag">WCAG</span><span class="tag">Dark Mode</span>
-            </div>
-          </a>
-
-          <a href="category.html?cat=healthcare" class="category-card" id="cat-healthcare" role="listitem">
-            <div class="category-card__icon" aria-hidden="true">
-              <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#ef4444" fill-opacity="0.2"/><path d="M16 8v16M8 16h16" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round"/></svg>
-            </div>
-            <h3 class="category-card__title">Healthcare UX Systems</h3>
-            <p class="category-card__desc">EHR, telemedicine, patient portals, and clinical interfaces</p>
-            <div class="category-card__meta">
-              <span class="category-card__count">890 products</span>
-              <span class="category-card__price">From ₹4,999</span>
-            </div>
-            <div class="category-card__tags">
-              <span class="tag">HIPAA</span><span class="tag">Accessible</span>
-            </div>
-          </a>
-
-          <a href="category.html?cat=saas" class="category-card" id="cat-saas" role="listitem">
-            <div class="category-card__icon" aria-hidden="true">
-              <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#f59e0b" fill-opacity="0.2"/><rect x="6" y="8" width="20" height="16" rx="3" stroke="#f59e0b" stroke-width="2"/><path d="M10 12h12M10 16h8M10 20h5" stroke="#f59e0b" stroke-width="1.5" stroke-linecap="round"/></svg>
-            </div>
-            <h3 class="category-card__title">SaaS UI Kits</h3>
-            <p class="category-card__desc">Complete SaaS product design systems with onboarding flows</p>
-            <div class="category-card__meta">
-              <span class="category-card__count">3,450 products</span>
-              <span class="category-card__price">From ₹1,999</span>
-            </div>
-            <div class="category-card__tags">
-              <span class="tag">Next.js</span><span class="tag">Tailwind</span>
-            </div>
-          </a>
-
-          <a href="category.html?cat=ai-agents" class="category-card" id="cat-ai-agents" role="listitem">
-            <div class="category-card__icon" aria-hidden="true">
-              <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#8b5cf6" fill-opacity="0.2"/><circle cx="16" cy="16" r="6" stroke="#8b5cf6" stroke-width="2"/><path d="M16 8V6M16 26v-2M8 16H6M26 16h-2" stroke="#8b5cf6" stroke-width="2" stroke-linecap="round"/></svg>
-            </div>
-            <h3 class="category-card__title">AI Agent UI Systems</h3>
-            <p class="category-card__desc">Chat interfaces, copilot UX, and human-AI interaction patterns</p>
-            <div class="category-card__meta">
-              <span class="category-card__count">760 products</span>
-              <span class="category-card__price">From ₹5,999</span>
-            </div>
-            <div class="category-card__tags">
-              <span class="tag">LLM</span><span class="tag">Streaming</span>
-            </div>
-          </a>
-
-          <a href="category.html?cat=ecommerce" class="category-card" id="cat-ecommerce" role="listitem">
-            <div class="category-card__icon" aria-hidden="true">
-              <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#06b6d4" fill-opacity="0.2"/><path d="M6 8h3l3 12h12l2-8H11" stroke="#06b6d4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="14" cy="23" r="1.5" fill="#06b6d4"/><circle cx="22" cy="23" r="1.5" fill="#06b6d4"/></svg>
-            </div>
-            <h3 class="category-card__title">E-commerce UX Systems</h3>
-            <p class="category-card__desc">Next-gen shopping experiences, checkout flows, and catalog UX</p>
-            <div class="category-card__meta">
-              <span class="category-card__count">1,680 products</span>
-              <span class="category-card__price">From ₹2,999</span>
-            </div>
-            <div class="category-card__tags">
-              <span class="tag">Headless</span><span class="tag">CMS</span>
-            </div>
-          </a>
-
-          <a href="category.html?cat=enterprise" class="category-card" id="cat-enterprise" role="listitem">
-            <div class="category-card__icon" aria-hidden="true">
-              <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#ec4899" fill-opacity="0.2"/><rect x="6" y="14" width="7" height="12" rx="1" fill="#ec4899" fill-opacity="0.4"/><rect x="15" y="10" width="7" height="16" rx="1" fill="#ec4899" fill-opacity="0.6"/><rect x="24" y="6" width="2" height="20" rx="1" fill="#ec4899"/></svg>
-            </div>
-            <h3 class="category-card__title">Enterprise Dashboard Systems</h3>
-            <p class="category-card__desc">B2B analytics platforms, admin panels, and ops centers</p>
-            <div class="category-card__meta">
-              <span class="category-card__count">1,120 products</span>
-              <span class="category-card__price">From ₹9,999</span>
-            </div>
-            <div class="category-card__tags">
-              <span class="tag">Multi-tenant</span><span class="tag">SSO</span>
-            </div>
-          </a>
-
-          <a href="category.html?cat=headless-cms" class="category-card" id="cat-headless-cms" role="listitem">
-            <div class="category-card__icon" aria-hidden="true">
-              <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#64748b" fill-opacity="0.3"/><path d="M8 12h16M8 16h10M8 20h13" stroke="#94a3b8" stroke-width="2" stroke-linecap="round"/><circle cx="24" cy="20" r="3" fill="#6366f1"/></svg>
-            </div>
-            <h3 class="category-card__title">Headless CMS UI Kits</h3>
-            <p class="category-card__desc">Content-first design systems for Sanity, Strapi, Contentful</p>
-            <div class="category-card__meta">
-              <span class="category-card__count">640 products</span>
-              <span class="category-card__price">From ₹3,499</span>
-            </div>
-            <div class="category-card__tags">
-              <span class="tag">API-first</span><span class="tag">CMS</span>
-            </div>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- ═══════════════════════════════ FEATURED PRODUCTS ═══════════════════════════════ -->
-    <section class="section products-section" aria-labelledby="products-heading">
-      <div class="container">
-        <div class="section__header">
-          <span class="section__eyebrow">Featured Products</span>
-          <h2 class="section__title" id="products-heading">Trending Design Systems</h2>
-        </div>
-
-        <div class="products-filter" role="tablist" aria-label="Product filter">
-          <button class="filter-btn filter-btn--active" role="tab" aria-selected="true" data-filter="all" id="filter-all">All</button>
-          <button class="filter-btn" role="tab" aria-selected="false" data-filter="new" id="filter-new">New</button>
-          <button class="filter-btn" role="tab" aria-selected="false" data-filter="trending" id="filter-trending">Trending</button>
-          <button class="filter-btn" role="tab" aria-selected="false" data-filter="ai-powered" id="filter-ai">AI-Powered</button>
-          <button class="filter-btn" role="tab" aria-selected="false" data-filter="enterprise" id="filter-enterprise">Enterprise</button>
-        </div>
-
-        <div class="products-grid" id="products-grid" role="list">
-          <!-- Product Card 1 -->
-          <article class="product-card" id="product-aurora-ai" role="listitem" data-category="ai-powered trending">
-            <a href="product.html?id=aurora-ai-dashboard" class="product-card__media-link">
-              <div class="product-card__media">
-                <div class="product-card__preview aurora-preview" aria-label="Aurora AI Dashboard preview">
-                  <div class="aurora-bg"></div>
-                  <div class="aurora-ui">
-                    <div class="aurora-sidebar"></div>
-                    <div class="aurora-content">
-                      <div class="aurora-widget"></div>
-                      <div class="aurora-widget aurora-widget--wide"></div>
-                    </div>
-                  </div>
-                </div>
-                <div class="product-card__badges">
-                  <span class="badge badge--new">New</span>
-                  <span class="badge badge--ai">AI-Powered</span>
-                </div>
-              </div>
-            </a>
-            <div class="product-card__body">
-              <div class="product-card__seller">
-                <div class="seller-avatar seller-avatar--purple">SK</div>
-                <span class="seller-name">SketchKraft Studio</span>
-                <span class="seller-badge">⭐ Elite</span>
-              </div>
-              <h3 class="product-card__title">
-                <a href="product.html?id=aurora-ai-dashboard">Aurora AI Dashboard Pro</a>
-              </h3>
-              <p class="product-card__desc">Complete analytics dashboard with 200+ AI-driven components, real-time data viz, and conversational UI patterns.</p>
-              <div class="product-card__tech">
-                <span class="tech-tag">React</span>
-                <span class="tech-tag">Figma</span>
-                <span class="tech-tag">Tailwind</span>
-                <span class="tech-tag">TypeScript</span>
-              </div>
-              <div class="product-card__footer">
-                <div class="product-card__rating" aria-label="Rating: 4.9 out of 5">
-                  <span class="stars" aria-hidden="true">★★★★★</span>
-                  <span class="rating-num">4.9</span>
-                  <span class="rating-count">(284)</span>
-                </div>
-                <div class="product-card__price">
-                  <span class="price--current">₹8,499</span>
-                  <span class="price--old">₹14,999</span>
-                </div>
-              </div>
-              <a href="product.html?id=aurora-ai-dashboard" class="btn btn--primary btn--full btn--sm">View & Buy</a>
-            </div>
-          </article>
-
-          <!-- Product Card 2 -->
-          <article class="product-card" id="product-finflow" role="listitem" data-category="fintech trending">
-            <a href="product.html?id=finflow-pro" class="product-card__media-link">
-              <div class="product-card__media">
-                <div class="product-card__preview fintech-preview" aria-label="FinFlow Pro preview">
-                  <div class="fintech-bg"></div>
-                  <div class="fintech-ui">
-                    <div class="fintech-card"></div>
-                    <div class="fintech-chart"></div>
-                  </div>
-                </div>
-                <div class="product-card__badges">
-                  <span class="badge badge--trending">🔥 Trending</span>
-                </div>
-              </div>
-            </a>
-            <div class="product-card__body">
-              <div class="product-card__seller">
-                <div class="seller-avatar seller-avatar--green">DF</div>
-                <span class="seller-name">DesignForge</span>
-                <span class="seller-badge">✓ Verified</span>
-              </div>
-              <h3 class="product-card__title">
-                <a href="product.html?id=finflow-pro">FinFlow Pro — FinTech UX System</a>
-              </h3>
-              <p class="product-card__desc">Banking & payments design system with WCAG 2.1 AA compliance, dark/light modes, and 400+ components.</p>
-              <div class="product-card__tech">
-                <span class="tech-tag">Next.js</span>
-                <span class="tech-tag">Figma</span>
-                <span class="tech-tag">shadcn</span>
-              </div>
-              <div class="product-card__footer">
-                <div class="product-card__rating" aria-label="Rating: 4.8 out of 5">
-                  <span class="stars" aria-hidden="true">★★★★★</span>
-                  <span class="rating-num">4.8</span>
-                  <span class="rating-count">(192)</span>
-                </div>
-                <div class="product-card__price">
-                  <span class="price--current">₹12,999</span>
-                </div>
-              </div>
-              <a href="product.html?id=finflow-pro" class="btn btn--primary btn--full btn--sm">View & Buy</a>
-            </div>
-          </article>
-
-          <!-- Product Card 3 -->
-          <article class="product-card" id="product-medflo" role="listitem" data-category="healthcare new">
-            <a href="product.html?id=medflow-health" class="product-card__media-link">
-              <div class="product-card__media">
-                <div class="product-card__preview health-preview" aria-label="MedFlow Health UX preview">
-                  <div class="health-bg"></div>
-                  <div class="health-ui">
-                    <div class="health-vitals"></div>
-                    <div class="health-chart"></div>
-                  </div>
-                </div>
-                <div class="product-card__badges">
-                  <span class="badge badge--new">New</span>
-                </div>
-              </div>
-            </a>
-            <div class="product-card__body">
-              <div class="product-card__seller">
-                <div class="seller-avatar seller-avatar--red">HC</div>
-                <span class="seller-name">HealthCraft Design</span>
-              </div>
-              <h3 class="product-card__title">
-                <a href="product.html?id=medflow-health">MedFlow Health UX System</a>
-              </h3>
-              <p class="product-card__desc">Complete EHR & telemedicine design system. HIPAA-aware patterns, clinical data visualization.</p>
-              <div class="product-card__tech">
-                <span class="tech-tag">React</span>
-                <span class="tech-tag">Figma</span>
-                <span class="tech-tag">WCAG AAA</span>
-              </div>
-              <div class="product-card__footer">
-                <div class="product-card__rating" aria-label="Rating: 4.7 out of 5">
-                  <span class="stars" aria-hidden="true">★★★★☆</span>
-                  <span class="rating-num">4.7</span>
-                  <span class="rating-count">(88)</span>
-                </div>
-                <div class="product-card__price">
-                  <span class="price--current">₹18,499</span>
-                </div>
-              </div>
-              <a href="product.html?id=medflow-health" class="btn btn--primary btn--full btn--sm">View & Buy</a>
-            </div>
-          </article>
-
-          <!-- Product Card 4 -->
-          <article class="product-card" id="product-agentux" role="listitem" data-category="ai-powered new">
-            <a href="product.html?id=agentux-system" class="product-card__media-link">
-              <div class="product-card__media">
-                <div class="product-card__preview agent-preview" aria-label="AgentUX System preview">
-                  <div class="agent-bg"></div>
-                  <div class="agent-ui">
-                    <div class="agent-chat">
-                      <div class="agent-bubble agent-bubble--ai"></div>
-                      <div class="agent-bubble agent-bubble--user"></div>
-                      <div class="agent-bubble agent-bubble--ai"></div>
-                    </div>
-                  </div>
-                </div>
-                <div class="product-card__badges">
-                  <span class="badge badge--ai">AI-Native</span>
-                </div>
-              </div>
-            </a>
-            <div class="product-card__body">
-              <div class="product-card__seller">
-                <div class="seller-avatar seller-avatar--purple">AI</div>
-                <span class="seller-name">AIInterface.design</span>
-                <span class="seller-badge">⭐ Elite</span>
-              </div>
-              <h3 class="product-card__title">
-                <a href="product.html?id=agentux-system">AgentUX — Human-AI Interface System</a>
-              </h3>
-              <p class="product-card__desc">Design system for AI copilots, chat agents, and voice interfaces. Streaming UX, thinking states, tool calls UI.</p>
-              <div class="product-card__tech">
-                <span class="tech-tag">Next.js</span>
-                <span class="tech-tag">Vercel AI SDK</span>
-                <span class="tech-tag">Figma</span>
-              </div>
-              <div class="product-card__footer">
-                <div class="product-card__rating" aria-label="Rating: 5.0 out of 5">
-                  <span class="stars" aria-hidden="true">★★★★★</span>
-                  <span class="rating-num">5.0</span>
-                  <span class="rating-count">(47)</span>
-                </div>
-                <div class="product-card__price">
-                  <span class="price--current">₹24,999</span>
-                </div>
-              </div>
-              <a href="product.html?id=agentux-system" class="btn btn--primary btn--full btn--sm">View & Buy</a>
-            </div>
-          </article>
-        </div>
-
-        <div class="section__cta-center">
-          <a href="categories.html" class="btn btn--outline btn--lg">Browse All 12,400+ Products</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- ═══════════════════════════════ AI TOOLS BANNER ═══════════════════════════════ -->
-    <section class="section ai-banner" id="ai-tools" aria-labelledby="ai-tools-heading">
-      <div class="container">
-        <div class="ai-banner__inner">
-          <div class="ai-banner__content">
-            <span class="section__eyebrow">Powered by Gemini AI</span>
-            <h2 class="ai-banner__title" id="ai-tools-heading">AI-Powered Design Tools</h2>
-            <p class="ai-banner__desc">Generate, review, and convert design systems with our suite of AI tools — built natively into the marketplace.</p>
-            <div class="ai-tools-grid">
-              <div class="ai-tool-item" id="ai-tool-generator">
-                <div class="ai-tool-item__icon">✨</div>
-                <div>
-                  <p class="ai-tool-item__title">AI Design System Generator</p>
-                  <p class="ai-tool-item__desc">Generate complete design systems from a prompt</p>
-                </div>
-              </div>
-              <div class="ai-tool-item" id="ai-tool-reviewer">
-                <div class="ai-tool-item__icon">🔍</div>
-                <div>
-                  <p class="ai-tool-item__title">AI UX Reviewer</p>
-                  <p class="ai-tool-item__desc">Get UX scores &amp; actionable improvement suggestions</p>
-                </div>
-              </div>
-              <div class="ai-tool-item" id="ai-tool-converter">
-                <div class="ai-tool-item__icon">⚡</div>
-                <div>
-                  <p class="ai-tool-item__title">Figma → React Converter</p>
-                  <p class="ai-tool-item__desc">AI-powered code generation from your Figma files</p>
-                </div>
-              </div>
-              <div class="ai-tool-item" id="ai-tool-search">
-                <div class="ai-tool-item__icon">🤖</div>
-                <div>
-                  <p class="ai-tool-item__title">AI Search Assistant</p>
-                  <p class="ai-tool-item__desc">Describe what you need, find the perfect system</p>
-                </div>
-              </div>
-            </div>
-            <a href="ai-tools.html" class="btn btn--primary btn--lg" id="explore-ai-tools-btn">Explore AI Tools</a>
-          </div>
-          <div class="ai-banner__visual" aria-hidden="true">
-            <div class="ai-chat-demo">
-              <div class="ai-chat-demo__header">
-                <div class="ai-chat-demo__avatar">🤖</div>
-                <span>UXMarket AI Assistant</span>
-                <div class="ai-status-dot"></div>
-              </div>
-              <div class="ai-chat-demo__messages" id="ai-chat-messages">
-                <div class="chat-msg chat-msg--user">I need a FinTech dashboard for mobile banking</div>
-                <div class="chat-msg chat-msg--ai">
-                  <div class="chat-msg__typing" id="chat-typing">
-                    <span></span><span></span><span></span>
-                  </div>
-                  <p class="chat-msg__text" style="display:none">Found 12 matches. Top pick: <strong>FinFlow Pro</strong> — 400+ components, dark mode, WCAG 2.1 AA. ₹12,999 <a href="#">View →</a></p>
-                </div>
-              </div>
-              <div class="ai-chat-demo__input">
-                <input type="text" placeholder="Describe your UX need…" readonly aria-label="AI chat demo input" />
-                <button aria-label="Send">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ═══════════════════════════════ TOP SELLERS ═══════════════════════════════ -->
-    <section class="section sellers-section" aria-labelledby="sellers-heading">
-      <div class="container">
-        <div class="section__header">
-          <span class="section__eyebrow">Creator Economy</span>
-          <h2 class="section__title" id="sellers-heading">Top Sellers This Month</h2>
-          <p class="section__subtitle">Designers earning real income by publishing world-class design systems.</p>
-        </div>
-        <div class="sellers-grid">
-          <div class="seller-card" id="seller-sketchkraft">
-            <div class="seller-card__rank">#1</div>
-            <div class="seller-card__avatar seller-card__avatar--purple">SK</div>
-            <div class="seller-card__info">
-              <h3 class="seller-card__name">SketchKraft Studio</h3>
-              <p class="seller-card__specialty">AI Dashboards & SaaS UI</p>
-            </div>
-            <div class="seller-card__stats">
-              <div class="seller-stat">
-                <span class="seller-stat__val">₹4.2L</span>
-                <span class="seller-stat__label">Earned</span>
-              </div>
-              <div class="seller-stat">
-                <span class="seller-stat__val">28</span>
-                <span class="seller-stat__label">Products</span>
-              </div>
-              <div class="seller-stat">
-                <span class="seller-stat__val">4.9★</span>
-                <span class="seller-stat__label">Rating</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="seller-card" id="seller-designforge">
-            <div class="seller-card__rank">#2</div>
-            <div class="seller-card__avatar seller-card__avatar--green">DF</div>
-            <div class="seller-card__info">
-              <h3 class="seller-card__name">DesignForge</h3>
-              <p class="seller-card__specialty">FinTech & Enterprise UX</p>
-            </div>
-            <div class="seller-card__stats">
-              <div class="seller-stat">
-                <span class="seller-stat__val">₹3.1L</span>
-                <span class="seller-stat__label">Earned</span>
-              </div>
-              <div class="seller-stat">
-                <span class="seller-stat__val">19</span>
-                <span class="seller-stat__label">Products</span>
-              </div>
-              <div class="seller-stat">
-                <span class="seller-stat__val">4.8★</span>
-                <span class="seller-stat__label">Rating</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="seller-card" id="seller-aiinterface">
-            <div class="seller-card__rank">#3</div>
-            <div class="seller-card__avatar seller-card__avatar--blue">AI</div>
-            <div class="seller-card__info">
-              <h3 class="seller-card__name">AIInterface.design</h3>
-              <p class="seller-card__specialty">Human-AI Interfaces</p>
-            </div>
-            <div class="seller-card__stats">
-              <div class="seller-stat">
-                <span class="seller-stat__val">₹2.8L</span>
-                <span class="seller-stat__label">Earned</span>
-              </div>
-              <div class="seller-stat">
-                <span class="seller-stat__val">11</span>
-                <span class="seller-stat__label">Products</span>
-              </div>
-              <div class="seller-stat">
-                <span class="seller-stat__val">5.0★</span>
-                <span class="seller-stat__label">Rating</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="seller-cta-box">
-          <div>
-            <h3 class="seller-cta-box__title">Earn 70% Revenue Share</h3>
-            <p class="seller-cta-box__desc">Publish your design system and earn from thousands of global buyers. No upfront cost, no commissions on sales below ₹10,000.</p>
-          </div>
-          <a href="sellers.html" class="btn btn--primary btn--lg" id="start-selling-cta">Start Selling Today</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- ═══════════════════════════════ PRICING ═══════════════════════════════ -->
-    <section class="section pricing-section" id="pricing" aria-labelledby="pricing-heading">
-      <div class="container">
-        <div class="section__header">
-          <span class="section__eyebrow">Monetization Model</span>
-          <h2 class="section__title" id="pricing-heading">Flexible Plans for Every Team</h2>
-        </div>
-        <div class="pricing-toggle" role="group" aria-label="Billing period">
-          <button class="pricing-toggle__btn pricing-toggle__btn--active" id="pricing-monthly" data-period="monthly">Monthly</button>
-          <button class="pricing-toggle__btn" id="pricing-annual" data-period="annual">Annual <span class="pricing-save">Save 30%</span></button>
-        </div>
-        <div class="pricing-grid">
-          <div class="pricing-card" id="pricing-starter">
-            <div class="pricing-card__header">
-              <h3 class="pricing-card__name">Starter</h3>
-              <p class="pricing-card__desc">For independent designers & freelancers</p>
-              <div class="pricing-card__price">
-                <span class="pricing-amount" data-monthly="₹999" data-annual="₹699">₹999</span>
-                <span class="pricing-period">/month</span>
-              </div>
-            </div>
-            <ul class="pricing-features">
-              <li class="pricing-feature pricing-feature--check">Access to 5,000+ products</li>
-              <li class="pricing-feature pricing-feature--check">Personal license</li>
-              <li class="pricing-feature pricing-feature--check">100 AI credits/month</li>
-              <li class="pricing-feature pricing-feature--check">Community support</li>
-              <li class="pricing-feature pricing-feature--x">Commercial use</li>
-              <li class="pricing-feature pricing-feature--x">Source files access</li>
-            </ul>
-            <a href="auth.html#register?plan=starter" class="btn btn--outline btn--full" id="pricing-starter-btn">Get Started</a>
-          </div>
-
-          <div class="pricing-card pricing-card--featured" id="pricing-pro">
-            <div class="pricing-card__popular">Most Popular</div>
-            <div class="pricing-card__header">
-              <h3 class="pricing-card__name">Pro</h3>
-              <p class="pricing-card__desc">For agencies &amp; growing startups</p>
-              <div class="pricing-card__price">
-                <span class="pricing-amount" data-monthly="₹2,999" data-annual="₹1,999">₹2,999</span>
-                <span class="pricing-period">/month</span>
-              </div>
-            </div>
-            <ul class="pricing-features">
-              <li class="pricing-feature pricing-feature--check">Access to all 12,400+ products</li>
-              <li class="pricing-feature pricing-feature--check">Commercial license</li>
-              <li class="pricing-feature pricing-feature--check">500 AI credits/month</li>
-              <li class="pricing-feature pricing-feature--check">Priority support</li>
-              <li class="pricing-feature pricing-feature--check">Full source files</li>
-              <li class="pricing-feature pricing-feature--x">Enterprise SSO</li>
-            </ul>
-            <a href="auth.html#register?plan=pro" class="btn btn--primary btn--full" id="pricing-pro-btn">Start Pro Trial</a>
-          </div>
-
-          <div class="pricing-card" id="pricing-enterprise">
-            <div class="pricing-card__header">
-              <h3 class="pricing-card__name">Enterprise</h3>
-              <p class="pricing-card__desc">For large teams &amp; corporations</p>
-              <div class="pricing-card__price">
-                <span class="pricing-amount" style="font-size:1.5rem;">Custom</span>
-              </div>
-            </div>
-            <ul class="pricing-features">
-              <li class="pricing-feature pricing-feature--check">Unlimited access</li>
-              <li class="pricing-feature pricing-feature--check">Enterprise license (5L–50L)</li>
-              <li class="pricing-feature pricing-feature--check">Unlimited AI credits</li>
-              <li class="pricing-feature pricing-feature--check">Dedicated CSM</li>
-              <li class="pricing-feature pricing-feature--check">Private design system hosting</li>
-              <li class="pricing-feature pricing-feature--check">SSO + SAML + SCIM</li>
-            </ul>
-            <a href="enterprise.html" class="btn btn--outline btn--full" id="pricing-enterprise-btn">Contact Sales</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ═══════════════════════════════ GLOBAL EXPANSION ═══════════════════════════════ -->
-    <section class="section global-section" aria-labelledby="global-heading">
-      <div class="container">
-        <div class="section__header">
-          <span class="section__eyebrow">Global Expansion</span>
-          <h2 class="section__title" id="global-heading">Serving Design Teams Worldwide</h2>
-        </div>
-        <div class="global-grid">
-          <div class="global-region" id="global-india">
-            <div class="global-region__flag">🇮🇳</div>
-            <h3 class="global-region__name">India</h3>
-            <p class="global-region__desc">India UX market — the fastest growing design economy with 5M+ designers</p>
-            <div class="global-region__stats">
-              <span>₹ INR Pricing</span>
-              <span>GST Compliant</span>
-              <span>UPI Payments</span>
-            </div>
-          </div>
-          <div class="global-region" id="global-us">
-            <div class="global-region__flag">🇺🇸</div>
-            <h3 class="global-region__name">United States</h3>
-            <p class="global-region__desc">US SaaS ecosystem — enterprise and startup design system needs</p>
-            <div class="global-region__stats">
-              <span>$ USD Pricing</span>
-              <span>Stripe Payments</span>
-              <span>W8-BEN Tax</span>
-            </div>
-          </div>
-          <div class="global-region" id="global-eu">
-            <div class="global-region__flag">🇪🇺</div>
-            <h3 class="global-region__name">Europe</h3>
-            <p class="global-region__desc">EU enterprise systems — GDPR-compliant design and accessibility standards</p>
-            <div class="global-region__stats">
-              <span>€ EUR Pricing</span>
-              <span>GDPR Ready</span>
-              <span>VAT Compliant</span>
-            </div>
-          </div>
-          <div class="global-region" id="global-me">
-            <div class="global-region__flag">🇦🇪</div>
-            <h3 class="global-region__name">Middle East</h3>
-            <p class="global-region__desc">Digital transformation — Arabic RTL support and region-specific UX</p>
-            <div class="global-region__stats">
-              <span>RTL Support</span>
-              <span>Arabic Fonts</span>
-              <span>AED / SAR</span>
-            </div>
-          </div>
-          <div class="global-region" id="global-apac">
-            <div class="global-region__flag">🌏</div>
-            <h3 class="global-region__name">APAC</h3>
-            <p class="global-region__desc">Asia-Pacific startup ecosystem — high-growth markets in SEA, ANZ, Japan</p>
-            <div class="global-region__stats">
-              <span>Multi-currency</span>
-              <span>Local CDN</span>
-              <span>i18n Ready</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ═══════════════════════════════ TESTIMONIALS ═══════════════════════════════ -->
-    <section class="section testimonials-section" aria-labelledby="testimonials-heading">
-      <div class="container">
-        <div class="section__header">
-          <span class="section__eyebrow">Social Proof</span>
-          <h2 class="section__title" id="testimonials-heading">Loved by Design Teams Globally</h2>
-        </div>
-        <div class="testimonials-grid">
-          <blockquote class="testimonial-card" id="testimonial-1">
-            <p class="testimonial-card__text">"UXMarket AI saved us 6 months of design work. We bought the Aurora AI Dashboard and shipped our product in 3 weeks instead of 4 months."</p>
-            <footer class="testimonial-card__author">
-              <div class="testimonial-avatar">RK</div>
-              <div>
-                <cite class="testimonial-name">Rohan Kumar</cite>
-                <p class="testimonial-role">CTO, FinanceFlow — Mumbai</p>
-              </div>
-              <div class="testimonial-rating" aria-label="5 stars">★★★★★</div>
-            </footer>
-          </blockquote>
-
-          <blockquote class="testimonial-card" id="testimonial-2">
-            <p class="testimonial-card__text">"I've been selling on ThemeForest for 5 years. UXMarket AI's 70% revenue share and AI-focused audience means I earn 3x more for the same products."</p>
-            <footer class="testimonial-card__author">
-              <div class="testimonial-avatar">SA</div>
-              <div>
-                <cite class="testimonial-name">Sneha Arora</cite>
-                <p class="testimonial-role">Design System Seller — Bangalore</p>
-              </div>
-              <div class="testimonial-rating" aria-label="5 stars">★★★★★</div>
-            </footer>
-          </blockquote>
-
-          <blockquote class="testimonial-card" id="testimonial-3">
-            <p class="testimonial-card__text">"The enterprise license covered our entire 200-person design team. The Figma + React components work seamlessly with our stack."</p>
-            <footer class="testimonial-card__author">
-              <div class="testimonial-avatar">MP</div>
-              <div>
-                <cite class="testimonial-name">Marcus Peters</cite>
-                <p class="testimonial-role">Head of Design, TechCorp — San Francisco</p>
-              </div>
-              <div class="testimonial-rating" aria-label="5 stars">★★★★★</div>
-            </footer>
-          </blockquote>
-        </div>
-      </div>
-    </section>
-
-    <!-- ═══════════════════════════════ FINAL CTA ═══════════════════════════════ -->
-    <section class="section final-cta-section" aria-labelledby="final-cta-heading">
-      <div class="container">
-        <div class="final-cta">
-          <div class="final-cta__bg" aria-hidden="true"></div>
-          <div class="final-cta__content">
-            <h2 class="final-cta__title" id="final-cta-heading">Ready to Build the Future of UX?</h2>
-            <p class="final-cta__desc">Join 98,000+ designers, developers, and enterprises building with AI-powered design systems.</p>
-            <div class="final-cta__actions">
-              <a href="#marketplace" class="btn btn--white btn--lg" id="final-explore-btn">Explore Marketplace</a>
-              <a href="sellers.html" class="btn btn--outline-white btn--lg" id="final-sell-btn">Start Selling</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <!-- ═══════════════════════════════ FOOTER ═══════════════════════════════ -->
-  <footer class="footer" role="contentinfo">
-    <div class="container">
-      <div class="footer__top">
-        <div class="footer__brand">
-          <a href="index.html" class="nav__logo" aria-label="UXMarket AI">
-            <div class="nav__logo-icon">
-              <svg width="28" height="28" viewBox="0 0 32 32" fill="none" aria-hidden="true">
-                <rect width="32" height="32" rx="8" fill="url(#logo-gradient-footer)"/>
-                <path d="M8 16L14 10L20 16L26 10" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M8 22L14 16L20 22L26 16" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.6"/>
-                <defs>
-                  <linearGradient id="logo-gradient-footer" x1="0" y1="0" x2="32" y2="32">
-                    <stop offset="0%" stop-color="#6366f1"/>
-                    <stop offset="100%" stop-color="#8b5cf6"/>
-                  </linearGradient>
-                </defs>
-              </svg>
-            </div>
-            <span class="nav__logo-text">UXMarket<span class="nav__logo-ai">AI</span></span>
-          </a>
-          <p class="footer__tagline">The World's First AI UX Design Marketplace</p>
-          <div class="footer__socials">
-            <a href="#" aria-label="Twitter/X">𝕏</a>
-            <a href="#" aria-label="LinkedIn">in</a>
-            <a href="#" aria-label="Figma Community">◈</a>
-            <a href="#" aria-label="GitHub">⌥</a>
-          </div>
-        </div>
-        <nav class="footer__links" aria-label="Footer navigation">
-          <div class="footer__col">
-            <h4 class="footer__col-title">Marketplace</h4>
-            <a href="categories.html">All Categories</a>
-            <a href="category.html?cat=ai-dashboards">AI Dashboards</a>
-            <a href="category.html?cat=fintech">FinTech UX</a>
-            <a href="category.html?cat=saas">SaaS UI Kits</a>
-            <a href="category.html?cat=enterprise">Enterprise Systems</a>
-          </div>
-          <div class="footer__col">
-            <h4 class="footer__col-title">Creators</h4>
-            <a href="sellers.html">Become a Seller</a>
-            <a href="sellers.html#pricing">Seller Pricing</a>
-            <a href="sellers.html#guidelines">Design Guidelines</a>
-            <a href="sellers.html#resources">Seller Resources</a>
-          </div>
-          <div class="footer__col">
-            <h4 class="footer__col-title">AI Tools</h4>
-            <a href="ai-tools.html">AI Generator</a>
-            <a href="ai-tools.html#reviewer">UX Reviewer</a>
-            <a href="ai-tools.html#converter">Figma → React</a>
-            <a href="ai-tools.html#search">AI Search</a>
-          </div>
-          <div class="footer__col">
-            <h4 class="footer__col-title">Company</h4>
-            <a href="about.html">About Us</a>
-            <a href="enterprise.html">Enterprise</a>
-            <a href="blog.html">Blog</a>
-            <a href="careers.html">Careers</a>
-          </div>
-        </nav>
-      </div>
-      <div class="footer__bottom">
-        <p>© 2026 UXMarket AI. All rights reserved. Built with ❤️ for the global design community.</p>
-        <div class="footer__legal">
-          <a href="privacy.html">Privacy Policy</a>
-          <a href="terms.html">Terms of Service</a>
-          <a href="licenses.html">Licensing</a>
-        </div>
+      <div style="display:flex;gap:var(--space-2);flex-wrap:wrap" role="group" aria-label="Filter products">
+        <button class="btn btn--secondary btn--sm active" data-filter="all" id="filter-all">All</button>
+        <button class="btn btn--ghost btn--sm" data-filter="ai" id="filter-ai">AI &amp; Chat</button>
+        <button class="btn btn--ghost btn--sm" data-filter="saas" id="filter-saas">SaaS</button>
+        <button class="btn btn--ghost btn--sm" data-filter="fintech" id="filter-fintech">FinTech</button>
+        <button class="btn btn--ghost btn--sm" data-filter="enterprise" id="filter-enterprise">Enterprise</button>
       </div>
     </div>
-  </footer>
 
-  <script src="js/main.js" type="module"></script>
+    <div class="product-grid stagger-children" id="product-grid" data-reveal>
+
+      <!-- Product 1 -->
+      <article class="product-card" data-category="saas" id="product-aurora">
+        <div class="product-card__preview">
+          <div class="preview--aurora preview-ui" style="position:relative;height:100%">
+            <div class="preview-sidebar"></div>
+            <div class="preview-content">
+              <div class="preview-widget"></div>
+              <div style="display:flex;gap:6px;flex:1">
+                <div class="preview-widget" style="height:auto;flex:1"></div>
+                <div class="preview-widget" style="height:auto;flex:1"></div>
+              </div>
+            </div>
+          </div>
+          <div style="position:absolute;top:10px;right:10px">
+            <span class="badge badge--new">Editor's Pick</span>
+          </div>
+        </div>
+        <div class="product-card__seller">
+          <div class="seller-avatar seller-avatar--purple" aria-hidden="true">AX</div>
+          <span class="seller-name">AxiomDesign Studio</span>
+          <span class="seller-badge" aria-label="Verified seller">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          </span>
+        </div>
+        <h3 class="product-card__title"><a href="product.html">Aurora AI Dashboard Pro</a></h3>
+        <p class="product-card__desc">340+ components for AI analytics products. Dark mode, Figma variables, React components.</p>
+        <div class="product-card__tags">
+          <span class="tech-tag">Figma</span>
+          <span class="tech-tag">React</span>
+          <span class="tech-tag">TypeScript</span>
+        </div>
+        <div class="product-card__footer">
+          <div class="product-card__rating">
+            <span class="stars" aria-label="4.9 stars">★★★★★</span>
+            <span class="rating-num">4.9</span>
+            <span class="rating-count">(847)</span>
+          </div>
+          <div>
+            <span class="price-current">$49</span>
+            <span class="price-original">$99</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Product 2 -->
+      <article class="product-card" data-category="fintech" id="product-finledger">
+        <div class="product-card__preview">
+          <div class="preview--fintech" style="width:100%;height:100%">
+            <div class="preview-ui">
+              <div style="height:30%;background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.15);border-radius:6px;margin-bottom:8px;display:flex;align-items:center;padding:8px 12px">
+                <div style="font-family:var(--font-mono);font-size:9px;color:rgba(52,211,153,0.8)">+24.8% ↑</div>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
+                <div style="height:50px;background:rgba(16,185,129,0.05);border:1px solid rgba(16,185,129,0.1);border-radius:6px"></div>
+                <div style="height:50px;background:rgba(16,185,129,0.05);border:1px solid rgba(16,185,129,0.1);border-radius:6px"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="product-card__seller">
+          <div class="seller-avatar seller-avatar--green" aria-hidden="true">KV</div>
+          <span class="seller-name">KapilVerma.design</span>
+          <span class="seller-badge" aria-label="Verified seller">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          </span>
+        </div>
+        <h3 class="product-card__title"><a href="product.html">FinLedger Pro Dashboard</a></h3>
+        <p class="product-card__desc">Banking-grade UX kit with transaction tables, portfolio charts, KYC flows, and payment widgets.</p>
+        <div class="product-card__tags">
+          <span class="tech-tag">Figma</span>
+          <span class="tech-tag">Variables</span>
+        </div>
+        <div class="product-card__footer">
+          <div class="product-card__rating">
+            <span class="stars" aria-label="4.8 stars">★★★★★</span>
+            <span class="rating-num">4.8</span>
+            <span class="rating-count">(312)</span>
+          </div>
+          <div><span class="price-current">$89</span></div>
+        </div>
+      </article>
+
+      <!-- Product 3 -->
+      <article class="product-card" data-category="ai" id="product-agentflow">
+        <div class="product-card__preview">
+          <div class="preview--agent" style="width:100%;height:100%">
+            <div class="preview-ui" style="display:flex;flex-direction:column;gap:8px">
+              <div style="background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.2);border-radius:8px;padding:8px 12px">
+                <div style="font-size:9px;color:rgba(129,140,248,0.9);font-family:var(--font-mono)">User: Show me revenue trends</div>
+              </div>
+              <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);border-radius:8px;padding:8px 12px;margin-left:20px">
+                <div style="font-size:9px;color:rgba(255,255,255,0.5);font-family:var(--font-mono)">Agent: Analyzing Q1–Q3 data…</div>
+              </div>
+              <div style="height:30px;background:rgba(99,102,241,0.06);border:1px solid rgba(99,102,241,0.12);border-radius:6px;margin-top:auto"></div>
+            </div>
+          </div>
+          <div style="position:absolute;top:10px;right:10px">
+            <span class="badge badge--ai">AI-native</span>
+          </div>
+        </div>
+        <div class="product-card__seller">
+          <div class="seller-avatar seller-avatar--amber" aria-hidden="true">SS</div>
+          <span class="seller-name">SnehaSharma.ux</span>
+          <span class="seller-badge" aria-label="Verified seller">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          </span>
+        </div>
+        <h3 class="product-card__title"><a href="product.html">AgentFlow UI System</a></h3>
+        <p class="product-card__desc">Design system purpose-built for LLM-powered products. Streaming UIs, tool calling displays, agent state visualizations.</p>
+        <div class="product-card__tags">
+          <span class="tech-tag">React</span>
+          <span class="tech-tag">Next.js</span>
+          <span class="tech-tag">Storybook</span>
+        </div>
+        <div class="product-card__footer">
+          <div class="product-card__rating">
+            <span class="stars" aria-label="5 stars">★★★★★</span>
+            <span class="rating-num">5.0</span>
+            <span class="rating-count">(128)</span>
+          </div>
+          <div><span class="price-current">$129</span></div>
+        </div>
+      </article>
+
+      <!-- Product 4 -->
+      <article class="product-card" data-category="enterprise" id="product-enterprise-kit">
+        <div class="product-card__preview" style="background:var(--bg-elevated)">
+          <div style="width:100%;height:100%;background:linear-gradient(135deg,#08080e,#0d0d1a);padding:16px;display:flex;flex-direction:column;gap:8px">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+              <div style="width:8px;height:8px;border-radius:50%;background:rgba(16,185,129,0.7)"></div>
+              <div style="font-size:9px;color:rgba(255,255,255,0.3);font-family:var(--font-mono)">Design Tokens v3.0</div>
+            </div>
+            <div style="height:1px;background:rgba(255,255,255,0.06)"></div>
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:4px">
+              <div style="height:16px;background:rgba(99,102,241,0.4);border-radius:3px"></div>
+              <div style="height:16px;background:rgba(16,185,129,0.3);border-radius:3px"></div>
+              <div style="height:16px;background:rgba(245,158,11,0.3);border-radius:3px"></div>
+              <div style="height:16px;background:rgba(239,68,68,0.3);border-radius:3px"></div>
+            </div>
+            <div style="height:20px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);border-radius:4px"></div>
+            <div style="height:20px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);border-radius:4px;width:70%"></div>
+          </div>
+        </div>
+        <div class="product-card__seller">
+          <div class="seller-avatar seller-avatar--purple" aria-hidden="true">GD</div>
+          <span class="seller-name">GlobalDS Team</span>
+          <span class="seller-badge" aria-label="Verified seller">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          </span>
+        </div>
+        <h3 class="product-card__title"><a href="product.html">Polaris Enterprise System v3</a></h3>
+        <p class="product-card__desc">Token-driven design system with accessibility baked in. 580+ components, brand theming, multi-brand support.</p>
+        <div class="product-card__tags">
+          <span class="tech-tag">Figma</span>
+          <span class="tech-tag">Tokens</span>
+          <span class="tech-tag">A11y</span>
+        </div>
+        <div class="product-card__footer">
+          <div class="product-card__rating">
+            <span class="stars" aria-label="4.7 stars">★★★★☆</span>
+            <span class="rating-num">4.7</span>
+            <span class="rating-count">(204)</span>
+          </div>
+          <div><span class="price-current">$199</span></div>
+        </div>
+      </article>
+
+      <!-- Product 5 -->
+      <article class="product-card" data-category="ai" id="product-rag-ui">
+        <div class="product-card__preview" style="background:var(--bg-elevated)">
+          <div style="width:100%;height:100%;background:linear-gradient(160deg,#060614,#0a0a20);padding:14px">
+            <div style="display:flex;gap:8px;height:100%;align-items:stretch">
+              <div style="width:36%;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:6px;padding:8px;display:flex;flex-direction:column;gap:4px">
+                <div style="height:6px;background:rgba(255,255,255,0.1);border-radius:3px;width:70%"></div>
+                <div style="height:6px;background:rgba(99,102,241,0.3);border-radius:3px"></div>
+                <div style="height:6px;background:rgba(255,255,255,0.06);border-radius:3px;width:85%"></div>
+                <div style="height:6px;background:rgba(255,255,255,0.06);border-radius:3px;width:55%"></div>
+              </div>
+              <div style="flex:1;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05);border-radius:6px;padding:8px;display:flex;flex-direction:column;gap:6px">
+                <div style="height:8px;background:rgba(99,102,241,0.15);border-radius:3px;width:60%"></div>
+                <div style="height:5px;background:rgba(255,255,255,0.05);border-radius:3px"></div>
+                <div style="height:5px;background:rgba(255,255,255,0.05);border-radius:3px;width:80%"></div>
+                <div style="margin-top:auto;height:16px;background:rgba(99,102,241,0.12);border:1px solid rgba(99,102,241,0.2);border-radius:4px"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="product-card__seller">
+          <div class="seller-avatar seller-avatar--green" aria-hidden="true">RK</div>
+          <span class="seller-name">RAG.design</span>
+        </div>
+        <h3 class="product-card__title"><a href="product.html">RAG Search UI Kit</a></h3>
+        <p class="product-card__desc">Purpose-built for retrieval-augmented generation products. Source citation UI, confidence scores, streaming results.</p>
+        <div class="product-card__tags">
+          <span class="tech-tag">React</span>
+          <span class="tech-tag">Tailwind</span>
+        </div>
+        <div class="product-card__footer">
+          <div class="product-card__rating">
+            <span class="stars" aria-label="4.6 stars">★★★★☆</span>
+            <span class="rating-num">4.6</span>
+            <span class="rating-count">(89)</span>
+          </div>
+          <div><span class="price-current">$79</span></div>
+        </div>
+      </article>
+
+      <!-- Product 6 -->
+      <article class="product-card" data-category="saas" id="product-clarity">
+        <div class="product-card__preview" style="background:var(--bg-elevated)">
+          <div style="width:100%;height:100%;background:linear-gradient(135deg,#050510,#0c0c20);padding:14px;display:flex;flex-direction:column;gap:8px">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <div style="display:flex;gap:4px">
+                <div style="width:8px;height:8px;border-radius:2px;background:rgba(99,102,241,0.6)"></div>
+                <div style="width:8px;height:8px;border-radius:2px;background:rgba(255,255,255,0.1)"></div>
+                <div style="width:8px;height:8px;border-radius:2px;background:rgba(255,255,255,0.1)"></div>
+              </div>
+              <div style="width:40px;height:6px;background:rgba(255,255,255,0.08);border-radius:3px"></div>
+            </div>
+            <div style="flex:1;background:rgba(99,102,241,0.05);border:1px solid rgba(99,102,241,0.1);border-radius:6px;display:flex;align-items:flex-end;padding:6px;gap:3px">
+              <div style="flex:1;background:rgba(99,102,241,0.2);border-radius:2px 2px 0 0;height:30%"></div>
+              <div style="flex:1;background:rgba(99,102,241,0.3);border-radius:2px 2px 0 0;height:60%"></div>
+              <div style="flex:1;background:rgba(99,102,241,0.4);border-radius:2px 2px 0 0;height:45%"></div>
+              <div style="flex:1;background:rgba(99,102,241,0.5);border-radius:2px 2px 0 0;height:80%"></div>
+              <div style="flex:1;background:rgba(99,102,241,0.6);border-radius:2px 2px 0 0;height:55%"></div>
+              <div style="flex:1;background:rgba(129,140,248,0.7);border-radius:2px 2px 0 0;height:100%"></div>
+            </div>
+          </div>
+        </div>
+        <div class="product-card__seller">
+          <div class="seller-avatar seller-avatar--amber" aria-hidden="true">CL</div>
+          <span class="seller-name">Clarity.design</span>
+          <span class="seller-badge" aria-label="Verified seller">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          </span>
+        </div>
+        <h3 class="product-card__title"><a href="product.html">Clarity SaaS UI Kit</a></h3>
+        <p class="product-card__desc">Minimal, fast-to-implement SaaS dashboard. 220 components, 12 page templates, dark + light.</p>
+        <div class="product-card__tags">
+          <span class="tech-tag">Figma</span>
+          <span class="tech-tag">Vue</span>
+        </div>
+        <div class="product-card__footer">
+          <div class="product-card__rating">
+            <span class="stars" aria-label="4.8 stars">★★★★★</span>
+            <span class="rating-num">4.8</span>
+            <span class="rating-count">(445)</span>
+          </div>
+          <div><span class="price-current">$59</span></div>
+        </div>
+      </article>
+    </div>
+
+    <div style="text-align:center;margin-top:var(--space-10)" data-reveal>
+      <a href="categories.html" class="btn btn--secondary" id="browse-all-btn">
+        Browse all 12,400+ products
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider" aria-hidden="true"></div>
+
+<!-- ── Why UXMarket AI (Bento) ─────────────────────────────── -->
+<section class="section" aria-labelledby="why-heading">
+  <div class="container">
+    <div class="section-header" data-reveal>
+      <div class="eyebrow" aria-hidden="true">Why choose us</div>
+      <h2 id="why-heading">Not just another marketplace</h2>
+      <p>Purpose-built for the AI product era. Everything ThemeForest wasn't.</p>
+    </div>
+
+    <div class="bento-grid stagger-children" data-reveal>
+      <div class="bento-cell bento-cell--wide">
+        <div class="icon-box icon-box--accent" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 0 2h-1v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1H2a1 1 0 0 1 0-2h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2z"/><circle cx="9" cy="12" r="1"/><circle cx="15" cy="12" r="1"/></svg>
+        </div>
+        <div class="bento-cell__title">AI Quality Review — Every product</div>
+        <div class="bento-cell__desc">Our AI reviewer checks every submission for accessibility, token consistency, dark mode support, and component completeness before it goes live. Buyers get what's advertised, guaranteed.</div>
+        <div class="bento-cell__visual" aria-hidden="true">
+          <div style="padding:16px;display:flex;flex-direction:column;gap:8px;height:100%">
+            <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.15);border-radius:8px">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(52,211,153,0.8)" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              <span style="font-size:12px;color:rgba(255,255,255,0.6)">Accessibility: WCAG 2.1 AA ✓</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.15);border-radius:8px">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(52,211,153,0.8)" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              <span style="font-size:12px;color:rgba(255,255,255,0.6)">Design Tokens: 100% structured ✓</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.15);border-radius:8px">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(52,211,153,0.8)" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              <span style="font-size:12px;color:rgba(255,255,255,0.6)">Dark mode: Complete coverage ✓</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bento-cell">
+        <div class="icon-box icon-box--success" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        </div>
+        <div class="bento-cell__title">Version Control for Design</div>
+        <div class="bento-cell__desc">Every purchase includes all future updates automatically. No re-purchasing. Design systems evolve — yours should too.</div>
+      </div>
+
+      <div class="bento-cell">
+        <div class="icon-box icon-box--warning" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        </div>
+        <div class="bento-cell__title">Live Preview, Always</div>
+        <div class="bento-cell__desc">Every product ships with an interactive preview. Toggle dark/light, resize breakpoints, and test interactions before you buy.</div>
+      </div>
+
+      <div class="bento-cell">
+        <div class="icon-box icon-box--accent" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div class="bento-cell__title">70% Creator Revenue Share</div>
+        <div class="bento-cell__desc">We take 30%, you keep 70%. The most creator-friendly split in the industry. No hidden fees, no exclusivity lock-in.</div>
+      </div>
+
+      <div class="bento-cell">
+        <div class="icon-box icon-box--success" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        </div>
+        <div class="bento-cell__title">Built-in AI Tools</div>
+        <div class="bento-cell__desc">Generate custom variations, analyze competitor designs, or convert Figma to production-ready React — all inside the platform.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider" aria-hidden="true"></div>
+
+<!-- ── CTA ─────────────────────────────────────────────────── -->
+<section class="section" aria-labelledby="cta-heading">
+  <div class="container">
+    <div class="cta-section" data-reveal>
+      <div class="badge badge--new" style="margin-bottom:var(--space-5)" aria-hidden="true">Free to start selling</div>
+      <h2 id="cta-heading">Your design system should<br>work while you sleep</h2>
+      <p>Join 3,800+ creators who turned their design systems into recurring revenue. Your first listing is free.</p>
+      <div style="display:flex;align-items:center;justify-content:center;gap:var(--space-3);flex-wrap:wrap">
+        <a href="sellers.html" class="btn btn--primary btn--xl" id="cta-start-selling">
+          Start selling for free
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+        <a href="enterprise.html" class="btn btn--secondary btn--xl" id="cta-enterprise">Talk to enterprise sales</a>
+      </div>
+      <p style="font-size:var(--text-xs);color:var(--text-muted);margin-top:var(--space-6);margin-bottom:0">No credit card required · Instant payouts · 70% revenue share</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── Footer ──────────────────────────────────────────────── -->
+<footer class="footer" role="contentinfo">
+  <div class="container">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <a href="index.html" class="nav__logo" style="margin-bottom:var(--space-3);display:inline-flex" aria-label="UXMarket AI">
+          <div class="nav__logo-mark" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="5" height="5" rx="1" fill="white" opacity="0.9"/><rect x="8" y="1" width="5" height="5" rx="1" fill="white" opacity="0.6"/><rect x="1" y="8" width="5" height="5" rx="1" fill="white" opacity="0.6"/><rect x="8" y="8" width="5" height="5" rx="1" fill="white" opacity="0.3"/></svg>
+          </div>
+          UXMarket AI
+        </a>
+        <p>The world's premier marketplace for AI-native design systems and human-AI interface templates.</p>
+      </div>
+
+      <div class="footer__col">
+        <h5>Marketplace</h5>
+        <ul class="footer__links">
+          <li><a href="categories.html">Browse categories</a></li>
+          <li><a href="product.html">Featured products</a></li>
+          <li><a href="ai-tools.html">AI tools</a></li>
+          <li><a href="categories.html#new">New arrivals</a></li>
+        </ul>
+      </div>
+
+      <div class="footer__col">
+        <h5>For creators</h5>
+        <ul class="footer__links">
+          <li><a href="sellers.html">Become a seller</a></li>
+          <li><a href="sellers.html#pricing">Seller pricing</a></li>
+          <li><a href="sellers.html#faq">Creator FAQ</a></li>
+          <li><a href="ai-tools.html">Design AI tools</a></li>
+        </ul>
+      </div>
+
+      <div class="footer__col">
+        <h5>Enterprise</h5>
+        <ul class="footer__links">
+          <li><a href="enterprise.html">Enterprise plan</a></li>
+          <li><a href="enterprise.html#sso">SSO &amp; security</a></li>
+          <li><a href="enterprise.html#api">API access</a></li>
+          <li><a href="enterprise.html#contact">Contact sales</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <span>© 2025 UXMarket AI. All rights reserved.</span>
+      <div style="display:flex;gap:var(--space-6)">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Cookies</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
 </body>
 </html>

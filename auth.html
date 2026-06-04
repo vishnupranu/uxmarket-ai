@@ -1,395 +1,438 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sign In / Register — UXMarket AI</title>
-  <meta name="description" content="Sign in or create your UXMarket AI account. Buy design systems, sell your work, or access AI tools." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/style.css" />
-  <link rel="stylesheet" href="css/animations.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In — UXMarket AI</title>
+  <meta name="description" content="Sign in to UXMarket AI — the world's premier design system marketplace.">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <script src="js/theme.js"></script>
   <style>
-    .auth-page {
+    html, body { height: 100%; }
+    body { display: grid; place-items: center; min-height: 100vh; }
+
+    .auth-wrapper {
+      width: 100%;
       min-height: 100vh;
       display: grid;
       grid-template-columns: 1fr 1fr;
     }
+    @media(max-width:768px){ .auth-wrapper { grid-template-columns: 1fr; } }
 
-    .auth-visual {
-      background: linear-gradient(135deg, #0d0d2b, #1a0a2e, #0d1f3c);
+    /* Left: brand panel */
+    .auth-brand {
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: var(--space-8);
+      background: var(--bg-base);
+    }
+    @media(max-width:768px){ .auth-brand { display: none; } }
+
+    .auth-brand__bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+
+    .auth-brand__content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      justify-content: space-between;
+    }
+
+    .auth-brand__stats {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+
+    .auth-stat-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+      backdrop-filter: blur(8px);
+      animation: slide-in-left 0.6s var(--ease-smooth) both;
+    }
+    .auth-stat-card:nth-child(1) { animation-delay: 0.5s; }
+    .auth-stat-card:nth-child(2) { animation-delay: 0.7s; }
+
+    .auth-stat-num {
+      font-size: var(--text-2xl);
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      color: var(--text-primary);
+    }
+    .auth-stat-label {
+      font-size: var(--text-xs);
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .testimonial-mini {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+      backdrop-filter: blur(8px);
+      animation: slide-in-left 0.6s var(--ease-smooth) 0.9s both;
+    }
+    .testimonial-mini__quote {
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: var(--space-3);
+      font-style: italic;
+    }
+
+    /* Right: form panel */
+    .auth-form-panel {
       display: flex;
       flex-direction: column;
       justify-content: center;
-      padding: 60px;
-      position: relative;
-      overflow: hidden;
+      padding: clamp(var(--space-8), 5vw, 80px) clamp(var(--space-6), 5vw, 64px);
+      background: var(--bg-surface);
+      border-left: 1px solid var(--border);
+      min-height: 100vh;
+    }
+    @media(max-width:768px){
+      .auth-form-panel {
+        border-left: none;
+        padding: var(--space-16) var(--space-6);
+      }
     }
 
-    .auth-visual::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse 80% 80% at 30% 40%, rgba(99,102,241,0.2) 0%, transparent 60%);
-    }
-
-    .auth-visual__content { position: relative; z-index: 1; }
-
-    .auth-form-side {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 60px 48px;
-      background: var(--color-bg);
-    }
-
-    .auth-card {
+    .auth-form-inner {
       width: 100%;
-      max-width: 420px;
+      max-width: 400px;
+      margin: 0 auto;
     }
 
+    /* Auth tabs */
     .auth-tabs {
       display: flex;
       gap: 0;
-      background: var(--color-surface);
-      border: 1px solid var(--color-border);
+      border: 1px solid var(--border);
       border-radius: var(--radius-lg);
       padding: 4px;
-      margin-bottom: 32px;
+      background: var(--bg-elevated);
+      margin-bottom: var(--space-8);
     }
-
     .auth-tab {
       flex: 1;
-      padding: 10px;
+      padding: 9px var(--space-4);
+      font-size: var(--text-sm);
+      font-weight: 600;
+      color: var(--text-secondary);
       border-radius: calc(var(--radius-lg) - 4px);
-      font-size: 0.875rem;
-      font-weight: 600;
-      color: var(--color-text-3);
-      transition: all var(--transition-fast);
+      border: 1px solid transparent;
+      cursor: pointer;
       text-align: center;
-    }
-
-    .auth-tab.active {
-      background: var(--gradient-primary);
-      color: white;
-    }
-
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      margin-bottom: 16px;
-    }
-
-    .form-label {
-      font-size: 0.8125rem;
-      font-weight: 600;
-      color: var(--color-text-2);
-    }
-
-    .form-input {
-      background: var(--color-surface);
-      border: 1px solid var(--color-border-2);
-      border-radius: var(--radius-md);
-      padding: 12px 16px;
-      color: var(--color-text);
-      font-size: 0.9375rem;
-      font-family: var(--font-sans);
-      outline: none;
       transition: all var(--transition-fast);
+      font-family: var(--font-sans);
+      background: none;
+    }
+    .auth-tab.active {
+      background: var(--bg-base);
+      color: var(--text-primary);
+      border-color: var(--border);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* OAuth buttons */
+    .oauth-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-3);
       width: 100%;
+      padding: 11px var(--space-4);
+      font-size: var(--text-sm);
+      font-weight: 600;
+      font-family: var(--font-sans);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-md);
+      background: var(--bg-card);
+      color: var(--text-primary);
+      cursor: pointer;
+      transition: all var(--transition-fast);
     }
-
-    .form-input:focus {
-      border-color: var(--color-primary);
-      box-shadow: 0 0 0 3px rgba(99,102,241,0.15);
+    .oauth-btn:hover {
+      background: var(--bg-elevated);
+      border-color: var(--text-muted);
     }
-
-    .form-input::placeholder { color: var(--color-text-3); }
+    .oauth-btn svg { width: 18px; height: 18px; flex-shrink: 0; }
 
     .auth-divider {
       display: flex;
       align-items: center;
-      gap: 16px;
-      margin: 24px 0;
-      color: var(--color-text-3);
-      font-size: 0.8125rem;
+      gap: var(--space-3);
+      margin: var(--space-6) 0;
+      color: var(--text-muted);
+      font-size: var(--text-xs);
     }
-
     .auth-divider::before, .auth-divider::after {
       content: '';
       flex: 1;
       height: 1px;
-      background: var(--color-border);
+      background: var(--border);
     }
 
-    .social-btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      width: 100%;
-      padding: 12px;
-      border: 1px solid var(--color-border-2);
-      border-radius: var(--radius-md);
-      background: var(--color-surface);
-      color: var(--color-text);
-      font-size: 0.875rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all var(--transition-fast);
-      margin-bottom: 8px;
+    .field-error {
+      font-size: var(--text-xs);
+      color: var(--danger);
+      margin-top: 4px;
+      display: block;
     }
+    .form-input.error { border-color: var(--danger); }
 
-    .social-btn:hover {
-      border-color: var(--color-primary);
-      background: rgba(99,102,241,0.05);
+    .auth-footer-text {
+      text-align: center;
+      font-size: var(--text-xs);
+      color: var(--text-muted);
+      margin-top: var(--space-6);
+      line-height: 1.6;
     }
-
-    @media (max-width: 768px) {
-      .auth-page { grid-template-columns: 1fr; }
-      .auth-visual { display: none; }
-      .auth-form-side { padding: 32px 24px; }
-    }
+    .auth-footer-text a { color: var(--text-secondary); text-decoration: underline; text-underline-offset: 2px; }
   </style>
 </head>
 <body>
-  <div class="auth-page">
-    <!-- Visual Side -->
-    <div class="auth-visual">
-      <a href="index.html" class="nav__logo" style="margin-bottom:48px;">
-        <div class="nav__logo-icon"><svg width="36" height="36" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="url(#lg6)"/><path d="M8 16L14 10L20 16L26 10" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 22L14 16L20 22L26 16" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.6"/><defs><linearGradient id="lg6" x1="0" y1="0" x2="32" y2="32"><stop offset="0%" stop-color="#6366f1"/><stop offset="100%" stop-color="#8b5cf6"/></linearGradient></defs></svg></div>
-        <span class="nav__logo-text" style="font-size:1.5rem;">UXMarket<span class="nav__logo-ai">AI</span></span>
+
+<!-- Theme toggle floating -->
+<div style="position:fixed;top:var(--space-4);right:var(--space-4);z-index:1001">
+  <button class="theme-toggle" id="theme-toggle-btn" aria-label="Toggle theme">
+    <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/></svg>
+  </button>
+</div>
+
+<div class="auth-wrapper">
+  <!-- Brand panel (left) -->
+  <div class="auth-brand">
+    <div class="auth-brand__bg">
+      <div class="mesh-orb mesh-orb--1" style="width:500px;height:500px;opacity:0.3" aria-hidden="true"></div>
+      <div class="mesh-orb mesh-orb--2" style="opacity:0.2" aria-hidden="true"></div>
+      <div class="grid-overlay" aria-hidden="true"></div>
+    </div>
+    <div class="auth-brand__content">
+      <!-- Logo top -->
+      <a href="index.html" class="nav__logo" style="display:inline-flex;margin-bottom:var(--space-12)" aria-label="UXMarket AI Home">
+        <div class="nav__logo-mark" aria-hidden="true">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="5" height="5" rx="1" fill="white" opacity="0.9"/><rect x="8" y="1" width="5" height="5" rx="1" fill="white" opacity="0.6"/><rect x="1" y="8" width="5" height="5" rx="1" fill="white" opacity="0.6"/><rect x="8" y="8" width="5" height="5" rx="1" fill="white" opacity="0.3"/></svg>
+        </div>
+        UXMarket <span class="nav__logo-ai">AI</span>
       </a>
 
-      <div class="auth-visual__content">
-        <h2 style="font-size:2.5rem;font-weight:900;font-family:'Space Grotesk',sans-serif;line-height:1.1;margin-bottom:16px;">
-          The World's First<br>
-          <span style="background:linear-gradient(135deg,#a5b4fc,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">AI UX Marketplace</span>
-        </h2>
-        <p style="font-size:1rem;color:rgba(255,255,255,0.6);line-height:1.8;margin-bottom:48px;">
-          Join 98,000+ designers, developers, and enterprises building with AI-powered design systems.
+      <!-- Main message -->
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:center">
+        <h1 style="font-size:clamp(2rem,3.5vw,3rem);font-weight:900;letter-spacing:-0.05em;line-height:1.05;margin-bottom:var(--space-4)" class="animate-slide-up">
+          The marketplace<br>where design<br><em style="font-style:normal;background:linear-gradient(135deg,var(--accent-light),var(--accent-2-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">systems earn</em>
+        </h1>
+        <p style="font-size:var(--text-base);color:var(--text-secondary);line-height:1.7;margin-bottom:var(--space-10);max-width:380px" class="animate-slide-up delay-200">
+          Join 98,000+ designers and 3,800+ creators on the world's first AI-native design marketplace.
         </p>
 
-        <div style="display:flex;flex-direction:column;gap:16px;">
-          <div style="display:flex;align-items:center;gap:12px;">
-            <div style="width:36px;height:36px;border-radius:8px;background:rgba(99,102,241,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;">✨</div>
-            <div>
-              <p style="font-size:0.875rem;font-weight:600;color:white;">100 Free AI Credits</p>
-              <p style="font-size:0.75rem;color:rgba(255,255,255,0.5);">Generate your first design system free</p>
+        <div class="auth-brand__stats">
+          <div class="auth-stat-card">
+            <div style="display:flex;align-items:center;justify-content:space-between">
+              <div>
+                <div class="auth-stat-num">₹8.4L</div>
+                <div class="auth-stat-label">Avg. top seller monthly earnings</div>
+              </div>
+              <div style="color:var(--success);font-size:var(--text-xs)">+18% MoM</div>
             </div>
           </div>
-          <div style="display:flex;align-items:center;gap:12px;">
-            <div style="width:36px;height:36px;border-radius:8px;background:rgba(16,185,129,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;">💰</div>
-            <div>
-              <p style="font-size:0.875rem;font-weight:600;color:white;">70% Revenue Share</p>
-              <p style="font-size:0.75rem;color:rgba(255,255,255,0.5);">Highest in the industry for sellers</p>
-            </div>
-          </div>
-          <div style="display:flex;align-items:center;gap:12px;">
-            <div style="width:36px;height:36px;border-radius:8px;background:rgba(6,182,212,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;">🌍</div>
-            <div>
-              <p style="font-size:0.875rem;font-weight:600;color:white;">Global Marketplace</p>
-              <p style="font-size:0.75rem;color:rgba(255,255,255,0.5);">India, US, EU, ME, APAC coverage</p>
-            </div>
-          </div>
-        </div>
 
-        <!-- Mini preview cards -->
-        <div style="margin-top:40px;display:flex;gap:12px;flex-wrap:wrap;">
-          <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 16px;">
-            <div style="font-size:0.75rem;color:rgba(255,255,255,0.5);">Active Sellers</div>
-            <div style="font-size:1.25rem;font-weight:800;color:white;">3,800+</div>
+          <div class="auth-stat-card">
+            <div style="display:flex;align-items:center;justify-content:space-between">
+              <div>
+                <div class="auth-stat-num">24h</div>
+                <div class="auth-stat-label">Average time to first sale</div>
+              </div>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--warning)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            </div>
           </div>
-          <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 16px;">
-            <div style="font-size:0.75rem;color:rgba(255,255,255,0.5);">Products</div>
-            <div style="font-size:1.25rem;font-weight:800;color:white;">12,400+</div>
-          </div>
-          <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 16px;">
-            <div style="font-size:0.75rem;color:rgba(255,255,255,0.5);">Creator Revenue</div>
-            <div style="font-size:1.25rem;font-weight:800;color:white;">₹48Cr+</div>
+
+          <div class="testimonial-mini">
+            <p class="testimonial-mini__quote">"Uploaded my FinTech kit on Monday. Sold 3 copies by Tuesday morning. UXMarket AI's audience is exactly who buys premium design work."</p>
+            <div style="display:flex;align-items:center;gap:var(--space-2)">
+              <div class="seller-avatar seller-avatar--green" style="width:24px;height:24px;font-size:9px" aria-hidden="true">KV</div>
+              <span style="font-size:var(--text-xs);color:var(--text-muted)">Kapil Verma · UX Designer</span>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- Form Side -->
-    <div class="auth-form-side">
-      <div class="auth-card">
-        <div class="auth-tabs">
-          <button class="auth-tab active" id="tab-signin" onclick="switchTab('signin')">Sign In</button>
-          <button class="auth-tab" id="tab-register" onclick="switchTab('register')">Register</button>
-        </div>
-
-        <!-- Sign In Form -->
-        <div id="signin-form">
-          <h2 style="font-size:1.5rem;font-weight:800;margin-bottom:4px;">Welcome back</h2>
-          <p style="font-size:0.875rem;color:var(--color-text-3);margin-bottom:28px;">Sign in to your UXMarket AI account</p>
-
-          <button class="social-btn" id="google-signin">
-            <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
-            Continue with Google
-          </button>
-          <button class="social-btn" id="github-signin">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-            Continue with GitHub
-          </button>
-          <button class="social-btn" id="figma-signin">
-            <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#F24E1E" d="M8 24c2.208 0 4-1.792 4-4v-4H8c-2.208 0-4 1.792-4 4s1.792 4 4 4z"/><path fill="#FF7262" d="M4 12c0-2.208 1.792-4 4-4h4v8H8c-2.208 0-4-1.792-4-4z"/><path fill="#A259FF" d="M4 4c0-2.208 1.792-4 4-4h4v8H8C5.792 8 4 6.208 4 4z"/><path fill="#1ABCFE" d="M12 0h4c2.208 0 4 1.792 4 4s-1.792 4-4 4h-4V0z"/><path fill="#0ACF83" d="M20 12c0 2.208-1.792 4-4 4s-4-1.792-4-4 1.792-4 4-4 4 1.792 4 4z"/></svg>
-            Continue with Figma
-          </button>
-
-          <div class="auth-divider">or sign in with email</div>
-
-          <form id="email-signin" novalidate>
-            <div class="form-group">
-              <label class="form-label" for="signin-email">Email Address</label>
-              <input type="email" id="signin-email" class="form-input" placeholder="you@company.com" required />
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="signin-password" style="display:flex;justify-content:space-between;">
-                Password
-                <a href="#" style="color:var(--color-primary-light);font-weight:500;font-size:0.8125rem;">Forgot password?</a>
-              </label>
-              <input type="password" id="signin-password" class="form-input" placeholder="••••••••" required />
-            </div>
-            <button type="submit" class="btn btn--primary" style="width:100%;justify-content:center;margin-top:8px;" id="signin-submit">
-              Sign In to UXMarket AI
-            </button>
-          </form>
-        </div>
-
-        <!-- Register Form -->
-        <div id="register-form" style="display:none;">
-          <h2 style="font-size:1.5rem;font-weight:800;margin-bottom:4px;">Create your account</h2>
-          <p style="font-size:0.875rem;color:var(--color-text-3);margin-bottom:24px;">Join 98,000+ designers & developers</p>
-
-          <div style="display:flex;gap:8px;margin-bottom:20px;">
-            <button class="social-btn" style="flex:1;margin-bottom:0;" id="google-register">
-              <svg width="16" height="16" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
-              Google
-            </button>
-            <button class="social-btn" style="flex:1;margin-bottom:0;" id="github-register">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-              GitHub
-            </button>
-          </div>
-
-          <div class="auth-divider">or register with email</div>
-
-          <form id="email-register" novalidate>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-              <div class="form-group">
-                <label class="form-label" for="reg-fname">First Name</label>
-                <input type="text" id="reg-fname" class="form-input" placeholder="Rohan" required />
-              </div>
-              <div class="form-group">
-                <label class="form-label" for="reg-lname">Last Name</label>
-                <input type="text" id="reg-lname" class="form-input" placeholder="Kumar" required />
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="reg-email">Work Email</label>
-              <input type="email" id="reg-email" class="form-input" placeholder="rohan@startup.com" required />
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="reg-password">Password</label>
-              <input type="password" id="reg-password" class="form-input" placeholder="8+ characters" required />
-            </div>
-            <div style="display:flex;gap:8px;margin-bottom:16px;">
-              <div style="display:flex;align-items:center;gap:8px;padding:10px 14px;border:1px solid var(--color-border);border-radius:8px;cursor:pointer;flex:1;" id="role-buyer" onclick="selectRole('buyer')">
-                <input type="radio" name="role" value="buyer" checked style="accent-color:#6366f1;" />
-                <div><div style="font-size:0.8125rem;font-weight:600;">🛒 Buyer</div><div style="font-size:0.6875rem;color:var(--color-text-3);">Buy design systems</div></div>
-              </div>
-              <div style="display:flex;align-items:center;gap:8px;padding:10px 14px;border:1px solid var(--color-border);border-radius:8px;cursor:pointer;flex:1;" id="role-seller" onclick="selectRole('seller')">
-                <input type="radio" name="role" value="seller" style="accent-color:#6366f1;" />
-                <div><div style="font-size:0.8125rem;font-weight:600;">💰 Seller</div><div style="font-size:0.6875rem;color:var(--color-text-3);">Sell your designs</div></div>
-              </div>
-            </div>
-            <button type="submit" class="btn btn--primary" style="width:100%;justify-content:center;" id="register-submit">
-              Create Free Account ✨
-            </button>
-            <p style="font-size:0.75rem;color:var(--color-text-3);text-align:center;margin-top:12px;">By creating an account you agree to our <a href="terms.html" style="color:var(--color-primary-light)">Terms</a> and <a href="privacy.html" style="color:var(--color-primary-light)">Privacy Policy</a></p>
-          </form>
-        </div>
-
-        <p style="margin-top:24px;font-size:0.8125rem;color:var(--color-text-3);text-align:center;">
-          <span id="switch-text">Don't have an account?</span>
-          <a href="#" id="switch-link" style="color:var(--color-primary-light);font-weight:600;margin-left:4px;" onclick="switchTab('register');return false;">Register free</a>
-        </p>
+      <!-- Bottom nav -->
+      <div style="display:flex;gap:var(--space-4);padding-top:var(--space-6);border-top:1px solid var(--border)">
+        <a href="index.html" style="font-size:var(--text-xs);color:var(--text-muted)">Home</a>
+        <a href="categories.html" style="font-size:var(--text-xs);color:var(--text-muted)">Browse</a>
+        <a href="sellers.html" style="font-size:var(--text-xs);color:var(--text-muted)">Sell</a>
+        <a href="enterprise.html" style="font-size:var(--text-xs);color:var(--text-muted)">Enterprise</a>
       </div>
     </div>
   </div>
 
-  <script src="js/main.js" type="module"></script>
-  <script>
-    function switchTab(tab) {
-      const signinForm = document.getElementById('signin-form');
-      const registerForm = document.getElementById('register-form');
-      const signinTab = document.getElementById('tab-signin');
-      const registerTab = document.getElementById('tab-register');
-      const switchText = document.getElementById('switch-text');
-      const switchLink = document.getElementById('switch-link');
+  <!-- Form panel (right) -->
+  <div class="auth-form-panel">
+    <div class="auth-form-inner">
 
-      if (tab === 'register') {
-        signinForm.style.display = 'none';
-        registerForm.style.display = 'block';
-        signinTab.classList.remove('active');
-        registerTab.classList.add('active');
-        switchText.textContent = 'Already have an account?';
-        switchLink.textContent = 'Sign in';
-        switchLink.onclick = (e) => { e.preventDefault(); switchTab('signin'); };
-      } else {
-        signinForm.style.display = 'block';
-        registerForm.style.display = 'none';
-        signinTab.classList.add('active');
-        registerTab.classList.remove('active');
-        switchText.textContent = "Don't have an account?";
-        switchLink.textContent = 'Register free';
-        switchLink.onclick = (e) => { e.preventDefault(); switchTab('register'); };
-      }
-    }
+      <!-- Logo (mobile only) -->
+      <a href="index.html" class="nav__logo" style="display:none;margin-bottom:var(--space-8)" id="auth-mobile-logo" aria-label="UXMarket AI Home">
+        <div class="nav__logo-mark" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="5" height="5" rx="1" fill="white" opacity="0.9"/><rect x="8" y="1" width="5" height="5" rx="1" fill="white" opacity="0.6"/><rect x="1" y="8" width="5" height="5" rx="1" fill="white" opacity="0.6"/><rect x="8" y="8" width="5" height="5" rx="1" fill="white" opacity="0.3"/></svg></div>
+        UXMarket AI
+      </a>
 
-    function selectRole(role) {
-      const buyerEl = document.getElementById('role-buyer');
-      const sellerEl = document.getElementById('role-seller');
-      buyerEl.style.borderColor = role === 'buyer' ? '#6366f1' : 'rgba(255,255,255,0.08)';
-      sellerEl.style.borderColor = role === 'seller' ? '#6366f1' : 'rgba(255,255,255,0.08)';
-      buyerEl.style.background = role === 'buyer' ? 'rgba(99,102,241,0.08)' : '';
-      sellerEl.style.background = role === 'seller' ? 'rgba(99,102,241,0.08)' : '';
-    }
+      <!-- Auth tabs -->
+      <div class="auth-tabs" role="tablist" aria-label="Authentication options">
+        <button class="auth-tab active" data-auth-tab="signin" id="tab-signin" role="tab" aria-selected="true">Sign in</button>
+        <button class="auth-tab" data-auth-tab="register" id="tab-register" role="tab" aria-selected="false">Create account</button>
+      </div>
 
-    // Check URL hash
-    if (location.hash.includes('register')) switchTab('register');
+      <!-- Sign in form -->
+      <div data-auth-panel="signin" id="signin-panel">
+        <h2 style="font-size:var(--text-2xl);font-weight:800;letter-spacing:-0.04em;margin-bottom:var(--space-2)">Welcome back</h2>
+        <p style="font-size:var(--text-sm);color:var(--text-muted);margin-bottom:var(--space-6)">Sign in to access your marketplace and AI tools.</p>
 
-    // Form submit handlers
-    document.getElementById('email-signin')?.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const btn = document.getElementById('signin-submit');
-      btn.textContent = '⟳ Signing in...';
-      btn.disabled = true;
-      setTimeout(() => {
-        btn.textContent = '✓ Welcome back! Redirecting...';
-        btn.style.background = 'rgba(16,185,129,0.2)';
-      }, 1500);
+        <!-- OAuth -->
+        <div style="display:flex;flex-direction:column;gap:var(--space-3)">
+          <button class="oauth-btn" id="google-signin-btn" type="button" aria-label="Continue with Google">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+            Continue with Google
+          </button>
+          <button class="oauth-btn" id="github-signin-btn" type="button" aria-label="Continue with GitHub">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+            Continue with GitHub
+          </button>
+        </div>
+
+        <div class="auth-divider" aria-hidden="true">or sign in with email</div>
+
+        <form id="login-form" novalidate aria-label="Sign in with email">
+          <div style="display:flex;flex-direction:column;gap:var(--space-4)">
+            <div class="form-group">
+              <label class="form-label" for="login-email">Email address</label>
+              <input type="email" id="login-email" name="email" class="form-input" placeholder="you@company.com" required autocomplete="email">
+            </div>
+            <div class="form-group">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--space-2)">
+                <label class="form-label" for="login-pass" style="margin-bottom:0">Password</label>
+                <a href="#" style="font-size:var(--text-xs);color:var(--text-muted)" id="forgot-password-link">Forgot password?</a>
+              </div>
+              <input type="password" id="login-pass" name="password" class="form-input" placeholder="••••••••" required autocomplete="current-password" minlength="8">
+            </div>
+            <button type="submit" class="btn btn--primary btn--full btn--lg" id="login-submit-btn">Sign in</button>
+          </div>
+        </form>
+
+        <div class="auth-footer-text">
+          Don't have an account? <button data-auth-tab="register" class="auth-tab" style="display:inline;padding:0;font-size:inherit;color:var(--text-secondary);text-decoration:underline;text-underline-offset:2px;background:none;border:none;cursor:pointer;font-family:inherit" id="switch-to-register" type="button">Create one free</button>
+        </div>
+      </div>
+
+      <!-- Register form -->
+      <div data-auth-panel="register" id="register-panel" hidden>
+        <h2 style="font-size:var(--text-2xl);font-weight:800;letter-spacing:-0.04em;margin-bottom:var(--space-2)">Create your account</h2>
+        <p style="font-size:var(--text-sm);color:var(--text-muted);margin-bottom:var(--space-6)">Start buying or selling design systems in minutes.</p>
+
+        <!-- Role selector -->
+        <div style="margin-bottom:var(--space-6)" role="group" aria-label="Choose account type">
+          <div style="font-size:var(--text-xs);font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:var(--space-3)">I want to</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-3)">
+            <label style="cursor:pointer">
+              <input type="radio" name="role" value="buyer" checked style="display:none">
+              <div class="license-card active" id="role-buyer-card">
+                <div style="display:flex;align-items:center;gap:var(--space-2);margin-bottom:4px">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                  <span style="font-weight:700;font-size:var(--text-sm)">Buy</span>
+                </div>
+                <div style="font-size:var(--text-xs);color:var(--text-muted)">Browse &amp; purchase design systems</div>
+              </div>
+            </label>
+            <label style="cursor:pointer">
+              <input type="radio" name="role" value="seller" style="display:none">
+              <div class="license-card" id="role-seller-card">
+                <div style="display:flex;align-items:center;gap:var(--space-2);margin-bottom:4px">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg>
+                  <span style="font-weight:700;font-size:var(--text-sm)">Sell</span>
+                </div>
+                <div style="font-size:var(--text-xs);color:var(--text-muted)">Earn from your design work</div>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:var(--space-3);margin-bottom:var(--space-5)">
+          <button class="oauth-btn" id="google-register-btn" type="button" aria-label="Continue with Google">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+            Continue with Google
+          </button>
+        </div>
+
+        <div class="auth-divider" aria-hidden="true">or register with email</div>
+
+        <form id="register-form" novalidate aria-label="Create account form">
+          <div style="display:flex;flex-direction:column;gap:var(--space-4)">
+            <div class="form-group">
+              <label class="form-label" for="reg-name">Full name</label>
+              <input type="text" id="reg-name" name="name" class="form-input" placeholder="Priya Sharma" required autocomplete="name">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="reg-email">Email address</label>
+              <input type="email" id="reg-email" name="email" class="form-input" placeholder="you@company.com" required autocomplete="email">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="reg-pass">Password</label>
+              <input type="password" id="reg-pass" name="password" class="form-input" placeholder="Min. 8 characters" required autocomplete="new-password" minlength="8">
+            </div>
+            <button type="submit" class="btn btn--primary btn--full btn--lg" id="register-submit-btn">Create free account</button>
+          </div>
+        </form>
+
+        <div class="auth-footer-text">
+          By creating an account, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
+        </div>
+
+        <div class="auth-footer-text" style="margin-top:var(--space-3)">
+          Already have an account? <button data-auth-tab="signin" class="auth-tab" style="display:inline;padding:0;font-size:inherit;color:var(--text-secondary);text-decoration:underline;text-underline-offset:2px;background:none;border:none;cursor:pointer;font-family:inherit" id="switch-to-signin" type="button">Sign in</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script src="js/main.js"></script>
+<script>
+  // Show logo on mobile
+  if(window.innerWidth <= 768) {
+    const logo = document.getElementById('auth-mobile-logo');
+    if(logo) logo.style.display = 'inline-flex';
+  }
+
+  // Role card toggle
+  document.querySelectorAll('input[name="role"]').forEach(radio => {
+    radio.addEventListener('change', () => {
+      document.getElementById('role-buyer-card').classList.toggle('active', document.querySelector('[value="buyer"]').checked);
+      document.getElementById('role-seller-card').classList.toggle('active', document.querySelector('[value="seller"]').checked);
     });
+  });
 
-    document.getElementById('email-register')?.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const btn = document.getElementById('register-submit');
-      btn.textContent = '⟳ Creating account...';
-      btn.disabled = true;
-      setTimeout(() => {
-        btn.textContent = '✓ Account created! Check your email.';
-        btn.style.background = 'rgba(16,185,129,0.2)';
-      }, 1500);
-    });
-
-    // Focus styles
-    document.querySelectorAll('.form-input').forEach(el => {
-      el.addEventListener('focus', () => { el.style.borderColor = '#6366f1'; el.style.boxShadow = '0 0 0 3px rgba(99,102,241,0.12)'; });
-      el.addEventListener('blur', () => { el.style.borderColor = 'rgba(255,255,255,0.12)'; el.style.boxShadow = 'none'; });
-    });
-  </script>
+  // Switch tab from inline buttons
+  document.getElementById('switch-to-register')?.addEventListener('click', () => {
+    document.getElementById('tab-register').click();
+  });
+  document.getElementById('switch-to-signin')?.addEventListener('click', () => {
+    document.getElementById('tab-signin').click();
+  });
+</script>
 </body>
 </html>
